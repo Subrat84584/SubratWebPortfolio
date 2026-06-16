@@ -138,7 +138,7 @@ export default function Testimonials() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="relative min-h-[360px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm sm:p-12">
+          <div className="relative min-h-[320px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm sm:p-8 lg:p-12">
             {/* Gradient top border */}
             <div className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500" />
 

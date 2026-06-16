@@ -118,7 +118,7 @@ export default function Experience() {
           <span className="inline-block text-sm font-semibold tracking-widest uppercase text-blue-400 mb-3">
             Career Journey
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Work{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               Experience

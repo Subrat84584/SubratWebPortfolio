@@ -139,7 +139,7 @@ export default function Education() {
           <span className="mb-3 inline-block rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-medium text-indigo-400">
             Background
           </span>
-          <h2 className="mt-2 text-4xl font-extrabold text-white sm:text-5xl">
+          <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white">
             Education &{" "}
             <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
               Learning

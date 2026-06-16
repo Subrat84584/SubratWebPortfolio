@@ -184,8 +184,8 @@ export default function Hero() {
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600 opacity-10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-purple-600 opacity-10 blur-[120px] pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* ── LEFT COLUMN ── */}
           <motion.div
             className="flex flex-col gap-6"
@@ -313,14 +313,14 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── RIGHT COLUMN ── */}
+          {/* ── RIGHT COLUMN — hidden on very small phones, shown sm+ ── */}
           <motion.div
-            className="flex items-center justify-center"
+            className="hidden sm:flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" as const }}
           >
-            <div className="relative w-[340px] h-[340px] sm:w-[400px] sm:h-[400px]">
+            <div className="relative w-[260px] h-[260px] xs:w-[300px] xs:h-[300px] sm:w-[380px] sm:h-[380px] lg:w-[420px] lg:h-[420px]">
               {/* Background glow */}
               <div className="absolute inset-[-20px] rounded-full bg-gradient-to-br from-sky-600/20 to-purple-600/20 blur-2xl" />
 
