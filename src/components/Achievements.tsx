@@ -9,122 +9,62 @@ interface Achievement {
   icon: React.ElementType;
   title: string;
   description: string;
-  color: "blue" | "purple" | "yellow" | "green" | "red" | "cyan";
+  accent: "yellow" | "green";
 }
 
 const achievements: Achievement[] = [
   {
-    stat: "50,000+",
-    numericValue: 50000,
-    suffix: "+",
-    icon: Users,
-    title: "Users Served",
-    description:
-      "Built and deployed mobile applications reaching over 50,000 active users across Android and iOS platforms",
-    color: "blue",
+    stat: "50K+", numericValue: 50000, suffix: "+",
+    icon: Users, title: "Users Served", accent: "yellow",
+    description: "Built and deployed mobile applications reaching over 50,000 active users across Android and iOS platforms",
   },
   {
-    stat: "5",
-    numericValue: 5,
-    suffix: "",
-    icon: Smartphone,
-    title: "Apps Shipped",
-    description:
-      "Successfully designed, developed, and launched 5 production-grade mobile applications",
-    color: "purple",
+    stat: "5", numericValue: 5, suffix: "",
+    icon: Smartphone, title: "Apps Shipped", accent: "green",
+    description: "Successfully designed, developed, and launched 5 production-grade mobile applications",
   },
   {
-    stat: "40%",
-    numericValue: 40,
-    suffix: "%",
-    icon: Zap,
-    title: "Performance Boost",
-    description:
-      "Achieved 40% reduction in app load times through systematic performance profiling and optimization",
-    color: "yellow",
+    stat: "40%", numericValue: 40, suffix: "%",
+    icon: Zap, title: "Performance Boost", accent: "yellow",
+    description: "Achieved 40% reduction in app load times through systematic performance profiling and optimization",
   },
   {
-    stat: "400+",
-    numericValue: 400,
-    suffix: "+",
-    icon: GitBranch,
-    title: "Open Source Contributor",
-    description:
-      "Contributed to 5+ open source packages on pub.dev with 400+ combined GitHub stars",
-    color: "green",
+    stat: "400+", numericValue: 400, suffix: "+",
+    icon: GitBranch, title: "Open Source", accent: "green",
+    description: "Contributed to 5+ open source packages on pub.dev with 400+ combined GitHub stars",
   },
   {
-    stat: "99.9%",
-    numericValue: 99.9,
-    suffix: "%",
-    icon: Shield,
-    title: "Uptime",
-    description:
-      "Maintained enterprise-grade reliability across all deployed applications",
-    color: "red",
+    stat: "99.9%", numericValue: 99.9, suffix: "%",
+    icon: Shield, title: "Uptime", accent: "yellow",
+    description: "Maintained enterprise-grade reliability across all deployed applications",
   },
   {
-    stat: "20+",
-    numericValue: 20,
-    suffix: "+",
-    icon: BookOpen,
-    title: "Continuous Learner",
-    description:
-      "Completed 20+ courses and certifications in mobile development and cloud technologies",
-    color: "cyan",
+    stat: "20+", numericValue: 20, suffix: "+",
+    icon: BookOpen, title: "Continuous Learner", accent: "green",
+    description: "Completed 20+ courses and certifications in mobile development and cloud technologies",
   },
 ];
 
-const colorMap = {
-  blue: {
-    gradient: "from-blue-500 to-blue-700",
-    glow: "group-hover:shadow-blue-500/25",
-    iconBg: "bg-blue-500/10",
-    iconColor: "text-blue-400",
-    border: "group-hover:border-blue-500/50",
-    text: "from-blue-400 to-blue-600",
-  },
-  purple: {
-    gradient: "from-purple-500 to-purple-700",
-    glow: "group-hover:shadow-purple-500/25",
-    iconBg: "bg-purple-500/10",
-    iconColor: "text-purple-400",
-    border: "group-hover:border-purple-500/50",
-    text: "from-purple-400 to-purple-600",
-  },
-  yellow: {
-    gradient: "from-yellow-500 to-yellow-700",
-    glow: "group-hover:shadow-yellow-500/25",
-    iconBg: "bg-yellow-500/10",
-    iconColor: "text-yellow-400",
-    border: "group-hover:border-yellow-500/50",
-    text: "from-yellow-400 to-yellow-600",
-  },
-  green: {
-    gradient: "from-green-500 to-green-700",
-    glow: "group-hover:shadow-green-500/25",
-    iconBg: "bg-green-500/10",
-    iconColor: "text-green-400",
-    border: "group-hover:border-green-500/50",
-    text: "from-green-400 to-green-600",
-  },
-  red: {
-    gradient: "from-red-500 to-red-700",
-    glow: "group-hover:shadow-red-500/25",
-    iconBg: "bg-red-500/10",
-    iconColor: "text-red-400",
-    border: "group-hover:border-red-500/50",
-    text: "from-red-400 to-red-600",
-  },
-  cyan: {
-    gradient: "from-cyan-500 to-cyan-700",
-    glow: "group-hover:shadow-cyan-500/25",
-    iconBg: "bg-cyan-500/10",
-    iconColor: "text-cyan-400",
-    border: "group-hover:border-cyan-500/50",
-    text: "from-cyan-400 to-cyan-600",
-  },
-};
+// Word-by-word animated heading
+function WordReveal({ children }: { children: string }) {
+  const words = children.split(" ");
+  return (
+    <>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          className="inline-block mr-[0.28em]"
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ delay: i * 0.09, duration: 0.5, ease: "easeOut" as const }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </>
+  );
+}
 
 function useCountUp(target: number, duration: number, start: boolean) {
   const [count, setCount] = useState(0);
@@ -145,26 +85,26 @@ function useCountUp(target: number, duration: number, start: boolean) {
   return count;
 }
 
-function AchievementCard({
-  achievement,
-  index,
-}: {
-  achievement: Achievement;
-  index: number;
-}) {
+function AchievementCard({ achievement, index }: { achievement: Achievement; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const colors = colorMap[achievement.color];
   const Icon = achievement.icon;
+  const isYellow = achievement.accent === "yellow";
+
+  const accentColor = isYellow ? "#F5D000" : "#39D353";
+  const accentBg    = isYellow ? "rgba(245,208,0,0.08)"  : "rgba(57,211,83,0.08)";
+  const accentBorder= isYellow ? "rgba(245,208,0,0.18)"  : "rgba(57,211,83,0.18)";
+  const accentHover = isYellow ? "rgba(245,208,0,0.10)"  : "rgba(57,211,83,0.10)";
+  const shadowColor = isYellow ? "rgba(245,208,0,0.12)"  : "rgba(57,211,83,0.12)";
 
   const numVal = achievement.numericValue ?? 0;
-  const countedValue = useCountUp(numVal, 1800, isInView);
+  const counted = useCountUp(numVal, 1800, isInView);
 
   const displayStat =
     isInView && achievement.numericValue !== null
       ? achievement.numericValue >= 1000
-        ? `${(countedValue / 1000).toFixed(0)}k${achievement.suffix}`
-        : `${countedValue}${achievement.suffix}`
+        ? `${Math.round(counted / 1000)}k${achievement.suffix}`
+        : `${counted}${achievement.suffix}`
       : achievement.stat;
 
   return (
@@ -173,65 +113,69 @@ function AchievementCard({
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" as const }}
-      className={`group relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-2xl ${colors.glow} ${colors.border}`}
+      className="group relative rounded-2xl border p-6 cursor-default overflow-hidden transition-all duration-300"
+      style={{
+        background: "rgba(13, 20, 12, 0.80)",
+        backdropFilter: "blur(16px)",
+        borderColor: "rgba(245,208,0,0.10)",
+      }}
+      whileHover={{
+        boxShadow: `0 20px 60px ${shadowColor}`,
+        borderColor: accentBorder,
+        y: -4,
+      }}
     >
-      <div className="mb-4 flex items-start justify-between">
-        <div
-          className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${colors.iconBg}`}
-        >
-          <Icon className={`h-6 w-6 ${colors.iconColor}`} />
-        </div>
-      </div>
-
+      {/* Hover glow overlay */}
       <div
-        className={`mb-2 bg-gradient-to-r ${colors.text} bg-clip-text text-4xl font-extrabold text-transparent`}
-      >
-        {displayStat}
-      </div>
-
-      <h3 className="mb-2 text-lg font-semibold text-white">
-        {achievement.title}
-      </h3>
-      <p className="text-sm leading-relaxed text-gray-400">
-        {achievement.description}
-      </p>
-
-      {/* Subtle gradient overlay on hover */}
-      <div
-        className={`pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br ${colors.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`}
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{ background: `radial-gradient(circle at 50% 0%, ${accentHover}, transparent 70%)` }}
       />
+
+      <div className="relative z-10">
+        {/* Icon */}
+        <div
+          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl"
+          style={{ background: accentBg }}
+        >
+          <Icon className="h-6 w-6" style={{ color: accentColor }} />
+        </div>
+
+        {/* Stat number */}
+        <div className="mb-2 text-4xl font-extrabold" style={{ color: accentColor, fontFamily: "Space Grotesk, sans-serif" }}>
+          {displayStat}
+        </div>
+
+        <h3 className="mb-2 text-lg font-semibold" style={{ color: "#D4E8D4" }}>
+          {achievement.title}
+        </h3>
+        <p className="text-sm leading-relaxed" style={{ color: "#3A5A37" }}>
+          {achievement.description}
+        </p>
+      </div>
     </motion.div>
   );
 }
 
-function generateHeatmapData(): number[][] {
-  const weeks = 52;
-  const days = 7;
+// GitHub-style contribution heatmap in yellow/green
+const heatmapData: number[][] = (() => {
   const grid: number[][] = [];
-  for (let w = 0; w < weeks; w++) {
+  for (let w = 0; w < 52; w++) {
     const week: number[] = [];
-    for (let d = 0; d < days; d++) {
-      const rand = Math.random();
-      if (rand < 0.3) week.push(0);
-      else if (rand < 0.55) week.push(1);
-      else if (rand < 0.75) week.push(2);
-      else if (rand < 0.9) week.push(3);
+    for (let d = 0; d < 7; d++) {
+      const i = w * 7 + d;
+      const v = (i * 37 + w * 13 + d * 7) % 100;
+      if (v < 30) week.push(0);
+      else if (v < 55) week.push(1);
+      else if (v < 75) week.push(2);
+      else if (v < 90) week.push(3);
       else week.push(4);
     }
     grid.push(week);
   }
   return grid;
-}
+})();
 
-const heatmapData = generateHeatmapData();
-
-const heatmapColors = [
-  "bg-gray-800",
-  "bg-green-900",
-  "bg-green-700",
-  "bg-green-500",
-  "bg-green-400",
-];
+const heatColors = ["heat-0", "heat-1", "heat-2", "heat-3", "heat-4"];
 
 function ContributionGrid() {
   const ref = useRef(null);
@@ -243,9 +187,14 @@ function ContributionGrid() {
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: "easeOut" as const }}
-      className="mt-16 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+      className="mt-16 rounded-2xl border p-6"
+      style={{
+        background: "rgba(13, 20, 12, 0.80)",
+        backdropFilter: "blur(16px)",
+        borderColor: "rgba(245,208,0,0.10)",
+      }}
     >
-      <h3 className="mb-6 text-center text-xl font-semibold text-white">
+      <h3 className="mb-6 text-center text-xl font-semibold" style={{ color: "#D4E8D4" }}>
         Coding Activity
       </h3>
       <div className="overflow-x-auto">
@@ -257,21 +206,18 @@ function ContributionGrid() {
                   key={di}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                  transition={{
-                    duration: 0.3,
-                    delay: isInView ? (wi * 7 + di) * 0.003 : 0,
-                  }}
+                  transition={{ duration: 0.25, delay: isInView ? (wi * 7 + di) * 0.003 : 0 }}
                   title={`${level} contributions`}
-                  className={`h-3 w-3 rounded-sm ${heatmapColors[level]} transition-transform duration-150 hover:scale-125`}
+                  className={`h-3 w-3 rounded-sm ${heatColors[level]} transition-transform duration-150 hover:scale-125`}
                 />
               ))}
             </div>
           ))}
         </div>
       </div>
-      <div className="mt-4 flex items-center justify-end gap-2 text-xs text-gray-500">
+      <div className="mt-4 flex items-center justify-end gap-2 text-xs font-mono" style={{ color: "#2A3A28" }}>
         <span>Less</span>
-        {heatmapColors.map((c, i) => (
+        {heatColors.map((c, i) => (
           <div key={i} className={`h-3 w-3 rounded-sm ${c}`} />
         ))}
         <span>More</span>
@@ -288,14 +234,14 @@ export default function Achievements() {
     <section
       id="achievements"
       className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8"
-      style={{ background: "#0a0a0f" }}
+      style={{ background: "#0B0B0B" }}
     >
-      {/* Background glow blobs */}
-      <div className="pointer-events-none absolute left-1/4 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-500/5 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-1/4 h-96 w-96 translate-x-1/2 rounded-full bg-purple-500/5 blur-3xl" />
+      <div className="pointer-events-none absolute left-1/4 top-0 h-96 w-96 -translate-x-1/2 rounded-full blur-3xl"
+        style={{ background: "rgba(245,208,0,0.04)" }} />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-96 w-96 translate-x-1/2 rounded-full blur-3xl"
+        style={{ background: "rgba(57,211,83,0.04)" }} />
 
       <div className="relative mx-auto max-w-7xl">
-        {/* Section heading */}
         <motion.div
           ref={headingRef}
           initial={{ opacity: 0, y: 20 }}
@@ -303,33 +249,29 @@ export default function Achievements() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <span className="mb-3 inline-block rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400">
+          <span
+            className="mb-3 inline-block rounded-full border px-4 py-1.5 text-sm font-medium"
+            style={{ borderColor: "rgba(57,211,83,0.28)", background: "rgba(57,211,83,0.08)", color: "#39D353" }}
+          >
             Milestones
           </span>
-          <h2 className="mt-2 text-4xl font-extrabold text-white sm:text-5xl">
-            Key{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Achievements
-            </span>
+          <h2
+            className="mt-2 text-4xl font-extrabold sm:text-5xl"
+            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+          >
+            <WordReveal>Key Achievements</WordReveal>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-400">
-            Numbers that reflect real impact — from users reached to
-            performance milestones.
+          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "#5A7A57" }}>
+            Numbers that reflect real impact — from users reached to performance milestones.
           </p>
         </motion.div>
 
-        {/* Achievement cards grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {achievements.map((achievement, index) => (
-            <AchievementCard
-              key={achievement.title}
-              achievement={achievement}
-              index={index}
-            />
+            <AchievementCard key={achievement.title} achievement={achievement} index={index} />
           ))}
         </div>
 
-        {/* GitHub-style contribution heatmap */}
         <ContributionGrid />
       </div>
     </section>

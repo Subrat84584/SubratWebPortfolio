@@ -13,17 +13,17 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
         brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
+          yellow: '#F5D000',
+          green: '#39D353',
+          ground: '#0B0B0B',
+          text: '#D4E8D4',
+          muted: '#5A7A57',
+          card: '#0D140C',
         },
       },
       animation: {
@@ -33,6 +33,7 @@ export default {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'gradient': 'gradientShift 8s ease infinite',
         'shimmer': 'shimmer 2s linear infinite',
+        'scan': 'scanLine 10s linear infinite',
       },
       keyframes: {
         float: {
@@ -46,6 +47,12 @@ export default {
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
+        },
+        scanLine: {
+          '0%':   { transform: 'translateY(-5px)', opacity: '0' },
+          '3%':   { opacity: '0.7' },
+          '97%':  { opacity: '0.7' },
+          '100%': { transform: 'translateY(100vh)', opacity: '0' },
         },
       },
       backgroundSize: {

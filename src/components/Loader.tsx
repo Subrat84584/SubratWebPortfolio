@@ -1,114 +1,139 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const TERMINAL_LINES = [
+  { text: '$ ./launch-portfolio.sh', delay: 0,    color: '#F5D000' },
+  { text: '> Initializing Subrat K. Acharya...', delay: 380,  color: '#39D353' },
+  { text: '> Stack: Flutter · Android · iOS · Firebase', delay: 760,  color: '#D4E8D4' },
+  { text: '> 5 apps · 50K+ users · 2+ years', delay: 1100, color: '#D4E8D4' },
+  { text: '> ✓ All systems go.', delay: 1600, color: '#39D353' },
+];
 
 const Loader: React.FC = () => {
+  const [visibleLines, setVisibleLines] = useState<number[]>([]);
+
+  useEffect(() => {
+    TERMINAL_LINES.forEach((line, i) => {
+      const t = setTimeout(() => {
+        setVisibleLines((prev) => [...prev, i]);
+      }, line.delay);
+      return () => clearTimeout(t);
+    });
+  }, []);
+
   return (
     <motion.div
-      initial={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 1.1 }}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 0.97 }}
       transition={{ duration: 0.5, ease: 'easeInOut' as const }}
-      style={{ backgroundColor: '#0a0a0f' }}
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-8"
+      style={{ backgroundColor: '#0B0B0B' }}
     >
-      {/* Outer pulsing ring */}
-      <motion.div
-        animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0, 0.3] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' as const }}
-        className="absolute w-32 h-32 rounded-full border border-blue-500/30"
+      {/* Subtle grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(245,208,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(245,208,0,0.025) 1px, transparent 1px)',
+          backgroundSize: '52px 52px',
+        }}
       />
 
-      {/* Middle pulsing ring */}
+      {/* SKA monogram */}
       <motion.div
-        animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0, 0.4] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' as const, delay: 0.4 }}
-        className="absolute w-28 h-28 rounded-full border border-purple-500/30"
-      />
-
-      <div className="flex flex-col items-center gap-6 z-10">
-        {/* Monogram circle */}
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, ease: 'backOut' as const }}
-          className="relative w-20 h-20 rounded-full flex items-center justify-center"
-          style={{
-            background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%)',
-            boxShadow: '0 0 40px rgba(139, 92, 246, 0.5), 0 0 80px rgba(14, 165, 233, 0.3)',
-          }}
-        >
+        initial={{ opacity: 0, scale: 0.7, y: -10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: 'backOut' as const }}
+        className="relative z-10 flex flex-col items-center"
+      >
+        <div className="flex items-baseline gap-0.5 select-none">
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
-            className="text-white font-bold text-4xl select-none"
-            style={{ fontFamily: 'Georgia, serif', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.4, ease: 'backOut' as const }}
+            style={{ fontFamily: 'Space Grotesk, sans-serif', color: '#F5D000', fontSize: '3.5rem', fontWeight: 700, lineHeight: 1 }}
           >
             S
           </motion.span>
-
-          {/* Shine sweep */}
-          <motion.div
-            initial={{ x: '-100%', opacity: 0 }}
-            animate={{ x: '200%', opacity: [0, 0.6, 0] }}
-            transition={{ delay: 0.6, duration: 0.8, ease: 'easeInOut' as const }}
-            className="absolute inset-0 rounded-full"
-            style={{
-              background:
-                'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
-            }}
-          />
-        </motion.div>
-
-        {/* Name */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.6, ease: 'easeOut' as const }}
-          className="flex flex-col items-center gap-1"
-        >
-          <span
-            className="text-white text-2xl font-semibold tracking-widest"
-            style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}
-          >
-            Subrat K. Acharya
-          </span>
-
-          {/* Subtitle */}
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
-            className="text-sm tracking-[0.3em] uppercase font-medium"
-            style={{
-              background: 'linear-gradient(90deg, #0ea5e9, #8b5cf6)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.4, ease: 'backOut' as const }}
+            style={{ fontFamily: 'Space Grotesk, sans-serif', color: '#D4E8D4', fontSize: '3.5rem', fontWeight: 700, lineHeight: 1 }}
           >
-            Software Development Engineer
+            K
           </motion.span>
-        </motion.div>
+          <motion.span
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.4, ease: 'backOut' as const }}
+            style={{ fontFamily: 'Space Grotesk, sans-serif', color: '#39D353', fontSize: '3.5rem', fontWeight: 700, lineHeight: 1 }}
+          >
+            A
+          </motion.span>
+        </div>
 
-        {/* Loading bar */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.4 }}
-          className="w-40 h-[2px] rounded-full overflow-hidden"
-          style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.6, duration: 0.5, ease: 'easeOut' as const }}
+          className="mt-2 h-px w-20"
+          style={{
+            background: 'linear-gradient(90deg, #F5D000, #39D353)',
+            transformOrigin: 'left',
+          }}
+        />
+      </motion.div>
+
+      {/* Terminal window */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.2, ease: 'easeOut' as const }}
+        className="relative z-10 w-[300px] sm:w-[400px] rounded-xl overflow-hidden"
+        style={{
+          background: 'rgba(13, 20, 12, 0.95)',
+          border: '1px solid rgba(245, 208, 0, 0.18)',
+          boxShadow: '0 0 40px rgba(245, 208, 0, 0.05)',
+        }}
+      >
+        {/* Window chrome */}
+        <div
+          className="flex items-center gap-2 px-4 py-3 border-b"
+          style={{ borderColor: 'rgba(245, 208, 0, 0.1)', background: 'rgba(13, 20, 12, 0.8)' }}
         >
-          <motion.div
-            initial={{ x: '-100%' }}
-            animate={{ x: '100%' }}
-            transition={{ delay: 1.2, duration: 1.0, ease: 'easeInOut' as const, repeat: Infinity }}
-            className="w-full h-full rounded-full"
-            style={{
-              background: 'linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899)',
-            }}
-          />
-        </motion.div>
-      </div>
+          <span className="w-3 h-3 rounded-full" style={{ background: '#FF5F57' }} />
+          <span className="w-3 h-3 rounded-full" style={{ background: '#F5D000' }} />
+          <span className="w-3 h-3 rounded-full" style={{ background: '#39D353' }} />
+          <span className="ml-3 text-xs font-mono" style={{ color: '#3A5A37' }}>portfolio.sh</span>
+        </div>
+
+        {/* Terminal output */}
+        <div className="p-5 font-mono text-sm space-y-1.5" style={{ minHeight: '148px' }}>
+          {TERMINAL_LINES.map((line, i) => (
+            <AnimatePresence key={i}>
+              {visibleLines.includes(i) && (
+                <motion.div
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25 }}
+                  style={{ color: line.color, lineHeight: 1.6 }}
+                >
+                  {line.text}
+                  {i === TERMINAL_LINES.length - 1 && (
+                    <motion.span
+                      className="inline-block w-2 h-4 ml-1 align-middle rounded-sm"
+                      style={{ background: '#39D353' }}
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.7, repeat: Infinity }}
+                    />
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          ))}
+        </div>
+      </motion.div>
     </motion.div>
   );
 };

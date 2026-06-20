@@ -27,11 +27,11 @@ export default function App() {
 
   useEffect(() => {
     if (theme === 'light') {
-      document.body.style.background = '#f1f5f9'
-      document.body.style.color = '#1e293b'
+      document.body.style.background = '#F0F5EF'
+      document.body.style.color = '#0B1A0B'
     } else {
-      document.body.style.background = '#0a0a0f'
-      document.body.style.color = '#e2e8f0'
+      document.body.style.background = '#0B0B0B'
+      document.body.style.color = '#D4E8D4'
     }
   }, [theme])
 

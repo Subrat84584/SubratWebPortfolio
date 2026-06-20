@@ -53,43 +53,38 @@ const experiences: ExperienceEntry[] = [
   },
 ];
 
-const tagColors: Record<string, string> = {
-  Flutter: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  Dart: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
-  Firebase: "bg-orange-500/20 text-orange-300 border-orange-500/30",
-  "REST API": "bg-green-500/20 text-green-300 border-green-500/30",
-  Android: "bg-green-600/20 text-green-400 border-green-600/30",
-  iOS: "bg-gray-500/20 text-gray-300 border-gray-500/30",
-  Kotlin: "bg-purple-500/20 text-purple-300 border-purple-500/30",
-  "Android SDK": "bg-lime-500/20 text-lime-300 border-lime-500/30",
-  SQLite: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
-  MVVM: "bg-pink-500/20 text-pink-300 border-pink-500/30",
-  Git: "bg-red-500/20 text-red-300 border-red-500/30",
+// Word-by-word animated heading
+function WordReveal({ children }: { children: string }) {
+  const words = children.split(" ");
+  return (
+    <>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          className="inline-block mr-[0.28em]"
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{ delay: i * 0.09, duration: 0.5, ease: "easeOut" as const }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </>
+  );
+}
+
+const dotVariants = {
+  hidden:  { scale: 0, opacity: 0 },
+  visible: { scale: 1, opacity: 1, transition: { type: "spring" as const, stiffness: 200, damping: 15, delay: 0.2 } },
 };
 
 const cardVariants = {
-  hidden: (isLeft: boolean) => ({
-    opacity: 0,
-    x: isLeft ? -80 : 80,
-  }),
+  hidden:  (isLeft: boolean) => ({ opacity: 0, x: isLeft ? -80 : 80 }),
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      type: "spring" as const,
-      stiffness: 80,
-      damping: 18,
-      duration: 0.6,
-    },
-  },
-};
-
-const dotVariants = {
-  hidden: { scale: 0, opacity: 0 },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    transition: { type: "spring" as const, stiffness: 200, damping: 15, delay: 0.2 },
+    transition: { type: "spring" as const, stiffness: 80, damping: 18, duration: 0.6 },
   },
 };
 
@@ -98,12 +93,14 @@ export default function Experience() {
     <section
       id="experience"
       className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ background: "#0a0a0f" }}
+      style={{ background: "#0B0B0B" }}
     >
-      {/* Background decoration */}
+      {/* Background orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl"
+          style={{ background: "rgba(245,208,0,0.04)" }} />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl"
+          style={{ background: "rgba(57,211,83,0.04)" }} />
       </div>
 
       <div className="relative max-w-6xl mx-auto">
@@ -115,76 +112,67 @@ export default function Experience() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-blue-400 mb-3">
+          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-3" style={{ color: "#39D353" }}>
             Career Journey
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Work{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Experience
-            </span>
+          <h2
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold"
+            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+          >
+            <WordReveal>Work Experience</WordReveal>
           </h2>
-          <p className="mt-4 text-gray-400 max-w-xl mx-auto text-lg">
+          <p className="mt-4 max-w-xl mx-auto text-lg" style={{ color: "#5A7A57" }}>
             Building impactful mobile experiences across industries
           </p>
         </motion.div>
 
-        {/* Timeline container */}
+        {/* Timeline */}
         <div className="relative">
-          {/* Vertical gradient line — hidden on mobile, shown md+ */}
+          {/* Center line — desktop */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 z-0">
-            <div className="h-full w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent opacity-40" />
+            <div className="h-full w-full timeline-line opacity-50" />
           </div>
 
-          {/* Mobile left line */}
+          {/* Left line — mobile */}
           <div className="md:hidden absolute left-6 top-0 bottom-0 w-px z-0">
-            <div className="h-full w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent opacity-40" />
+            <div className="h-full w-full timeline-line opacity-40" />
           </div>
 
           <div className="flex flex-col gap-12 md:gap-16">
             {experiences.map((exp, index) => {
               const isLeft = index % 2 === 0;
-
               return (
                 <div key={exp.id} className="relative flex items-start md:items-center">
-                  {/* Timeline dot — desktop centered */}
+                  {/* Timeline dot — desktop */}
                   <motion.div
                     className="hidden md:flex absolute left-1/2 -translate-x-1/2 z-10 w-5 h-5 rounded-full items-center justify-center"
                     style={{
-                      background: "linear-gradient(135deg, #3b82f6, #a855f7)",
-                      boxShadow: "0 0 12px rgba(99,102,241,0.6)",
+                      background: "#F5D000",
+                      boxShadow: "0 0 16px rgba(245,208,0,0.6)",
                     }}
                     variants={dotVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
                   >
-                    <div className="w-2 h-2 rounded-full bg-white" />
+                    <div className="w-2 h-2 rounded-full" style={{ background: "#0B0B0B" }} />
                   </motion.div>
 
-                  {/* Mobile dot */}
+                  {/* Timeline dot — mobile */}
                   <motion.div
                     className="md:hidden flex-shrink-0 mt-1 ml-3.5 -translate-x-1/2 z-10 w-5 h-5 rounded-full flex items-center justify-center"
-                    style={{
-                      background: "linear-gradient(135deg, #3b82f6, #a855f7)",
-                      boxShadow: "0 0 12px rgba(99,102,241,0.6)",
-                    }}
+                    style={{ background: "#F5D000", boxShadow: "0 0 12px rgba(245,208,0,0.5)" }}
                     variants={dotVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.5 }}
                   >
-                    <div className="w-2 h-2 rounded-full bg-white" />
+                    <div className="w-2 h-2 rounded-full" style={{ background: "#0B0B0B" }} />
                   </motion.div>
 
-                  {/* Card layout: desktop alternating, mobile all left */}
+                  {/* Card layout */}
                   <div className="flex w-full md:grid md:grid-cols-2 md:gap-8 pl-8 md:pl-0">
-                    {/* Left slot */}
-                    <div
-                      className={`hidden md:flex md:justify-end md:pr-10 ${
-                        isLeft ? "md:col-start-1" : "md:col-start-2 md:row-start-1"
-                      }`}
-                    >
+                    <div className={`hidden md:flex md:justify-end md:pr-10 ${isLeft ? "md:col-start-1" : "md:col-start-2 md:row-start-1"}`}>
                       {isLeft && (
                         <motion.div
                           className="w-full max-w-lg"
@@ -199,12 +187,7 @@ export default function Experience() {
                       )}
                     </div>
 
-                    {/* Right slot */}
-                    <div
-                      className={`hidden md:flex md:justify-start md:pl-10 ${
-                        !isLeft ? "md:col-start-2" : "md:col-start-1 md:row-start-1"
-                      }`}
-                    >
+                    <div className={`hidden md:flex md:justify-start md:pl-10 ${!isLeft ? "md:col-start-2" : "md:col-start-1 md:row-start-1"}`}>
                       {!isLeft && (
                         <motion.div
                           className="w-full max-w-lg"
@@ -219,7 +202,7 @@ export default function Experience() {
                       )}
                     </div>
 
-                    {/* Mobile: single column card */}
+                    {/* Mobile card */}
                     <motion.div
                       className="md:hidden w-full"
                       initial={{ opacity: 0, x: 40 }}
@@ -243,30 +226,34 @@ export default function Experience() {
 function ExperienceCard({ exp }: { exp: ExperienceEntry }) {
   return (
     <motion.div
-      className="group relative rounded-2xl border border-white/10 p-6 cursor-default overflow-hidden"
+      className="group relative rounded-2xl border p-6 cursor-default overflow-hidden"
       style={{
-        background: "rgba(255,255,255,0.03)",
+        background: "rgba(13, 20, 12, 0.85)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
+        borderColor: "rgba(245,208,0,0.10)",
       }}
       whileHover={{
         y: -4,
-        boxShadow: "0 20px 60px rgba(99,102,241,0.15)",
-        borderColor: "rgba(99,102,241,0.4)",
+        boxShadow: "0 20px 60px rgba(57,211,83,0.10)",
+        borderColor: "rgba(57,211,83,0.30)",
       }}
       transition={{ duration: 0.2 }}
     >
-      {/* Top gradient bar */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 opacity-60 group-hover:opacity-100 transition-opacity" />
+      {/* Top accent bar */}
+      <div
+        className="absolute top-0 left-0 right-0 h-0.5 opacity-60 group-hover:opacity-100 transition-opacity"
+        style={{ background: "linear-gradient(90deg, #F5D000, #39D353)" }}
+      />
 
       {/* Role badge */}
       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <span
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
           style={{
-            background: "linear-gradient(135deg, rgba(59,130,246,0.25), rgba(168,85,247,0.25))",
-            border: "1px solid rgba(99,102,241,0.35)",
-            color: "#c4b5fd",
+            background: "rgba(245,208,0,0.10)",
+            border: "1px solid rgba(245,208,0,0.20)",
+            color: "#F5D000",
           }}
         >
           <Briefcase size={12} />
@@ -276,46 +263,60 @@ function ExperienceCard({ exp }: { exp: ExperienceEntry }) {
 
       {/* Company */}
       {exp.company && (
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+        <h3
+          className="text-xl font-bold mb-2 transition-colors group-hover:text-[#39D353]"
+          style={{ color: "#D4E8D4" }}
+        >
           {exp.company}
         </h3>
       )}
 
       {/* Period & Location */}
       <div className="flex flex-wrap gap-3 mb-4">
-        <span className="inline-flex items-center gap-1.5 text-sm text-gray-400">
-          <Calendar size={13} className="text-blue-400" />
+        <span className="inline-flex items-center gap-1.5 text-sm" style={{ color: "#3A5A37" }}>
+          <Calendar size={13} style={{ color: "#F5D000" }} />
           {exp.period}
         </span>
         {exp.location && (
-          <span className="inline-flex items-center gap-1.5 text-sm text-gray-400">
-            <MapPin size={13} className="text-purple-400" />
+          <span className="inline-flex items-center gap-1.5 text-sm" style={{ color: "#3A5A37" }}>
+            <MapPin size={13} style={{ color: "#39D353" }} />
             {exp.location}
           </span>
         )}
       </div>
 
-      {/* Bullet points */}
+      {/* Bullet points — each line appears on scroll */}
       <ul className="space-y-2 mb-5">
         {exp.bullets.map((bullet, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-gray-300 leading-relaxed">
+          <motion.li
+            key={i}
+            className="flex items-start gap-2 text-sm leading-relaxed"
+            style={{ color: "#5A7A57" }}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.08, duration: 0.4 }}
+          >
             <span
               className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full"
-              style={{ background: "linear-gradient(135deg, #3b82f6, #a855f7)" }}
+              style={{ background: "#39D353" }}
             />
             {bullet}
-          </li>
+          </motion.li>
         ))}
       </ul>
 
-      {/* Tech tags */}
+      {/* Tags */}
       <div className="flex flex-wrap gap-2">
         {exp.tags.map((tag) => (
           <span
             key={tag}
-            className={`px-2.5 py-1 rounded-full text-xs font-medium border ${
-              tagColors[tag] ?? "bg-white/10 text-gray-300 border-white/20"
-            }`}
+            className="px-2.5 py-1 rounded-full text-xs font-medium"
+            style={{
+              background: "rgba(57,211,83,0.08)",
+              border: "1px solid rgba(57,211,83,0.18)",
+              color: "#39D353",
+            }}
           >
             {tag}
           </span>
