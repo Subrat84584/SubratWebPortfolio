@@ -15,12 +15,12 @@ const CODE_LINES = [
 ];
 
 const COLOR_MAP: Record<string, string> = {
-  keyword: "#F5D000",
-  var:     "#39D353",
-  key:     "#86efac",
-  string:  "#D4E8D4",
-  bool:    "#F5D000",
-  plain:   "#5A7A57",
+  keyword: "var(--accent-2)",
+  var:     "var(--accent)",
+  key:     "var(--text)",
+  string:  "var(--accent)",
+  bool:    "var(--accent-2)",
+  plain:   "var(--muted)",
 };
 
 const VALUES = [
@@ -72,7 +72,7 @@ function CodeLine({ line }: { line: (typeof CODE_LINES)[number] }) {
     return (
       <div className="flex flex-wrap items-center leading-6">
         {line.parts.map((p, i) => (
-          <span key={i} style={{ color: COLOR_MAP[p.type] ?? "#5A7A57" }}>{p.text}</span>
+          <span key={i} style={{ color: COLOR_MAP[p.type] ?? "var(--muted)" }}>{p.text}</span>
         ))}
       </div>
     );
@@ -80,7 +80,7 @@ function CodeLine({ line }: { line: (typeof CODE_LINES)[number] }) {
   if ("type" in line && line.type) {
     return (
       <div className="leading-6">
-        <span style={{ color: COLOR_MAP[line.type] ?? "#5A7A57" }}>{line.text}</span>
+        <span style={{ color: COLOR_MAP[line.type] ?? "var(--muted)" }}>{line.text}</span>
       </div>
     );
   }
@@ -89,13 +89,13 @@ function CodeLine({ line }: { line: (typeof CODE_LINES)[number] }) {
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 sm:py-32 overflow-hidden" style={{ background: "#0B0B0B" }}>
+    <section id="about" className="relative py-24 sm:py-32 overflow-hidden z-10" style={{ background: "transparent" }}>
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[600px] h-[400px] rounded-full blur-[130px]"
-          style={{ background: "rgba(245,208,0,0.04)" }} />
+          style={{ background: "rgba(99, 102, 241, 0.03)" }} />
         <div className="absolute bottom-0 left-0 w-[400px] h-[300px] rounded-full blur-[100px]"
-          style={{ background: "rgba(57,211,83,0.04)" }} />
+          style={{ background: "rgba(16, 185, 129, 0.03)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -107,20 +107,20 @@ export default function About() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" as const }}
         >
-          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-4" style={{ color: "#39D353" }}>
+          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-4 animate-pulse" style={{ color: "var(--accent)" }}>
             Who I am
           </span>
           <h2
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--text)" }}
           >
             <WordReveal>About Me</WordReveal>
           </h2>
           <div
             className="mx-auto h-px w-24 rounded-full"
-            style={{ background: "linear-gradient(90deg, #F5D000, #39D353)" }}
+            style={{ background: "linear-gradient(90deg, var(--accent-2), var(--accent))" }}
           />
-          <p className="mt-4 text-sm uppercase tracking-widest font-mono" style={{ color: "#2A3A28" }}>
+          <p className="mt-4 text-sm uppercase tracking-widest font-mono" style={{ color: "var(--muted)" }}>
             Engineer · Builder · Learner
           </p>
         </motion.div>
@@ -138,28 +138,27 @@ export default function About() {
             <div
               className="rounded-2xl overflow-hidden border"
               style={{
-                background: "rgba(13, 20, 12, 0.90)",
-                backdropFilter: "blur(20px)",
-                borderColor: "rgba(245, 208, 0, 0.12)",
-                boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+                background: "var(--card-bg)",
+                borderColor: "var(--border)",
+                boxShadow: "0 10px 40px var(--border)",
               }}
             >
               {/* Window chrome */}
               <div
                 className="flex items-center gap-2 px-4 py-3 border-b"
-                style={{ borderColor: "rgba(245,208,0,0.08)", background: "rgba(13,20,12,0.7)" }}
+                style={{ borderColor: "var(--border)", background: "rgba(99, 102, 241, 0.03)" }}
               >
                 <span className="w-3 h-3 rounded-full" style={{ background: "#FF5F57" }} />
-                <span className="w-3 h-3 rounded-full" style={{ background: "#F5D000" }} />
-                <span className="w-3 h-3 rounded-full" style={{ background: "#39D353" }} />
-                <span className="ml-3 text-xs font-mono" style={{ color: "#2A4A27" }}>subrat.ts</span>
+                <span className="w-3 h-3 rounded-full" style={{ background: "var(--accent-2)" }} />
+                <span className="w-3 h-3 rounded-full" style={{ background: "var(--accent)" }} />
+                <span className="ml-3 text-xs font-mono" style={{ color: "var(--muted)" }}>subrat.ts</span>
               </div>
 
               {/* Code content */}
               <div className="p-6 font-mono text-sm overflow-x-auto">
                 <div className="flex gap-6">
                   {/* Line numbers */}
-                  <div className="flex flex-col text-right select-none min-w-[1.5rem]" style={{ color: "#1A3A18" }}>
+                  <div className="flex flex-col text-right select-none min-w-[1.5rem]" style={{ color: "var(--border)" }}>
                     {CODE_LINES.map((_, i) => (
                       <span key={i} className="leading-6">{i + 1}</span>
                     ))}
@@ -176,11 +175,11 @@ export default function About() {
               {/* Status bar */}
               <div
                 className="px-4 py-2 border-t flex items-center justify-between"
-                style={{ borderColor: "rgba(245,208,0,0.06)", background: "rgba(13,20,12,0.5)" }}
+                style={{ borderColor: "var(--border)", background: "rgba(99, 102, 241, 0.02)" }}
               >
-                <span className="text-xs font-mono" style={{ color: "#2A4A27" }}>TypeScript</span>
-                <span className="flex items-center gap-1.5 text-xs font-mono" style={{ color: "#39D353" }}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#39D353] animate-pulse" />
+                <span className="text-xs font-mono" style={{ color: "var(--muted)" }}>TypeScript</span>
+                <span className="flex items-center gap-1.5 text-xs font-mono" style={{ color: "var(--accent)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
                   No issues
                 </span>
               </div>
@@ -193,7 +192,7 @@ export default function About() {
               <motion.p
                 key={i}
                 className="text-base sm:text-lg leading-relaxed"
-                style={{ color: "#5A7A57" }}
+                style={{ color: "var(--muted)" }}
                 variants={fromBottom}
               >
                 {para}
@@ -205,11 +204,11 @@ export default function About() {
               {["Flutter", "Kotlin", "Swift", "Firebase", "REST APIs", "Git"].map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full text-xs font-medium"
+                  className="px-3 py-1 rounded-full text-xs font-medium border"
                   style={{
-                    border: "1px solid rgba(57,211,83,0.25)",
-                    background: "rgba(57,211,83,0.07)",
-                    color: "#39D353",
+                    borderColor: "var(--border)",
+                    background: "rgba(99, 102, 241, 0.05)",
+                    color: "var(--text)",
                   }}
                 >
                   {tag}
@@ -238,32 +237,31 @@ export default function About() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="group relative rounded-2xl p-6 border overflow-hidden cursor-default"
                 style={{
-                  background: "rgba(13, 20, 12, 0.75)",
-                  backdropFilter: "blur(16px)",
-                  borderColor: "rgba(245,208,0,0.10)",
+                  background: "var(--card-bg)",
+                  borderColor: "var(--border)",
                 }}
               >
                 {/* Hover glow */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "radial-gradient(circle at 50% 0%, rgba(245,208,0,0.07), transparent 70%)" }}
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{ background: "radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.06), transparent 70%)" }}
                 />
 
                 {/* Left border accent on hover */}
                 <div
                   className="absolute left-0 top-0 bottom-0 w-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "linear-gradient(to bottom, #F5D000, #39D353)" }}
+                  style={{ background: "linear-gradient(to bottom, var(--accent-2), var(--accent))" }}
                 />
 
                 <div className="relative z-10">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                    style={{ background: "rgba(245,208,0,0.10)" }}
+                    style={{ background: "rgba(99, 102, 241, 0.06)" }}
                   >
-                    <Icon size={20} style={{ color: "#F5D000" }} />
+                    <Icon size={20} style={{ color: "var(--accent-2)" }} />
                   </div>
-                  <h3 className="font-semibold text-base mb-2" style={{ color: "#D4E8D4" }}>{v.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "#3A5A37" }}>{v.desc}</p>
+                  <h3 className="font-semibold text-base mb-2" style={{ color: "var(--text)" }}>{v.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>{v.desc}</p>
                 </div>
               </motion.div>
             );

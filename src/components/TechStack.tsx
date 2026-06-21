@@ -9,25 +9,25 @@ interface Tech {
 }
 
 const row1: Tech[] = [
-  { name: "Flutter",      icon: "🐦", glow: "#F5D000", isYellow: true  },
-  { name: "Dart",         icon: "🎯", glow: "#39D353", isYellow: false },
-  { name: "Kotlin",       icon: "K",  glow: "#F5D000", isYellow: true  },
-  { name: "Swift",        icon: "🦅", glow: "#39D353", isYellow: false },
-  { name: "Android",      icon: "🤖", glow: "#F5D000", isYellow: true  },
-  { name: "iOS",          icon: "🍎", glow: "#39D353", isYellow: false },
-  { name: "React Native", icon: "⚛",  glow: "#F5D000", isYellow: true  },
-  { name: "TypeScript",   icon: "TS", glow: "#39D353", isYellow: false },
+  { name: "Flutter",      icon: "🐦", glow: "var(--accent-2)", isYellow: true  },
+  { name: "Dart",         icon: "🎯", glow: "var(--accent)",   isYellow: false },
+  { name: "Kotlin",       icon: "K",  glow: "var(--accent-2)", isYellow: true  },
+  { name: "Swift",        icon: "🦅", glow: "var(--accent)",   isYellow: false },
+  { name: "Android",      icon: "🤖", glow: "var(--accent-2)", isYellow: true  },
+  { name: "iOS",          icon: "🍎", glow: "var(--accent)",   isYellow: false },
+  { name: "React Native", icon: "⚛",  glow: "var(--accent-2)", isYellow: true  },
+  { name: "TypeScript",   icon: "TS", glow: "var(--accent)",   isYellow: false },
 ];
 
 const row2: Tech[] = [
-  { name: "Firebase",  icon: "🔥", glow: "#39D353", isYellow: false },
-  { name: "Node.js",   icon: "⬡",  glow: "#F5D000", isYellow: true  },
-  { name: "REST API",  icon: "🔗", glow: "#39D353", isYellow: false },
-  { name: "GraphQL",   icon: "◈",  glow: "#F5D000", isYellow: true  },
-  { name: "Git",       icon: "⑂",  glow: "#39D353", isYellow: false },
-  { name: "Docker",    icon: "🐳", glow: "#F5D000", isYellow: true  },
-  { name: "AWS",       icon: "☁",  glow: "#39D353", isYellow: false },
-  { name: "Figma",     icon: "✦",  glow: "#F5D000", isYellow: true  },
+  { name: "Firebase",  icon: "🔥", glow: "var(--accent)",   isYellow: false },
+  { name: "Node.js",   icon: "⬡",  glow: "var(--accent-2)", isYellow: true  },
+  { name: "REST API",  icon: "🔗", glow: "var(--accent)",   isYellow: false },
+  { name: "GraphQL",   icon: "◈",  glow: "var(--accent-2)", isYellow: true  },
+  { name: "Git",       icon: "⑂",  glow: "var(--accent)",   isYellow: false },
+  { name: "Docker",    icon: "🐳", glow: "var(--accent-2)", isYellow: true  },
+  { name: "AWS",       icon: "☁",  glow: "var(--accent)",   isYellow: false },
+  { name: "Figma",     icon: "✦",  glow: "var(--accent-2)", isYellow: true  },
 ];
 
 const doubled1 = [...row1, ...row1];
@@ -58,8 +58,8 @@ function ProgressRing({ skill }: { skill: SkillCategory }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, amount: 0.5 });
 
-  const color      = skill.isYellow ? "#F5D000" : "#39D353";
-  const trackColor = skill.isYellow ? "rgba(245,208,0,0.10)" : "rgba(57,211,83,0.10)";
+  const color      = skill.isYellow ? "var(--accent-2)" : "var(--accent)";
+  const trackColor = skill.isYellow ? "rgba(99, 102, 241, 0.08)" : "rgba(16, 185, 129, 0.08)";
 
   return (
     <div ref={containerRef} className="flex flex-col items-center gap-3">
@@ -75,7 +75,7 @@ function ProgressRing({ skill }: { skill: SkillCategory }) {
             initial={{ strokeDashoffset: CIRCUMFERENCE }}
             animate={inView ? { strokeDashoffset: circumferenceOffset(skill.percent) } : { strokeDashoffset: CIRCUMFERENCE }}
             transition={{ duration: 1.2, ease: "easeOut" as const, delay: 0.2 }}
-            style={{ filter: `drop-shadow(0 0 6px ${color}99)` }}
+            style={{ filter: `drop-shadow(0 0 4px ${color})` }}
           />
         </svg>
 
@@ -83,7 +83,7 @@ function ProgressRing({ skill }: { skill: SkillCategory }) {
           <span className="text-xl mb-0.5">{skill.icon}</span>
           <motion.span
             className="text-xl font-bold tabular-nums"
-            style={{ color: "#D4E8D4" }}
+            style={{ color: "var(--text)" }}
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -94,36 +94,34 @@ function ProgressRing({ skill }: { skill: SkillCategory }) {
       </div>
 
       <div className="text-center">
-        <p className="font-semibold text-sm" style={{ color: "#D4E8D4" }}>{skill.label}</p>
-        <p className="text-xs mt-0.5 font-mono" style={{ color: "#2A3A28" }}>Proficiency</p>
+        <p className="font-semibold text-sm" style={{ color: "var(--text)" }}>{skill.label}</p>
+        <p className="text-xs mt-0.5 font-mono" style={{ color: "var(--muted)" }}>Proficiency</p>
       </div>
     </div>
   );
 }
 
 function TechBadge({ tech }: { tech: Tech }) {
-  const textColor  = tech.isYellow ? "#D4A800" : "#2DB345";
-  const borderBase = tech.isYellow ? "rgba(245,208,0,0.18)" : "rgba(57,211,83,0.18)";
+  const borderBase = tech.isYellow ? "rgba(99, 102, 241, 0.12)" : "rgba(16, 185, 129, 0.12)";
 
   return (
     <motion.div
       className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full mx-2 cursor-default select-none border"
-      style={{ background: "rgba(13,20,12,0.70)", backdropFilter: "blur(8px)", borderColor: borderBase }}
+      style={{ background: "var(--card-bg)", borderColor: borderBase }}
       whileHover={{
-        scale: 1.08,
-        boxShadow: `0 0 18px ${tech.glow}44`,
-        borderColor: `${tech.glow}55`,
+        scale: 1.05,
+        boxShadow: `0 4px 12px var(--border)`,
+        borderColor: "var(--border-hover)",
       }}
       transition={{ duration: 0.18 }}
     >
       <span
         className={`font-bold ${tech.icon.length <= 2 ? "text-sm" : "text-base"}`}
-        style={{ color: textColor }}
         aria-hidden="true"
       >
         {tech.icon}
       </span>
-      <span className="text-sm font-medium whitespace-nowrap" style={{ color: textColor }}>
+      <span className="text-sm font-medium whitespace-nowrap" style={{ color: "var(--text)" }}>
         {tech.name}
       </span>
     </motion.div>
@@ -134,13 +132,13 @@ export default function TechStack() {
   return (
     <section
       id="tech-stack"
-      className="relative py-24 overflow-hidden"
-      style={{ background: "#0B0B0B" }}
+      className="relative py-24 overflow-hidden z-10"
+      style={{ background: "transparent" }}
     >
       {/* Background orb */}
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
-        style={{ background: "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(245,208,0,0.03), transparent)" }}
+        style={{ background: "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(99, 102, 241, 0.02), transparent)" }}
       />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -152,13 +150,13 @@ export default function TechStack() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-3" style={{ color: "#39D353" }}>
+          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-3" style={{ color: "var(--accent)" }}>
             Technologies
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold" style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}>
+          <h2 className="text-4xl sm:text-5xl font-bold" style={{ color: "var(--text)" }}>
             My Tech{" "}
             <span style={{
-              background: "linear-gradient(135deg, #F5D000, #39D353)",
+              background: "linear-gradient(135deg, var(--accent-2), var(--accent))",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -166,7 +164,7 @@ export default function TechStack() {
               Arsenal
             </span>
           </h2>
-          <p className="mt-4 max-w-xl mx-auto text-lg" style={{ color: "#5A7A57" }}>
+          <p className="mt-4 max-w-xl mx-auto text-lg" style={{ color: "var(--muted)" }}>
             Tools and technologies I use to bring ideas to life
           </p>
         </motion.div>
@@ -176,9 +174,9 @@ export default function TechStack() {
           {/* Row 1: scrolls left */}
           <div className="relative flex">
             <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(90deg, #0B0B0B, transparent)" }} />
+              style={{ background: "linear-gradient(90deg, var(--ground), transparent)" }} />
             <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(-90deg, #0B0B0B, transparent)" }} />
+              style={{ background: "linear-gradient(-90deg, var(--ground), transparent)" }} />
 
             <motion.div
               className="flex"
@@ -194,9 +192,9 @@ export default function TechStack() {
           {/* Row 2: scrolls right */}
           <div className="relative flex">
             <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(90deg, #0B0B0B, transparent)" }} />
+              style={{ background: "linear-gradient(90deg, var(--ground), transparent)" }} />
             <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(-90deg, #0B0B0B, transparent)" }} />
+              style={{ background: "linear-gradient(-90deg, var(--ground), transparent)" }} />
 
             <motion.div
               className="flex"
@@ -213,7 +211,7 @@ export default function TechStack() {
         {/* Divider */}
         <div
           className="w-full h-px mb-16"
-          style={{ background: "linear-gradient(90deg, transparent, rgba(245,208,0,0.18), transparent)" }}
+          style={{ background: "linear-gradient(90deg, transparent, var(--border), transparent)" }}
         />
 
         {/* Skill rings */}
@@ -224,10 +222,10 @@ export default function TechStack() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5 }}
         >
-          <h3 className="text-2xl font-bold" style={{ color: "#D4E8D4" }}>
+          <h3 className="text-2xl font-bold" style={{ color: "var(--text)" }}>
             Skill{" "}
             <span style={{
-              background: "linear-gradient(135deg, #F5D000, #39D353)",
+              background: "linear-gradient(135deg, var(--accent-2), var(--accent))",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -235,7 +233,7 @@ export default function TechStack() {
               Proficiency
             </span>
           </h3>
-          <p className="mt-2 text-sm font-mono" style={{ color: "#2A3A28" }}>
+          <p className="mt-2 text-sm font-mono" style={{ color: "var(--muted)" }}>
             Self-assessed expertise across domains
           </p>
         </motion.div>

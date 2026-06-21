@@ -14,11 +14,11 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Loader from './components/Loader'
 import ScrollProgress from './components/ScrollProgress'
-import CursorGlow from './components/CursorGlow'
+import BackgroundParticles from './components/BackgroundParticles'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [theme, setTheme] = useState<'dark' | 'light'>('light')
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2400)
@@ -26,18 +26,19 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    const root = window.document.documentElement
     if (theme === 'light') {
-      document.body.style.background = '#F0F5EF'
-      document.body.style.color = '#0B1A0B'
+      root.classList.add('light')
+      root.classList.remove('dark')
     } else {
-      document.body.style.background = '#0B0B0B'
-      document.body.style.color = '#D4E8D4'
+      root.classList.add('dark')
+      root.classList.remove('light')
     }
   }, [theme])
 
   return (
     <>
-      <CursorGlow />
+      <BackgroundParticles />
       <ScrollProgress />
       <AnimatePresence>
         {loading && <Loader key="loader" />}

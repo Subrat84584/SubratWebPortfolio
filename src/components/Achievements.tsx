@@ -91,11 +91,10 @@ function AchievementCard({ achievement, index }: { achievement: Achievement; ind
   const Icon = achievement.icon;
   const isYellow = achievement.accent === "yellow";
 
-  const accentColor = isYellow ? "#F5D000" : "#39D353";
-  const accentBg    = isYellow ? "rgba(245,208,0,0.08)"  : "rgba(57,211,83,0.08)";
-  const accentBorder= isYellow ? "rgba(245,208,0,0.18)"  : "rgba(57,211,83,0.18)";
-  const accentHover = isYellow ? "rgba(245,208,0,0.10)"  : "rgba(57,211,83,0.10)";
-  const shadowColor = isYellow ? "rgba(245,208,0,0.12)"  : "rgba(57,211,83,0.12)";
+  const accentColor = isYellow ? "var(--accent-2)" : "var(--accent)";
+  const accentBg    = isYellow ? "rgba(99, 102, 241, 0.06)"  : "rgba(16, 185, 129, 0.06)";
+  const accentBorder= isYellow ? "rgba(99, 102, 241, 0.12)"  : "rgba(16, 185, 129, 0.12)";
+  const accentHover = isYellow ? "rgba(99, 102, 241, 0.08)"  : "rgba(16, 185, 129, 0.08)";
 
   const numVal = achievement.numericValue ?? 0;
   const counted = useCountUp(numVal, 1800, isInView);
@@ -115,12 +114,11 @@ function AchievementCard({ achievement, index }: { achievement: Achievement; ind
       transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" as const }}
       className="group relative rounded-2xl border p-6 cursor-default overflow-hidden transition-all duration-300"
       style={{
-        background: "rgba(13, 20, 12, 0.80)",
-        backdropFilter: "blur(16px)",
-        borderColor: "rgba(245,208,0,0.10)",
+        background: "var(--card-bg)",
+        borderColor: "var(--border)",
       }}
       whileHover={{
-        boxShadow: `0 20px 60px ${shadowColor}`,
+        boxShadow: `0 10px 30px var(--border)`,
         borderColor: accentBorder,
         y: -4,
       }}
@@ -141,14 +139,14 @@ function AchievementCard({ achievement, index }: { achievement: Achievement; ind
         </div>
 
         {/* Stat number */}
-        <div className="mb-2 text-4xl font-extrabold" style={{ color: accentColor, fontFamily: "Space Grotesk, sans-serif" }}>
+        <div className="mb-2 text-4xl font-extrabold" style={{ color: accentColor }}>
           {displayStat}
         </div>
 
-        <h3 className="mb-2 text-lg font-semibold" style={{ color: "#D4E8D4" }}>
+        <h3 className="mb-2 text-lg font-semibold" style={{ color: "var(--text)" }}>
           {achievement.title}
         </h3>
-        <p className="text-sm leading-relaxed" style={{ color: "#3A5A37" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
           {achievement.description}
         </p>
       </div>
@@ -156,7 +154,7 @@ function AchievementCard({ achievement, index }: { achievement: Achievement; ind
   );
 }
 
-// GitHub-style contribution heatmap in yellow/green
+// GitHub-style contribution heatmap
 const heatmapData: number[][] = (() => {
   const grid: number[][] = [];
   for (let w = 0; w < 52; w++) {
@@ -189,12 +187,11 @@ function ContributionGrid() {
       transition={{ duration: 0.7, ease: "easeOut" as const }}
       className="mt-16 rounded-2xl border p-6"
       style={{
-        background: "rgba(13, 20, 12, 0.80)",
-        backdropFilter: "blur(16px)",
-        borderColor: "rgba(245,208,0,0.10)",
+        background: "var(--card-bg)",
+        borderColor: "var(--border)",
       }}
     >
-      <h3 className="mb-6 text-center text-xl font-semibold" style={{ color: "#D4E8D4" }}>
+      <h3 className="mb-6 text-center text-xl font-semibold" style={{ color: "var(--text)" }}>
         Coding Activity
       </h3>
       <div className="overflow-x-auto">
@@ -215,7 +212,7 @@ function ContributionGrid() {
           ))}
         </div>
       </div>
-      <div className="mt-4 flex items-center justify-end gap-2 text-xs font-mono" style={{ color: "#2A3A28" }}>
+      <div className="mt-4 flex items-center justify-end gap-2 text-xs font-mono" style={{ color: "var(--muted)" }}>
         <span>Less</span>
         {heatColors.map((c, i) => (
           <div key={i} className={`h-3 w-3 rounded-sm ${c}`} />
@@ -233,13 +230,13 @@ export default function Achievements() {
   return (
     <section
       id="achievements"
-      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8"
-      style={{ background: "#0B0B0B" }}
+      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 z-10"
+      style={{ background: "transparent" }}
     >
       <div className="pointer-events-none absolute left-1/4 top-0 h-96 w-96 -translate-x-1/2 rounded-full blur-3xl"
-        style={{ background: "rgba(245,208,0,0.04)" }} />
+        style={{ background: "rgba(99, 102, 241, 0.03)" }} />
       <div className="pointer-events-none absolute bottom-0 right-1/4 h-96 w-96 translate-x-1/2 rounded-full blur-3xl"
-        style={{ background: "rgba(57,211,83,0.04)" }} />
+        style={{ background: "rgba(16, 185, 129, 0.03)" }} />
 
       <div className="relative mx-auto max-w-7xl">
         <motion.div
@@ -251,17 +248,17 @@ export default function Achievements() {
         >
           <span
             className="mb-3 inline-block rounded-full border px-4 py-1.5 text-sm font-medium"
-            style={{ borderColor: "rgba(57,211,83,0.28)", background: "rgba(57,211,83,0.08)", color: "#39D353" }}
+            style={{ borderColor: "var(--border)", background: "rgba(16, 185, 129, 0.08)", color: "var(--accent)" }}
           >
             Milestones
           </span>
           <h2
             className="mt-2 text-4xl font-extrabold sm:text-5xl"
-            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--text)" }}
           >
             <WordReveal>Key Achievements</WordReveal>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "#5A7A57" }}>
+          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "var(--muted)" }}>
             Numbers that reflect real impact — from users reached to performance milestones.
           </p>
         </motion.div>

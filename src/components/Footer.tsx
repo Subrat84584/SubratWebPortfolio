@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GitBranch, Link2, Globe, Mail, ArrowUp, Heart } from "lucide-react";
 
 const quickLinks = [
-  { label: "Home",     href: "#home" },
+  { label: "Home",     href: "#hero" },
   { label: "About",    href: "#about" },
   { label: "Skills",   href: "#skills" },
   { label: "Projects", href: "#projects" },
@@ -26,7 +26,7 @@ function smoothScrollTo(target: string) {
   const el = document.querySelector(target);
   if (el) {
     el.scrollIntoView({ behavior: "smooth" });
-  } else if (target === "#home") {
+  } else if (target === "#hero") {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
@@ -42,33 +42,31 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden"
-      style={{ background: "rgba(11, 11, 11, 0.98)" }}
+      className="relative overflow-hidden z-10"
+      style={{ background: "var(--card-bg)", backdropFilter: "blur(20px)" }}
     >
       {/* Top gradient bar */}
       <div
         className="h-px w-full"
-        style={{ background: "linear-gradient(90deg, #F5D000, #39D353, #F5D000)", opacity: 0.5 }}
+        style={{ background: "linear-gradient(90deg, var(--accent-2), var(--accent), var(--accent-2))" }}
       />
 
       {/* Subtle glass */}
-      <div className="absolute inset-0" style={{ background: "rgba(13,20,12,0.04)" }} />
+      <div className="absolute inset-0" style={{ background: "rgba(99, 102, 241, 0.01)" }} />
 
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         {/* Logo + tagline */}
         <div className="mb-12 flex flex-col items-center gap-3 text-center">
           <div
-            className="flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-extrabold select-none"
+            className="flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-extrabold select-none text-white border border-white/10"
             style={{
-              background: "linear-gradient(135deg, #F5D000, #39D353)",
-              color: "#0B0B0B",
-              boxShadow: "0 4px 24px rgba(245,208,0,0.25)",
-              fontFamily: "Space Grotesk, sans-serif",
+              background: "linear-gradient(135deg, var(--accent-2), var(--accent))",
+              boxShadow: "0 4px 14px rgba(16, 185, 129, 0.15)",
             }}
           >
             SKA
           </div>
-          <p className="text-base italic" style={{ color: "#3A5A37" }}>
+          <p className="text-base italic" style={{ color: "var(--muted)" }}>
             Building the future, one app at a time.
           </p>
         </div>
@@ -77,7 +75,7 @@ export default function Footer() {
         <div className="mb-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
           {/* Quick Links */}
           <div>
-            <h4 className="mb-4 text-xs font-mono uppercase tracking-widest" style={{ color: "#2A3A28" }}>
+            <h4 className="mb-4 text-xs font-mono uppercase tracking-widest" style={{ color: "var(--muted)" }}>
               Quick Links
             </h4>
             <ul className="space-y-2">
@@ -86,9 +84,9 @@ export default function Footer() {
                   <button
                     onClick={() => smoothScrollTo(href)}
                     className="text-sm transition-colors duration-200 focus:outline-none"
-                    style={{ color: "#3A5A37" }}
-                    onMouseEnter={(e) => ((e.target as HTMLButtonElement).style.color = "#D4E8D4")}
-                    onMouseLeave={(e) => ((e.target as HTMLButtonElement).style.color = "#3A5A37")}
+                    style={{ color: "var(--muted)" }}
+                    onMouseEnter={(e) => ((e.target as HTMLButtonElement).style.color = "var(--text)")}
+                    onMouseLeave={(e) => ((e.target as HTMLButtonElement).style.color = "var(--muted)")}
                   >
                     {label}
                   </button>
@@ -99,7 +97,7 @@ export default function Footer() {
 
           {/* Social Links */}
           <div>
-            <h4 className="mb-4 text-xs font-mono uppercase tracking-widest" style={{ color: "#2A3A28" }}>
+            <h4 className="mb-4 text-xs font-mono uppercase tracking-widest" style={{ color: "var(--muted)" }}>
               Connect
             </h4>
             <ul className="space-y-2">
@@ -110,9 +108,9 @@ export default function Footer() {
                     target={href.startsWith("mailto") ? undefined : "_blank"}
                     rel="noreferrer noopener"
                     className="flex items-center gap-2 text-sm transition-colors duration-200"
-                    style={{ color: "#3A5A37" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#F5D000"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#3A5A37"; }}
+                    style={{ color: "var(--muted)" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent-2)"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "var(--muted)"; }}
                   >
                     <Icon className="h-4 w-4" />
                     {label}
@@ -124,23 +122,23 @@ export default function Footer() {
 
           {/* Tech Stack */}
           <div>
-            <h4 className="mb-4 text-xs font-mono uppercase tracking-widest" style={{ color: "#2A3A28" }}>
+            <h4 className="mb-4 text-xs font-mono uppercase tracking-widest" style={{ color: "var(--muted)" }}>
               Tech Stack
             </h4>
             <div className="flex flex-wrap gap-2">
               {techStack.map((tech) => (
                 <motion.span
                   key={tech}
-                  className="rounded-full px-3 py-1 text-xs cursor-default transition-all duration-200"
+                  className="rounded-full px-3 py-1 text-xs border cursor-default transition-all duration-200"
                   style={{
-                    border: "1px solid rgba(245,208,0,0.10)",
-                    background: "rgba(245,208,0,0.03)",
-                    color: "#3A5A37",
+                    borderColor: "var(--border)",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    color: "var(--text)",
                   }}
                   whileHover={{
-                    borderColor: "rgba(57,211,83,0.30)",
-                    background: "rgba(57,211,83,0.08)",
-                    color: "#39D353",
+                    borderColor: "var(--accent)",
+                    background: "rgba(16, 185, 129, 0.08)",
+                    color: "var(--accent)",
                     scale: 1.05,
                   }}
                 >
@@ -154,19 +152,19 @@ export default function Footer() {
         {/* Bottom bar */}
         <div
           className="flex flex-col items-center justify-between gap-4 pt-8 sm:flex-row"
-          style={{ borderTop: "1px solid rgba(245,208,0,0.08)" }}
+          style={{ borderTop: "1px solid var(--border)" }}
         >
           <p
             className="flex flex-wrap items-center justify-center gap-1 text-sm sm:justify-start"
-            style={{ color: "#2A3A28" }}
+            style={{ color: "var(--muted)" }}
           >
             <span>© 2026 Subrat K. Acharya.</span>
             <span className="mx-1">Crafted with</span>
-            <Heart className="inline h-4 w-4" style={{ fill: "#F5D000", color: "#F5D000" }} />
+            <Heart className="inline h-4 w-4 fill-[var(--accent-2)]" style={{ color: "var(--accent-2)" }} />
             <span>using React &amp; Framer Motion</span>
           </p>
 
-          <div className="flex items-center gap-4 text-xs font-mono" style={{ color: "#1A2A18" }}>
+          <div className="flex items-center gap-4 text-xs font-mono" style={{ color: "var(--muted)" }}>
             <span>All rights reserved</span>
           </div>
         </div>
@@ -182,11 +180,10 @@ export default function Footer() {
             exit={{ opacity: 0, scale: 0.8, y: 10 }}
             transition={{ duration: 0.25 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full transition-transform duration-200 hover:scale-110 focus:outline-none"
+            className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full transition-transform duration-200 hover:scale-110 focus:outline-none text-white border border-white/10"
             style={{
-              background: "#F5D000",
-              color: "#0B0B0B",
-              boxShadow: "0 4px 24px rgba(245,208,0,0.40)",
+              background: "var(--accent)",
+              boxShadow: "0 4px 14px rgba(16, 185, 129, 0.25)",
             }}
             aria-label="Back to top"
           >

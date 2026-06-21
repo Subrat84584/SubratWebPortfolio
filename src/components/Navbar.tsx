@@ -68,8 +68,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  const navBg = scrolled ? 'rgba(11, 11, 11, 0.88)' : 'transparent';
-  const borderColor = scrolled ? 'rgba(245, 208, 0, 0.12)' : 'transparent';
+  const navBg = scrolled ? 'var(--card-bg)' : 'transparent';
+  const borderColor = scrolled ? 'var(--border)' : 'transparent';
 
   return (
     <>
@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
           borderBottom: `1px solid ${borderColor}`,
           transition: 'background-color 0.3s ease, border-color 0.3s ease',
-          boxShadow: scrolled ? '0 1px 30px rgba(245, 208, 0, 0.05)' : 'none',
+          boxShadow: scrolled ? '0 4px 20px var(--border)' : 'none',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,27 +98,23 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <motion.a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               className="flex-shrink-0 select-none"
               aria-label="Go to top"
             >
               <span
-                className="text-2xl font-bold tracking-wider"
+                className="text-2xl font-bold tracking-tight italic"
                 style={{
-                  fontFamily: 'Space Grotesk, sans-serif',
-                  background: 'linear-gradient(135deg, #F5D000 0%, #39D353 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  color: 'var(--accent)',
                 }}
               >
-                SKA
+                subrat
               </span>
             </motion.a>
 
             {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+            <nav className="hidden md:flex items-center gap-2" aria-label="Main navigation">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -126,15 +122,15 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                     key={link.id}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="relative px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200"
-                    style={{ color: isActive ? '#F5D000' : 'rgba(212,232,212,0.55)' }}
+                    className="relative px-3 py-2 text-sm font-medium transition-colors duration-200"
+                    style={{ color: isActive ? 'var(--text)' : 'var(--muted)' }}
                   >
                     {link.label}
                     {isActive && (
                       <motion.span
                         layoutId="activeIndicator"
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-4 rounded-full"
-                        style={{ background: 'linear-gradient(90deg, #F5D000, #39D353)' }}
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-6 rounded-full"
+                        style={{ background: 'var(--accent)' }}
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -146,13 +142,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             {/* Right controls */}
             <div className="hidden md:flex items-center gap-3">
               <motion.button
-                whileHover={{ scale: 1.1, rotate: 15 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.92 }}
                 onClick={toggleTheme}
                 className="p-2 rounded-full transition-colors duration-200"
                 style={{
-                  color: 'rgba(212,232,212,0.6)',
-                  backgroundColor: 'rgba(245,208,0,0.06)',
+                  color: 'var(--text)',
+                  backgroundColor: 'var(--border)',
                 }}
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
@@ -162,16 +158,16 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               <motion.a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '#contact')}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="px-4 py-2 rounded-full text-sm font-semibold"
+                className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
                 style={{
-                  background: '#F5D000',
-                  color: '#0B0B0B',
-                  boxShadow: '0 2px 16px rgba(245, 208, 0, 0.30)',
+                  background: 'var(--accent)',
+                  color: '#FFFFFF',
+                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.2)',
                 }}
               >
-                Hire Me
+                Let's talk !
               </motion.a>
             </div>
 
@@ -180,7 +176,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full"
-                style={{ color: 'rgba(212,232,212,0.6)' }}
+                style={{ color: 'var(--text)' }}
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
@@ -189,7 +185,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               <button
                 onClick={() => setMobileOpen((prev) => !prev)}
                 className="p-2 rounded-md"
-                style={{ color: 'rgba(212,232,212,0.6)' }}
+                style={{ color: 'var(--text)' }}
                 aria-label="Toggle menu"
                 aria-expanded={mobileOpen}
               >
@@ -210,10 +206,10 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               transition={{ duration: 0.3, ease: 'easeInOut' as const }}
               style={{
                 overflow: 'hidden',
-                backgroundColor: 'rgba(11,11,11,0.97)',
+                backgroundColor: 'var(--card-bg)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
-                borderTop: '1px solid rgba(245,208,0,0.10)',
+                borderTop: '1px solid var(--border)',
               }}
             >
               <nav className="flex flex-col px-4 py-4 gap-1" aria-label="Mobile navigation">
@@ -229,9 +225,9 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                       transition={{ delay: index * 0.05, duration: 0.25 }}
                       className="px-4 py-3 rounded-lg text-sm font-medium transition-colors duration-150"
                       style={{
-                        color: isActive ? '#F5D000' : 'rgba(212,232,212,0.65)',
-                        backgroundColor: isActive ? 'rgba(245,208,0,0.07)' : 'transparent',
-                        borderLeft: isActive ? '2px solid #F5D000' : '2px solid transparent',
+                        color: isActive ? 'var(--text)' : 'var(--muted)',
+                        backgroundColor: isActive ? 'rgba(16, 185, 129, 0.06)' : 'transparent',
+                        borderLeft: isActive ? '3px solid var(--accent)' : '3px solid transparent',
                       }}
                     >
                       {link.label}
@@ -245,10 +241,10 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: NAV_LINKS.length * 0.05, duration: 0.25 }}
-                  className="mt-2 px-4 py-3 rounded-lg text-sm font-semibold text-center"
-                  style={{ background: '#F5D000', color: '#0B0B0B' }}
+                  className="mt-2 px-4 py-3 rounded-lg text-sm font-semibold text-center text-white"
+                  style={{ background: 'var(--accent)' }}
                 >
-                  Hire Me
+                  Let's talk !
                 </motion.a>
               </nav>
             </motion.div>

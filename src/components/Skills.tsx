@@ -88,38 +88,37 @@ function SkillCard({ skill, index }: { skill: Skill; index: number }) {
       whileHover={{ y: -4, scale: 1.02 }}
       className="group relative rounded-2xl p-5 border overflow-hidden cursor-default"
       style={{
-        background: "rgba(13, 20, 12, 0.80)",
-        backdropFilter: "blur(16px)",
-        borderColor: "rgba(245,208,0,0.10)",
+        background: "var(--card-bg)",
+        borderColor: "var(--border)",
       }}
     >
       {/* Hover glow */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(57,211,83,0.10), transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse at 50% -10%, rgba(99,102,241,0.06), transparent 70%)" }}
       />
       {/* Hover left bar */}
       <div
         className="absolute left-0 top-0 bottom-0 w-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: "linear-gradient(to bottom, #F5D000, #39D353)" }}
+        style={{ background: "linear-gradient(to bottom, var(--accent-2), var(--accent))" }}
       />
 
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <span className="text-2xl select-none">{skill.emoji}</span>
-            <span className="font-semibold text-sm sm:text-base" style={{ color: "#D4E8D4" }}>{skill.name}</span>
+            <span className="font-semibold text-sm sm:text-base" style={{ color: "var(--text)" }}>{skill.name}</span>
           </div>
-          <span className="text-xs font-mono font-bold" style={{ color: "#F5D000" }}>
+          <span className="text-xs font-mono font-bold" style={{ color: "var(--accent-2)" }}>
             {skill.percent}%
           </span>
         </div>
 
         {/* Progress track */}
-        <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: "rgba(245,208,0,0.07)" }}>
+        <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
           <motion.div
             className="h-full rounded-full skill-bar"
-            style={{ background: "linear-gradient(90deg, #F5D000 0%, #39D353 100%)" }}
+            style={{ background: "linear-gradient(90deg, var(--accent-2) 0%, var(--accent) 100%)" }}
             initial={{ width: 0 }}
             whileInView={{ width: `${skill.percent}%` }}
             viewport={{ once: true, amount: 0.5 }}
@@ -136,23 +135,14 @@ export default function Skills() {
   const activeCategory = CATEGORIES.find((c) => c.id === activeTab)!;
 
   return (
-    <section id="skills" className="relative py-24 sm:py-32 overflow-hidden" style={{ background: "#0B0B0B" }}>
-      {/* Background */}
+    <section id="skills" className="relative py-24 sm:py-32 overflow-hidden z-10" style={{ background: "transparent" }}>
+      {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-0 w-[500px] h-[400px] rounded-full blur-[130px]"
-          style={{ background: "rgba(245,208,0,0.04)" }} />
+          style={{ background: "rgba(99, 102, 241, 0.03)" }} />
         <div className="absolute bottom-0 right-0 w-[400px] h-[350px] rounded-full blur-[110px]"
-          style={{ background: "rgba(57,211,83,0.04)" }} />
+          style={{ background: "rgba(16, 185, 129, 0.03)" }} />
       </div>
-
-      {/* Dot grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(circle, rgba(245,208,0,0.04) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section header */}
@@ -163,17 +153,17 @@ export default function Skills() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: "easeOut" as const }}
         >
-          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-4" style={{ color: "#39D353" }}>
+          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-4" style={{ color: "var(--accent)" }}>
             Expertise
           </span>
           <h2
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
-            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--text)" }}
           >
             <WordReveal>Skills & Expertise</WordReveal>
           </h2>
-          <div className="mx-auto h-px w-24 rounded-full" style={{ background: "linear-gradient(90deg, #F5D000, #39D353)" }} />
-          <p className="mt-4 text-sm uppercase tracking-widest font-mono" style={{ color: "#2A3A28" }}>
+          <div className="mx-auto h-px w-24 rounded-full" style={{ background: "linear-gradient(90deg, var(--accent-2), var(--accent))" }} />
+          <p className="mt-4 text-sm uppercase tracking-widest font-mono" style={{ color: "var(--muted)" }}>
             Technologies I work with
           </p>
         </motion.div>
@@ -194,17 +184,17 @@ export default function Skills() {
                 onClick={() => setActiveTab(cat.id)}
                 className="relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 outline-none"
                 style={{
-                  color: isActive ? "#0B0B0B" : "#5A7A57",
-                  background: isActive ? "#F5D000" : "rgba(245,208,0,0.05)",
-                  border: isActive ? "1px solid #F5D000" : "1px solid rgba(245,208,0,0.12)",
-                  boxShadow: isActive ? "0 0 20px rgba(245,208,0,0.20)" : "none",
+                  color: isActive ? "#FFFFFF" : "var(--muted)",
+                  background: isActive ? "var(--accent)" : "rgba(99, 102, 241, 0.05)",
+                  border: isActive ? "1px solid var(--accent)" : "1px solid var(--border)",
+                  boxShadow: isActive ? "0 4px 12px rgba(16, 185, 129, 0.15)" : "none",
                 }}
               >
                 {isActive && (
                   <motion.span
                     layoutId="tab-highlight"
                     className="absolute inset-0 rounded-full"
-                    style={{ background: "#F5D000", zIndex: -1 }}
+                    style={{ background: "var(--accent)", zIndex: -1 }}
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -233,13 +223,13 @@ export default function Skills() {
         {/* All skills strip */}
         <motion.div
           className="mt-12 p-6 rounded-2xl border"
-          style={{ background: "rgba(13, 20, 12, 0.65)", backdropFilter: "blur(16px)", borderColor: "rgba(245,208,0,0.08)" }}
+          style={{ background: "var(--card-bg)", borderColor: "var(--border)" }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <p className="text-center text-xs font-mono mb-5 uppercase tracking-widest" style={{ color: "#2A3A28" }}>
+          <p className="text-center text-xs font-mono mb-5 uppercase tracking-widest" style={{ color: "var(--muted)" }}>
             All technologies
           </p>
           <div className="flex flex-wrap justify-center gap-2">
@@ -247,16 +237,16 @@ export default function Skills() {
               c.skills.map((s) => (
                 <motion.span
                   key={`${c.id}-${s.name}`}
-                  className="px-3 py-1 rounded-full text-xs font-medium cursor-default transition-all duration-200"
+                  className="px-3 py-1 rounded-full text-xs font-medium cursor-default border transition-all duration-200"
                   style={{
-                    border: "1px solid rgba(245,208,0,0.10)",
-                    background: "rgba(245,208,0,0.03)",
-                    color: "#3A5A37",
+                    borderColor: "var(--border)",
+                    background: "rgba(99, 102, 241, 0.03)",
+                    color: "var(--text)",
                   }}
                   whileHover={{
-                    borderColor: "rgba(57,211,83,0.35)",
-                    color: "#39D353",
-                    background: "rgba(57,211,83,0.08)",
+                    borderColor: "var(--accent)",
+                    color: "var(--accent)",
+                    background: "rgba(16, 185, 129, 0.08)",
                     scale: 1.04,
                   }}
                 >
@@ -278,23 +268,22 @@ export default function Skills() {
           <div
             className="rounded-2xl p-6 border overflow-hidden relative"
             style={{
-              borderColor: "rgba(57,211,83,0.20)",
-              background: "linear-gradient(135deg, rgba(57,211,83,0.06), rgba(245,208,0,0.04))",
-              backdropFilter: "blur(16px)",
+              borderColor: "var(--border)",
+              background: "linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(16, 185, 129, 0.03))",
             }}
           >
             <div className="absolute top-0 right-0 w-40 h-40 rounded-full pointer-events-none blur-3xl"
-              style={{ background: "rgba(57,211,83,0.08)" }} />
+              style={{ background: "rgba(16, 185, 129, 0.04)" }} />
 
             <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
               <div className="flex items-center gap-2">
                 <span className="text-xl">📚</span>
-                <span className="font-semibold text-sm whitespace-nowrap" style={{ color: "#D4E8D4" }}>
+                <span className="font-semibold text-sm whitespace-nowrap" style={{ color: "var(--text)" }}>
                   Currently Learning
                 </span>
                 <span
-                  className="ml-1 px-2 py-0.5 rounded-full text-xs font-mono"
-                  style={{ background: "rgba(57,211,83,0.15)", color: "#39D353", border: "1px solid rgba(57,211,83,0.25)" }}
+                  className="ml-1 px-2 py-0.5 rounded-full text-xs font-mono border"
+                  style={{ background: "rgba(16, 185, 129, 0.08)", color: "var(--accent)", borderColor: "var(--border)" }}
                 >
                   2026
                 </span>
@@ -309,16 +298,16 @@ export default function Skills() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
                     whileHover={{ scale: 1.06 }}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium cursor-default"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium cursor-default border"
                     style={{
-                      border: "1px solid rgba(57,211,83,0.28)",
-                      background: "rgba(57,211,83,0.10)",
-                      color: "#39D353",
+                      borderColor: "var(--border)",
+                      background: "rgba(16, 185, 129, 0.08)",
+                      color: "var(--text)",
                     }}
                   >
                     <span>{item.emoji}</span>
                     {item.name}
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#39D353] animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
                   </motion.span>
                 ))}
               </div>

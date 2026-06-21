@@ -112,20 +112,20 @@ export default function Testimonials() {
 
   const t = testimonials[current];
   const isYellow    = t.accent === "yellow";
-  const accentColor = isYellow ? "#F5D000" : "#39D353";
-  const accentBg    = isYellow ? "rgba(245,208,0,0.10)"  : "rgba(57,211,83,0.10)";
-  const accentBorder= isYellow ? "rgba(245,208,0,0.22)"  : "rgba(57,211,83,0.22)";
+  const accentColor = isYellow ? "var(--accent-2)" : "var(--accent)";
+  const accentBg    = isYellow ? "rgba(99, 102, 241, 0.06)"  : "rgba(16, 185, 129, 0.06)";
+  const accentBorder= isYellow ? "rgba(99, 102, 241, 0.12)"  : "rgba(16, 185, 129, 0.12)";
 
   return (
     <section
       id="testimonials"
-      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8"
-      style={{ background: "#0B0B0B" }}
+      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 z-10"
+      style={{ background: "transparent" }}
     >
       <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: "rgba(245,208,0,0.04)" }} />
+        style={{ background: "rgba(99, 102, 241, 0.03)" }} />
       <div className="pointer-events-none absolute bottom-0 left-0 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: "rgba(57,211,83,0.04)" }} />
+        style={{ background: "rgba(16, 185, 129, 0.03)" }} />
 
       <div className="relative mx-auto max-w-4xl">
         {/* Heading */}
@@ -138,17 +138,17 @@ export default function Testimonials() {
         >
           <span
             className="mb-3 inline-block rounded-full border px-4 py-1.5 text-sm font-medium"
-            style={{ borderColor: "rgba(57,211,83,0.28)", background: "rgba(57,211,83,0.08)", color: "#39D353" }}
+            style={{ borderColor: "var(--border)", background: "rgba(16, 185, 129, 0.08)", color: "var(--accent)" }}
           >
             Social Proof
           </span>
           <h2
             className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold"
-            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--text)" }}
           >
             Client{" "}
             <span style={{
-              background: "linear-gradient(135deg, #F5D000, #39D353)",
+              background: "linear-gradient(135deg, var(--accent-2), var(--accent))",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -156,7 +156,7 @@ export default function Testimonials() {
               <WordReveal>Testimonials</WordReveal>
             </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "#5A7A57" }}>
+          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "var(--muted)" }}>
             Feedback from the people I've had the privilege of working with.
           </p>
         </motion.div>
@@ -174,23 +174,22 @@ export default function Testimonials() {
           <div
             className="relative overflow-hidden rounded-2xl border"
             style={{
-              background: "rgba(13,20,12,0.88)",
-              backdropFilter: "blur(20px)",
-              borderColor: "rgba(245,208,0,0.12)",
-              boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+              background: "var(--card-bg)",
+              borderColor: "var(--border)",
+              boxShadow: "0 10px 30px var(--border)",
             }}
           >
             {/* Top accent bar */}
             <motion.div
               className="absolute inset-x-0 top-0 h-px"
               animate={{
-                background: `linear-gradient(90deg, ${accentColor}, ${isYellow ? "#39D353" : "#F5D000"})`,
+                background: `linear-gradient(90deg, var(--accent-2), var(--accent))`,
               }}
               transition={{ duration: 0.5 }}
             />
 
             {/* Watermark quote icon */}
-            <div className="absolute right-8 top-8 opacity-5 pointer-events-none">
+            <div className="absolute right-8 top-8 opacity-[0.03] pointer-events-none">
               <Quote className="h-24 w-24" style={{ color: accentColor }} />
             </div>
 
@@ -215,15 +214,15 @@ export default function Testimonials() {
                     </div>
                     <div className="flex gap-1">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="h-4 w-4" style={{ fill: "#F5D000", color: "#F5D000" }} />
+                        <Star key={i} className="h-4 w-4 fill-[var(--accent-2)]" style={{ color: "var(--accent-2)" }} />
                       ))}
                     </div>
                   </div>
 
                   {/* Quote text */}
                   <blockquote
-                    className="mb-8 text-lg leading-relaxed sm:text-xl"
-                    style={{ color: "#D4E8D4" }}
+                    className="mb-8 text-lg leading-relaxed sm:text-xl font-medium"
+                    style={{ color: "var(--text)" }}
                   >
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
@@ -231,19 +230,18 @@ export default function Testimonials() {
                   {/* Author */}
                   <div className="flex items-center gap-4">
                     <div
-                      className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold"
+                      className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full text-lg font-bold border"
                       style={{
                         background: accentBg,
-                        border: `2px solid ${accentBorder}`,
+                        borderColor: accentBorder,
                         color: accentColor,
-                        fontFamily: "Space Grotesk, sans-serif",
                       }}
                     >
                       {t.initials}
                     </div>
                     <div>
-                      <p className="font-semibold" style={{ color: "#D4E8D4" }}>{t.name}</p>
-                      <p className="text-sm mt-0.5" style={{ color: "#3A5A37" }}>
+                      <p className="font-semibold" style={{ color: "var(--text)" }}>{t.name}</p>
+                      <p className="text-sm mt-0.5" style={{ color: "var(--muted)" }}>
                         {t.title} &middot; {t.company}
                       </p>
                     </div>
@@ -261,11 +259,11 @@ export default function Testimonials() {
               aria-label="Previous testimonial"
               className="flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-200 focus:outline-none"
               style={{
-                border: "1px solid rgba(245,208,0,0.16)",
-                background: "rgba(13,20,12,0.70)",
-                color: "#5A7A57",
+                borderColor: "var(--border)",
+                background: "var(--card-bg)",
+                color: "var(--muted)",
               }}
-              whileHover={{ borderColor: "rgba(245,208,0,0.40)", color: "#F5D000", scale: 1.07 }}
+              whileHover={{ borderColor: "var(--border-hover)", color: "var(--accent)", scale: 1.07 }}
               whileTap={{ scale: 0.93 }}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -274,7 +272,7 @@ export default function Testimonials() {
             {/* Dots */}
             <div className="flex gap-2">
               {testimonials.map((item, i) => {
-                const dotColor = item.accent === "yellow" ? "#F5D000" : "#39D353";
+                const dotColor = item.accent === "yellow" ? "var(--accent-2)" : "var(--accent)";
                 return (
                   <button
                     key={i}
@@ -283,7 +281,7 @@ export default function Testimonials() {
                     className="h-2 rounded-full transition-all duration-300 focus:outline-none"
                     style={{
                       width: i === current ? "2rem" : "0.5rem",
-                      background: i === current ? dotColor : "rgba(245,208,0,0.15)",
+                      background: i === current ? dotColor : "rgba(99, 102, 241, 0.15)",
                     }}
                   />
                 );
@@ -296,11 +294,11 @@ export default function Testimonials() {
               aria-label="Next testimonial"
               className="flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-200 focus:outline-none"
               style={{
-                border: "1px solid rgba(245,208,0,0.16)",
-                background: "rgba(13,20,12,0.70)",
-                color: "#5A7A57",
+                borderColor: "var(--border)",
+                background: "var(--card-bg)",
+                color: "var(--muted)",
               }}
-              whileHover={{ borderColor: "rgba(245,208,0,0.40)", color: "#F5D000", scale: 1.07 }}
+              whileHover={{ borderColor: "var(--border-hover)", color: "var(--accent)", scale: 1.07 }}
               whileTap={{ scale: 0.93 }}
             >
               <ChevronRight className="h-5 w-5" />
@@ -310,7 +308,7 @@ export default function Testimonials() {
           {/* Auto-play progress bar */}
           <div
             className="mt-5 h-px w-full overflow-hidden rounded-full"
-            style={{ background: "rgba(245,208,0,0.08)" }}
+            style={{ background: "var(--border)" }}
           >
             {!isPaused && (
               <motion.div
@@ -320,13 +318,13 @@ export default function Testimonials() {
                 animate={{ width: "100%" }}
                 transition={{ duration: AUTO_PLAY_INTERVAL / 1000, ease: "linear" }}
                 style={{
-                  background: `linear-gradient(90deg, ${accentColor}, ${isYellow ? "#39D353" : "#F5D000"})`,
+                  background: `linear-gradient(90deg, var(--accent-2), var(--accent))`,
                 }}
               />
             )}
           </div>
 
-          <p className="mt-3 text-center text-xs font-mono" style={{ color: "#2A3A28" }}>
+          <p className="mt-3 text-center text-xs font-mono" style={{ color: "var(--muted)" }}>
             {current + 1} / {testimonials.length}
           </p>
         </motion.div>

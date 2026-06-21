@@ -33,9 +33,9 @@ const ScrollProgress: React.FC = () => {
         style={{
           height: '100%',
           width: `${progress}%`,
-          background: 'linear-gradient(90deg, #F5D000 0%, #39D353 100%)',
+          background: 'linear-gradient(90deg, var(--accent-2) 0%, var(--accent) 100%)',
           transition: 'width 0.1s linear',
-          boxShadow: '0 0 8px rgba(245, 208, 0, 0.8), 0 0 2px rgba(57, 211, 83, 0.6)',
+          boxShadow: '0 0 8px var(--accent-2)',
         }}
       />
     </div>

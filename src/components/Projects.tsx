@@ -28,8 +28,8 @@ const projects: Project[] = [
     category: "Mobile",
     stars: 128,
     metrics: "50K+ Users · 4.8★ Rating",
-    accent: "#F5D000",
-    cardBg: "rgba(40, 33, 0, 0.60)",
+    accent: "var(--accent-2)",
+    cardBg: "rgba(99, 102, 241, 0.08)",
   },
   {
     id: 2,
@@ -40,8 +40,8 @@ const projects: Project[] = [
     category: "Mobile",
     stars: 94,
     metrics: "Real-time tracking · 99.9% Uptime",
-    accent: "#39D353",
-    cardBg: "rgba(0, 33, 10, 0.60)",
+    accent: "var(--accent)",
+    cardBg: "rgba(16, 185, 129, 0.08)",
   },
   {
     id: 3,
@@ -52,8 +52,8 @@ const projects: Project[] = [
     category: "Mobile",
     stars: 76,
     metrics: "10K+ Downloads · 4.9★",
-    accent: "#F5D000",
-    cardBg: "rgba(35, 28, 0, 0.60)",
+    accent: "var(--accent-2)",
+    cardBg: "rgba(99, 102, 241, 0.08)",
   },
   {
     id: 4,
@@ -64,8 +64,8 @@ const projects: Project[] = [
     category: "Mobile",
     stars: 112,
     metrics: "E2E Encrypted · <100ms latency",
-    accent: "#39D353",
-    cardBg: "rgba(0, 28, 10, 0.60)",
+    accent: "var(--accent)",
+    cardBg: "rgba(16, 185, 129, 0.08)",
   },
   {
     id: 5,
@@ -76,8 +76,8 @@ const projects: Project[] = [
     category: "Mobile",
     stars: 89,
     metrics: "Apple Health Sync · 5K Users",
-    accent: "#F5D000",
-    cardBg: "rgba(38, 30, 0, 0.60)",
+    accent: "var(--accent-2)",
+    cardBg: "rgba(99, 102, 241, 0.08)",
   },
   {
     id: 6,
@@ -88,8 +88,8 @@ const projects: Project[] = [
     category: "AI",
     stars: 143,
     metrics: "AI-Powered · 98% Accuracy",
-    accent: "#39D353",
-    cardBg: "rgba(0, 35, 12, 0.60)",
+    accent: "var(--accent)",
+    cardBg: "rgba(16, 185, 129, 0.08)",
     featured: true,
   },
 ];
@@ -135,15 +135,15 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ background: "#0B0B0B" }}
+      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden z-10"
+      style={{ background: "transparent" }}
     >
       {/* Background orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl"
-          style={{ background: "rgba(245,208,0,0.04)" }} />
+          style={{ background: "rgba(99, 102, 241, 0.03)" }} />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl"
-          style={{ background: "rgba(57,211,83,0.04)" }} />
+          style={{ background: "rgba(16, 185, 129, 0.03)" }} />
       </div>
 
       <div className="relative max-w-7xl mx-auto">
@@ -155,16 +155,16 @@ export default function Projects() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-3" style={{ color: "#39D353" }}>
+          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-3" style={{ color: "var(--accent)" }}>
             Portfolio
           </span>
           <h2
             className="text-4xl sm:text-5xl font-bold"
-            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--text)" }}
           >
             <WordReveal>Featured Projects</WordReveal>
           </h2>
-          <p className="mt-4 max-w-xl mx-auto text-lg" style={{ color: "#5A7A57" }}>
+          <p className="mt-4 max-w-xl mx-auto text-lg" style={{ color: "var(--muted)" }}>
             Handpicked work that showcases design, performance, and engineering craft
           </p>
         </motion.div>
@@ -183,17 +183,17 @@ export default function Projects() {
               onClick={() => setActiveFilter(filter)}
               className="relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-200"
               style={{
-                color: activeFilter === filter ? "#0B0B0B" : "#5A7A57",
-                background: activeFilter === filter ? "#F5D000" : "rgba(245,208,0,0.04)",
-                border: activeFilter === filter ? "1px solid #F5D000" : "1px solid rgba(245,208,0,0.10)",
-                boxShadow: activeFilter === filter ? "0 0 20px rgba(245,208,0,0.22)" : "none",
+                color: activeFilter === filter ? "#FFFFFF" : "var(--muted)",
+                background: activeFilter === filter ? "var(--accent)" : "rgba(99, 102, 241, 0.04)",
+                border: activeFilter === filter ? "1px solid var(--accent)" : "1px solid var(--border)",
+                boxShadow: activeFilter === filter ? "0 4px 12px rgba(16, 185, 129, 0.15)" : "none",
               }}
             >
               {activeFilter === filter && (
                 <motion.span
                   layoutId="filter-pill"
                   className="absolute inset-0 rounded-full"
-                  style={{ background: "#F5D000", zIndex: -1 }}
+                  style={{ background: "var(--accent)", zIndex: -1 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
@@ -223,7 +223,7 @@ export default function Projects() {
         {filtered.length === 0 && (
           <motion.p
             className="text-center mt-16 text-lg"
-            style={{ color: "#3A5A37" }}
+            style={{ color: "var(--muted)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
@@ -240,14 +240,13 @@ function ProjectCard({ project }: { project: Project }) {
     <motion.article
       className="group relative flex flex-col rounded-2xl border overflow-hidden h-full cursor-default"
       style={{
-        background: "rgba(13, 20, 12, 0.85)",
-        backdropFilter: "blur(16px)",
-        borderColor: "rgba(245,208,0,0.10)",
+        background: "var(--card-bg)",
+        borderColor: "var(--border)",
       }}
       whileHover={{
         y: -6,
-        boxShadow: `0 24px 60px ${project.accent}1A`,
-        borderColor: `${project.accent}44`,
+        boxShadow: `0 10px 30px var(--border)`,
+        borderColor: "var(--border-hover)",
       }}
       transition={{ duration: 0.25 }}
     >
@@ -264,9 +263,9 @@ function ProjectCard({ project }: { project: Project }) {
       >
         {/* Dot grid */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: `radial-gradient(circle, ${project.accent}44 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(circle, var(--accent) 1px, transparent 1px)`,
             backgroundSize: "22px 22px",
           }}
         />
@@ -275,7 +274,7 @@ function ProjectCard({ project }: { project: Project }) {
         <div
           className="absolute left-0 right-0 h-px pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
           style={{
-            background: `linear-gradient(90deg, transparent, ${project.accent}, transparent)`,
+            background: `linear-gradient(90deg, transparent, var(--accent), transparent)`,
             animation: "scanLine 3s linear infinite",
             top: "50%",
           }}
@@ -293,11 +292,11 @@ function ProjectCard({ project }: { project: Project }) {
         {/* Featured badge */}
         {project.featured && (
           <div
-            className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide z-10"
+            className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-bold tracking-wide z-10 border border-white/10"
             style={{
-              background: "#F5D000",
-              color: "#0B0B0B",
-              boxShadow: "0 2px 10px rgba(245,208,0,0.40)",
+              background: "var(--accent)",
+              color: "#FFFFFF",
+              boxShadow: "0 2px 10px rgba(16, 185, 129, 0.2)",
             }}
           >
             Featured
@@ -306,15 +305,15 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Stars */}
         <div
-          className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium z-10"
+          className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium z-10 border"
           style={{
-            background: "rgba(11,11,11,0.70)",
-            border: "1px solid rgba(245,208,0,0.18)",
-            color: "#F5D000",
+            background: "var(--card-bg)",
+            borderColor: "var(--border)",
+            color: "var(--accent-2)",
             backdropFilter: "blur(8px)",
           }}
         >
-          <Star size={11} fill="#F5D000" />
+          <Star size={11} className="fill-[var(--accent-2)]" style={{ color: "var(--accent-2)" }} />
           {project.stars}
         </div>
       </div>
@@ -323,8 +322,8 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="flex flex-col flex-1 p-5 gap-3">
         <div>
           <h3
-            className="text-lg font-bold leading-tight transition-colors group-hover:text-[#F5D000]"
-            style={{ color: "#D4E8D4" }}
+            className="text-lg font-bold leading-tight transition-colors group-hover:text-[var(--accent-2)]"
+            style={{ color: "var(--text)" }}
           >
             {project.name}
           </h3>
@@ -333,17 +332,17 @@ function ProjectCard({ project }: { project: Project }) {
           </p>
         </div>
 
-        <p className="text-sm leading-relaxed flex-1" style={{ color: "#3A5A37" }}>
+        <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--muted)" }}>
           {project.description}
         </p>
 
         {/* Metrics */}
         <div
-          className="inline-flex items-center self-start px-3 py-1 rounded-full text-xs font-medium"
+          className="inline-flex items-center self-start px-3 py-1 rounded-full text-xs font-medium border"
           style={{
-            background: `${project.accent}14`,
-            border: `1px solid ${project.accent}30`,
-            color: project.accent,
+            background: "rgba(16, 185, 129, 0.08)",
+            borderColor: "var(--border)",
+            color: "var(--accent)",
           }}
         >
           {project.metrics}
@@ -354,11 +353,11 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tech.map((t) => (
             <span
               key={t}
-              className="px-2 py-0.5 rounded-md text-xs font-medium"
+              className="px-2 py-0.5 rounded-md text-xs font-medium border"
               style={{
-                background: "rgba(245,208,0,0.05)",
-                border: "1px solid rgba(245,208,0,0.10)",
-                color: "#5A7A57",
+                background: "rgba(99, 102, 241, 0.05)",
+                borderColor: "var(--border)",
+                color: "var(--muted)",
               }}
             >
               {t}
@@ -370,13 +369,13 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="flex gap-2 pt-1">
           <motion.a
             href="#"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border"
             style={{
-              background: "rgba(245,208,0,0.05)",
-              border: "1px solid rgba(245,208,0,0.12)",
-              color: "#5A7A57",
+              background: "rgba(99, 102, 241, 0.05)",
+              borderColor: "var(--border)",
+              color: "var(--muted)",
             }}
-            whileHover={{ scale: 1.03, color: "#D4E8D4", borderColor: "rgba(245,208,0,0.30)" }}
+            whileHover={{ scale: 1.03, color: "var(--text)", borderColor: "var(--border-hover)" }}
             whileTap={{ scale: 0.97 }}
             aria-label={`GitHub for ${project.name}`}
           >
@@ -385,13 +384,12 @@ function ProjectCard({ project }: { project: Project }) {
           </motion.a>
           <motion.a
             href="#"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-white"
             style={{
-              background: project.accent === "#F5D000" ? "#F5D000" : "#39D353",
-              color: "#0B0B0B",
-              boxShadow: `0 2px 12px ${project.accent}33`,
+              background: "var(--accent)",
+              boxShadow: "0 2px 12px rgba(16, 185, 129, 0.2)",
             }}
-            whileHover={{ scale: 1.03, boxShadow: `0 4px 20px ${project.accent}55` }}
+            whileHover={{ scale: 1.03, boxShadow: "0 4px 16px rgba(16, 185, 129, 0.3)" }}
             whileTap={{ scale: 0.97 }}
             aria-label={`Live demo for ${project.name}`}
           >

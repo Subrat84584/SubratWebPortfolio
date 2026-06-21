@@ -110,20 +110,20 @@ export default function Contact() {
     }, 1500);
   };
 
-  const inputBase = "w-full rounded-xl border bg-transparent px-4 py-3 text-sm placeholder-[#2A3A28] backdrop-blur-sm transition-all duration-200 outline-none focus:ring-2";
-  const inputNormal = "border-[rgba(245,208,0,0.14)] focus:border-[rgba(245,208,0,0.40)] focus:ring-[rgba(245,208,0,0.10)] text-[#D4E8D4]";
-  const inputError  = "border-red-500/60 focus:border-red-500 focus:ring-red-500/20 text-[#D4E8D4]";
+  const inputBase = "w-full rounded-xl border bg-transparent px-4 py-3 text-sm placeholder-gray-400 backdrop-blur-sm transition-all duration-200 outline-none focus:ring-2";
+  const inputNormal = "border-[var(--border)] focus:border-[var(--accent-2)] focus:ring-[var(--border)] text-[var(--text)]";
+  const inputError  = "border-red-500/60 focus:border-red-500 focus:ring-red-500/20 text-[var(--text)]";
 
   return (
     <section
       id="contact"
-      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8"
-      style={{ background: "#0B0B0B" }}
+      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 z-10"
+      style={{ background: "transparent" }}
     >
       <div className="pointer-events-none absolute left-0 top-0 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: "rgba(245,208,0,0.04)" }} />
+        style={{ background: "rgba(99, 102, 241, 0.03)" }} />
       <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: "rgba(57,211,83,0.04)" }} />
+        style={{ background: "rgba(16, 185, 129, 0.03)" }} />
 
       <div className="relative mx-auto max-w-6xl">
         {/* Heading */}
@@ -136,17 +136,17 @@ export default function Contact() {
         >
           <span
             className="mb-3 inline-block rounded-full border px-4 py-1.5 text-sm font-medium"
-            style={{ borderColor: "rgba(57,211,83,0.28)", background: "rgba(57,211,83,0.08)", color: "#39D353" }}
+            style={{ borderColor: "var(--border)", background: "rgba(16, 185, 129, 0.08)", color: "var(--accent)" }}
           >
             Get In Touch
           </span>
           <h2
             className="mt-2 text-4xl font-extrabold sm:text-5xl"
-            style={{ color: "#D4E8D4", fontFamily: "Space Grotesk, sans-serif" }}
+            style={{ color: "var(--text)" }}
           >
             <WordReveal>Let's Connect</WordReveal>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "#5A7A57" }}>
+          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "var(--muted)" }}>
             Have a project in mind or just want to say hello? I'd love to hear from you.
           </p>
         </motion.div>
@@ -164,17 +164,16 @@ export default function Contact() {
               {contactInfoItems.map((item, i) => {
                 const Icon = item.icon;
                 const isLink = item.href !== "#";
-                const accentColor  = item.accent === "yellow" ? "#F5D000" : "#39D353";
-                const accentBg     = item.accent === "yellow" ? "rgba(245,208,0,0.07)" : "rgba(57,211,83,0.07)";
-                const accentBorder = item.accent === "yellow" ? "rgba(245,208,0,0.22)" : "rgba(57,211,83,0.22)";
+                const accentColor  = item.accent === "yellow" ? "var(--accent-2)" : "var(--accent)";
+                const accentBg     = item.accent === "yellow" ? "rgba(99, 102, 241, 0.06)" : "rgba(16, 185, 129, 0.06)";
+                const accentBorder = "var(--border-hover)";
 
                 const inner = (
                   <div
                     className="group flex items-center gap-4 rounded-xl border p-4 transition-all duration-300 cursor-pointer"
                     style={{
-                      background: "rgba(13,20,12,0.75)",
-                      backdropFilter: "blur(16px)",
-                      borderColor: "rgba(245,208,0,0.10)",
+                      background: "var(--card-bg)",
+                      borderColor: "var(--border)",
                     }}
                   >
                     <div
@@ -184,10 +183,10 @@ export default function Contact() {
                       <Icon className="h-5 w-5" style={{ color: accentColor }} />
                     </div>
                     <div>
-                      <p className="text-xs font-mono uppercase tracking-wider" style={{ color: "#2A3A28" }}>
+                      <p className="text-xs font-mono uppercase tracking-wider" style={{ color: "var(--muted)" }}>
                         {item.label}
                       </p>
-                      <p className="font-medium text-sm mt-0.5" style={{ color: "#D4E8D4" }}>
+                      <p className="font-semibold text-sm mt-0.5" style={{ color: "var(--text)" }}>
                         {item.value}
                       </p>
                     </div>
@@ -217,12 +216,11 @@ export default function Contact() {
             <div
               className="rounded-xl border p-5"
               style={{
-                background: "rgba(13,20,12,0.75)",
-                backdropFilter: "blur(16px)",
-                borderColor: "rgba(245,208,0,0.10)",
+                background: "var(--card-bg)",
+                borderColor: "var(--border)",
               }}
             >
-              <p className="mb-3 text-xs font-mono uppercase tracking-wider" style={{ color: "#2A3A28" }}>
+              <p className="mb-3 text-xs font-mono uppercase tracking-wider" style={{ color: "var(--muted)" }}>
                 Available for:
               </p>
               <div className="flex flex-wrap gap-2">
@@ -231,12 +229,12 @@ export default function Contact() {
                     key={label}
                     className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border"
                     style={{
-                      borderColor: "rgba(57,211,83,0.22)",
-                      background: "rgba(57,211,83,0.07)",
-                      color: "#39D353",
+                      borderColor: "var(--border)",
+                      background: "rgba(16, 185, 129, 0.08)",
+                      color: "var(--text)",
                     }}
                   >
-                    <Icon className="h-3.5 w-3.5" />
+                    <Icon className="h-3.5 w-3.5 text-[var(--accent)]" />
                     {label}
                   </div>
                 ))}
@@ -254,15 +252,14 @@ export default function Contact() {
             <div
               className="relative rounded-2xl border p-6 sm:p-8"
               style={{
-                background: "rgba(13,20,12,0.85)",
-                backdropFilter: "blur(16px)",
-                borderColor: "rgba(245,208,0,0.12)",
+                background: "var(--card-bg)",
+                borderColor: "var(--border)",
               }}
             >
               {/* Top accent bar */}
               <div
                 className="absolute inset-x-0 top-0 h-px rounded-t-2xl"
-                style={{ background: "linear-gradient(90deg, #F5D000, #39D353)" }}
+                style={{ background: "linear-gradient(90deg, var(--accent-2), var(--accent))" }}
               />
 
               {isSuccess ? (
@@ -271,11 +268,11 @@ export default function Contact() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex flex-col items-center justify-center py-16 text-center"
                 >
-                  <CheckCircle className="mb-4 h-16 w-16" style={{ color: "#39D353" }} />
-                  <h3 className="mb-2 text-xl font-bold" style={{ color: "#D4E8D4" }}>
+                  <CheckCircle className="mb-4 h-16 w-16 text-[var(--accent)]" />
+                  <h3 className="mb-2 text-xl font-bold" style={{ color: "var(--text)" }}>
                     Message Sent!
                   </h3>
-                  <p style={{ color: "#5A7A57" }}>
+                  <p style={{ color: "var(--muted)" }}>
                     Thanks for reaching out. I'll get back to you soon.
                   </p>
                 </motion.div>
@@ -283,8 +280,8 @@ export default function Contact() {
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
                   {/* Name */}
                   <div>
-                    <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium" style={{ color: "#5A7A57" }}>
-                      Name <span style={{ color: "#F5D000" }}>*</span>
+                    <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
+                      Name <span style={{ color: "var(--accent-2)" }}>*</span>
                     </label>
                     <input
                       id="contact-name" name="name" type="text" placeholder="Your full name"
@@ -298,8 +295,8 @@ export default function Contact() {
 
                   {/* Email */}
                   <div>
-                    <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium" style={{ color: "#5A7A57" }}>
-                      Email <span style={{ color: "#F5D000" }}>*</span>
+                    <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
+                      Email <span style={{ color: "var(--accent-2)" }}>*</span>
                     </label>
                     <input
                       id="contact-email" name="email" type="email" placeholder="your@email.com"
@@ -313,8 +310,8 @@ export default function Contact() {
 
                   {/* Subject */}
                   <div>
-                    <label htmlFor="contact-subject" className="mb-1.5 block text-sm font-medium" style={{ color: "#5A7A57" }}>
-                      Subject <span style={{ color: "#F5D000" }}>*</span>
+                    <label htmlFor="contact-subject" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
+                      Subject <span style={{ color: "var(--accent-2)" }}>*</span>
                     </label>
                     <input
                       id="contact-subject" name="subject" type="text" placeholder="What's this about?"
@@ -328,8 +325,8 @@ export default function Contact() {
 
                   {/* Message */}
                   <div>
-                    <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium" style={{ color: "#5A7A57" }}>
-                      Message <span style={{ color: "#F5D000" }}>*</span>
+                    <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
+                      Message <span style={{ color: "var(--accent-2)" }}>*</span>
                     </label>
                     <textarea
                       id="contact-message" name="message" rows={5}
@@ -348,11 +345,10 @@ export default function Contact() {
                     disabled={isSubmitting}
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-semibold text-sm disabled:cursor-not-allowed disabled:opacity-70 transition-all duration-200"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-semibold text-sm disabled:cursor-not-allowed disabled:opacity-70 transition-all duration-200 text-white"
                     style={{
-                      background: isSubmitting ? "rgba(245,208,0,0.7)" : "#F5D000",
-                      color: "#0B0B0B",
-                      boxShadow: isSubmitting ? "none" : "0 4px 24px rgba(245,208,0,0.30)",
+                      background: "var(--accent)",
+                      boxShadow: isSubmitting ? "none" : "0 4px 14px rgba(16, 185, 129, 0.2)",
                     }}
                   >
                     {isSubmitting ? (
