@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GitBranch, Link2, Globe, Mail, ArrowUp, Heart } from "lucide-react";
+import { GitBranch, Link2, Mail, ArrowUp, Heart } from "lucide-react";
 
 const quickLinks = [
-  { label: "Home",     href: "#hero" },
-  { label: "About",    href: "#about" },
-  { label: "Skills",   href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact",  href: "#contact" },
+  { label: "Home",       href: "#hero" },
+  { label: "About",      href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects",   href: "#projects" },
 ];
 
 const socialLinks = [
-  { label: "GitHub",   href: "https://github.com/subrat-acharya",          icon: GitBranch },
-  { label: "LinkedIn", href: "https://linkedin.com/in/subrat-acharya",     icon: Link2 },
-  { label: "Twitter",  href: "https://twitter.com/subrat_acharya",         icon: Globe },
-  { label: "Email",    href: "mailto:subrat.acharya@gmail.com",            icon: Mail },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/subrat-k-acharya-a29681188/", icon: Link2 },
+  { label: "Email",    href: "mailto:subratkumaracharya1@gmail.com",                    icon: Mail },
+  { label: "GitHub",   href: "https://github.com/Subrat84584",                          icon: GitBranch },
 ];
 
 const techStack = [
-  "Flutter", "Dart", "React", "TypeScript",
-  "Firebase", "Node.js", "AWS", "Kotlin", "Swift", "Git",
+  "Flutter", "Dart", "Firebase", "Spring Boot",
+  "REST APIs", "Razorpay", "RevenueCat", "Android & iOS",
+  "Google Play Console", "React.js", "Next.js", "Asana",
 ];
 
 function smoothScrollTo(target: string) {

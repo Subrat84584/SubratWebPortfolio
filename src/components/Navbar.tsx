@@ -16,10 +16,8 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { label: 'Home',       href: '#hero',       id: 'hero' },
   { label: 'About',      href: '#about',      id: 'about' },
-  { label: 'Skills',     href: '#skills',     id: 'skills' },
   { label: 'Experience', href: '#experience', id: 'experience' },
   { label: 'Projects',   href: '#projects',   id: 'projects' },
-  { label: 'Contact',    href: '#contact',    id: 'contact' },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
@@ -91,8 +89,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           boxShadow: scrolled ? '0 4px 20px var(--border)' : 'none',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+          <div className="flex items-center justify-between h-20">
 
             {/* Logo */}
             <motion.a
@@ -104,92 +102,99 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               aria-label="Go to top"
             >
               <span
-                className="text-2xl font-bold tracking-tight italic"
+                className="text-3xl sm:text-4xl font-bold tracking-normal italic"
                 style={{
+                  fontFamily: "'Dancing Script', 'Caveat', cursive",
                   color: 'var(--accent)',
                 }}
               >
-                subrat
+                subrat05
               </span>
             </motion.a>
 
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-2" aria-label="Main navigation">
-              {NAV_LINKS.map((link) => {
-                const isActive = activeSection === link.id;
-                return (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className="relative px-3 py-2 text-sm font-medium transition-colors duration-200"
-                    style={{ color: isActive ? 'var(--text)' : 'var(--muted)' }}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="activeIndicator"
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-6 rounded-full"
-                        style={{ background: 'var(--accent)' }}
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </a>
-                );
-              })}
-            </nav>
-
-            {/* Right controls */}
-            <div className="hidden md:flex items-center gap-3">
-              <motion.button
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
-                onClick={toggleTheme}
-                className="p-2 rounded-full transition-colors duration-200"
-                style={{
-                  color: 'var(--text)',
-                  backgroundColor: 'var(--border)',
-                }}
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-              </motion.button>
+            {/* Right Group: Navigation links & controls */}
+            <div className="hidden md:flex items-center gap-8">
+              <nav className="flex items-center gap-6" aria-label="Main navigation">
+                {NAV_LINKS.map((link) => {
+                  const isActive = activeSection === link.id;
+                  return (
+                    <a
+                      key={link.id}
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="relative text-base font-semibold transition-colors duration-200"
+                      style={{ color: isActive ? 'var(--text)' : 'var(--muted-dark)' }}
+                    >
+                      {link.label}
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeIndicator"
+                          className="absolute -bottom-1 left-0 right-0 h-[2.5px] rounded-full"
+                          style={{ background: 'var(--text)' }}
+                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </a>
+                  );
+                })}
+              </nav>
 
               <motion.a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, '#contact')}
-                whileHover={{ scale: 1.04 }}
+                href="#projects"
+                onClick={(e) => handleNavClick(e, '#projects')}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200"
+                className="px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
                 style={{
-                  background: 'var(--accent)',
-                  color: '#FFFFFF',
-                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.2)',
+                  background: 'rgba(241, 245, 249, 0.9)',
+                  color: '#1E293B',
+                  border: '1px solid rgba(203, 213, 225, 0.6)',
                 }}
               >
                 Let's talk !
               </motion.a>
+
+              {/* Controls */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={toggleTheme}
+                  className="p-2.5 rounded-full transition-colors duration-200 flex items-center justify-center"
+                  style={{ color: 'var(--text)', background: 'transparent' }}
+                  aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+
+                <button
+                  onClick={() => setMobileOpen((prev) => !prev)}
+                  className="p-2.5 rounded-full flex items-center justify-center"
+                  style={{ color: '#1E293B', background: '#E2E8F0' }}
+                  aria-label="Toggle menu"
+                >
+                  <Menu size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Mobile controls */}
-            <div className="flex md:hidden items-center gap-2">
+            <div className="flex md:hidden items-center gap-3">
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full"
                 style={{ color: 'var(--text)' }}
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
-                {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
               </button>
 
               <button
                 onClick={() => setMobileOpen((prev) => !prev)}
-                className="p-2 rounded-md"
-                style={{ color: 'var(--text)' }}
+                className="p-2.5 rounded-full flex items-center justify-center"
+                style={{ color: '#1E293B', background: '#E2E8F0' }}
                 aria-label="Toggle menu"
                 aria-expanded={mobileOpen}
               >
-                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+                {mobileOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
           </div>
@@ -212,7 +217,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                 borderTop: '1px solid var(--border)',
               }}
             >
-              <nav className="flex flex-col px-4 py-4 gap-1" aria-label="Mobile navigation">
+              <nav className="flex flex-col px-6 py-4 gap-2" aria-label="Mobile navigation">
                 {NAV_LINKS.map((link, index) => {
                   const isActive = activeSection === link.id;
                   return (
@@ -223,11 +228,10 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: index * 0.05, duration: 0.25 }}
-                      className="px-4 py-3 rounded-lg text-sm font-medium transition-colors duration-150"
+                      className="px-4 py-3 rounded-lg text-base font-semibold transition-colors duration-150"
                       style={{
-                        color: isActive ? 'var(--text)' : 'var(--muted)',
-                        backgroundColor: isActive ? 'rgba(16, 185, 129, 0.06)' : 'transparent',
-                        borderLeft: isActive ? '3px solid var(--accent)' : '3px solid transparent',
+                        color: isActive ? 'var(--accent)' : 'var(--text)',
+                        backgroundColor: isActive ? 'rgba(249, 115, 22, 0.08)' : 'transparent',
                       }}
                     >
                       {link.label}
@@ -236,13 +240,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                 })}
 
                 <motion.a
-                  href="#contact"
-                  onClick={(e) => handleNavClick(e, '#contact')}
+                  href="#projects"
+                  onClick={(e) => handleNavClick(e, '#projects')}
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: NAV_LINKS.length * 0.05, duration: 0.25 }}
-                  className="mt-2 px-4 py-3 rounded-lg text-sm font-semibold text-center text-white"
-                  style={{ background: 'var(--accent)' }}
+                  className="mt-2 px-4 py-3 rounded-lg text-sm font-semibold text-center"
+                  style={{ background: '#E2E8F0', color: '#1E293B' }}
                 >
                   Let's talk !
                 </motion.a>

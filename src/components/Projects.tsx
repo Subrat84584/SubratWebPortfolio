@@ -106,27 +106,6 @@ const projectIcons: Record<number, string> = {
   1: "🛒", 2: "🍕", 3: "💸", 4: "💬", 5: "🏋️", 6: "🤖",
 };
 
-// Word-by-word animated heading
-function WordReveal({ children }: { children: string }) {
-  const words = children.split(" ");
-  return (
-    <>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          className="inline-block mr-[0.28em]"
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.8 }}
-          transition={{ delay: i * 0.09, duration: 0.5, ease: "easeOut" as const }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </>
-  );
-}
-
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<Category>("All");
 
@@ -155,18 +134,14 @@ export default function Projects() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block text-xs font-mono tracking-widest uppercase mb-3" style={{ color: "var(--accent)" }}>
-            Portfolio
+          <span className="inline-block text-xs font-mono font-bold tracking-widest uppercase mb-2" style={{ color: "var(--accent)" }}>
+            WEB PROJECTS
           </span>
           <h2
-            className="text-4xl sm:text-5xl font-bold"
-            style={{ color: "var(--text)" }}
+            className="text-3xl sm:text-5xl font-sans tracking-tight text-slate-800 dark:text-slate-100"
           >
-            <WordReveal>Featured Projects</WordReveal>
+            Learning <span className="font-bold">By Building</span>
           </h2>
-          <p className="mt-4 max-w-xl mx-auto text-lg" style={{ color: "var(--muted)" }}>
-            Handpicked work that showcases design, performance, and engineering craft
-          </p>
         </motion.div>
 
         {/* Filter tabs */}
