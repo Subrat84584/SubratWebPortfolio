@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Menu, X } from 'lucide-react';
-
-interface NavbarProps {
-  theme: 'dark' | 'light';
-  toggleTheme: () => void;
-}
+import { Menu, X, Download } from 'lucide-react';
 
 interface NavLink {
   label: string;
@@ -14,46 +9,96 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: 'Home',       href: '#hero',       id: 'hero' },
-  { label: 'About',      href: '#about',      id: 'about' },
+  { label: 'Projects', href: '#projects', id: 'projects' },
   { label: 'Experience', href: '#experience', id: 'experience' },
-  { label: 'Projects',   href: '#projects',   id: 'projects' },
+  { label: 'Education', href: '#education', id: 'education' },
+  { label: 'Bio', href: '#about', id: 'about' },
+  { label: 'Skills', href: '#tech-stack', id: 'tech-stack' },
+  { label: 'Contact', href: '#contact', id: 'contact' },
 ];
 
-const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
-  const [scrolled, setScrolled]         = useState(false);
-  const [mobileOpen, setMobileOpen]     = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('hero');
+interface NavbarProps {
+  onOpenGetStarted?: () => void;
+}
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef<number | null>(null);
 
+  // Reliable scroll tracking for active section underline
   useEffect(() => {
-    const ids = NAV_LINKS.map((l) => l.id);
-    const observers: IntersectionObserver[] = [];
-    const opts: IntersectionObserverInit = {
-      root: null,
-      rootMargin: '-40% 0px -55% 0px',
-      threshold: 0,
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 40);
+
+      // If user recently clicked a nav item, don't let scroll spy overwrite it during smooth scroll
+      if (isClickScrollingRef.current) return;
+
+      // When near the top (Hero section), no nav item should have the underline
+      const heroThreshold = 380;
+      if (scrollY < heroThreshold) {
+        setActiveSection('');
+        return;
+      }
+
+      // If scrolled to the bottom of the page, activate Contact
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      if (scrollY + windowHeight >= documentHeight - 80) {
+        setActiveSection('contact');
+        return;
+      }
+
+      // Check which section is in view
+      const ids = NAV_LINKS.map((l) => l.id);
+      let currentSection = '';
+
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // When section top is near the top of the viewport (under navbar)
+          if (rect.top <= 200 && rect.bottom >= 150) {
+            currentSection = id;
+            break;
+          }
+        }
+      }
+
+      // Fallback: find the highest section that has passed above 250px
+      if (!currentSection) {
+        for (let i = ids.length - 1; i >= 0; i--) {
+          const el = document.getElementById(ids[i]);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= 250) {
+              currentSection = ids[i];
+              break;
+            }
+          }
+        }
+      }
+
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
     };
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) setActiveSection(id); });
-      }, opts);
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
   }, []);
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setMobileOpen(false);
+    };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
@@ -62,145 +107,128 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     e.preventDefault();
     setMobileOpen(false);
     const id = href.replace('#', '');
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
+    
+    // Immediately set activeSection so underline transitions smoothly on click
+    setActiveSection(id);
+    isClickScrollingRef.current = true;
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    clickTimeoutRef.current = window.setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 900);
 
-  const navBg = scrolled ? 'var(--card-bg)' : 'transparent';
-  const borderColor = scrolled ? 'var(--border)' : 'transparent';
+    const el = document.getElementById(id);
+    if (el) {
+      // 80px offset for the fixed navbar
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    }
+  }, []);
 
   return (
     <>
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' as const }}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          backgroundColor: navBg,
-          backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-          borderBottom: `1px solid ${borderColor}`,
-          transition: 'background-color 0.3s ease, border-color 0.3s ease',
-          boxShadow: scrolled ? '0 4px 20px var(--border)' : 'none',
-        }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-black border-b border-white/10 ${
+          scrolled ? 'shadow-2xl shadow-black/90' : 'shadow-lg shadow-black/50'
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+        {/* Generous wide container with ample breathing room to prevent congestion */}
+        <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16">
           <div className="flex items-center justify-between h-20">
-
-            {/* Logo */}
+            
+            {/* Left: Brand Logo (Moved left, with "Mobile Apps Eng") */}
             <motion.a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ opacity: 0.88 }}
               whileTap={{ scale: 0.98 }}
-              className="flex-shrink-0 select-none"
-              aria-label="Go to top"
+              className="flex-shrink-0 flex flex-col text-left select-none cursor-pointer group outline-none focus:outline-none"
+              aria-label="BuildwthSubrat - Home"
             >
-              <span
-                className="text-3xl sm:text-4xl font-bold tracking-normal italic"
-                style={{
-                  fontFamily: "'Dancing Script', 'Caveat', cursive",
-                  color: 'var(--accent)',
-                }}
-              >
-                subrat05
+              <span className="text-base sm:text-lg lg:text-xl font-sans font-extrabold tracking-[0.14em] uppercase text-white leading-none group-hover:text-neutral-200 transition-colors">
+                BUILDWTHSUBRAT
+              </span>
+              <span className="text-[11px] font-sans font-medium tracking-widest text-neutral-400 mt-1 uppercase">
+                Mobile Apps Eng
               </span>
             </motion.a>
 
-            {/* Right Group: Navigation links & controls */}
-            <div className="hidden md:flex items-center gap-8">
-              <nav className="flex items-center gap-6" aria-label="Main navigation">
-                {NAV_LINKS.map((link) => {
-                  const isActive = activeSection === link.id;
-                  return (
-                    <a
-                      key={link.id}
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
-                      className="relative text-base font-semibold transition-colors duration-200"
-                      style={{ color: isActive ? 'var(--text)' : 'var(--muted-dark)' }}
-                    >
-                      {link.label}
-                      {isActive && (
-                        <motion.span
-                          layoutId="activeIndicator"
-                          className="absolute -bottom-1 left-0 right-0 h-[2.5px] rounded-full"
-                          style={{ background: 'var(--text)' }}
-                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                        />
-                      )}
-                    </a>
-                  );
-                })}
-              </nav>
+            {/* Center: Navigation Links in exact order (Projects, Experience, Education, Bio, Skills, Contact) */}
+            <nav className="hidden lg:flex items-center gap-7 xl:gap-9" aria-label="Main navigation">
+              {NAV_LINKS.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a
+                    key={link.id}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`relative py-1 text-xs xl:text-[13px] font-sans font-semibold tracking-[0.10em] uppercase transition-colors duration-200 cursor-pointer select-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none ${
+                      isActive ? 'text-white' : 'text-neutral-400 hover:text-white'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    {isActive && (
+                      <motion.span
+                        layoutId="navActiveLine"
+                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-white rounded-full"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
+            </nav>
 
-              <motion.a
-                href="#projects"
-                onClick={(e) => handleNavClick(e, '#projects')}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
-                style={{
-                  background: 'rgba(241, 245, 249, 0.9)',
-                  color: '#1E293B',
-                  border: '1px solid rgba(203, 213, 225, 0.6)',
-                }}
+            {/* Right: Resume (PDF bracket removed) + GET STARTED Box moved right */}
+            <div className="hidden lg:flex items-center gap-6 xl:gap-8 flex-shrink-0">
+              {/* Direct Resume Download Link (No bracket) */}
+              <a
+                href="/Subrat_Kumar_Acharya_Resume.pdf"
+                download="Subrat_Kumar_Acharya_Resume.pdf"
+                className="inline-flex items-center gap-1.5 text-xs xl:text-[13px] font-sans font-semibold tracking-[0.10em] uppercase text-neutral-400 hover:text-white transition-colors cursor-pointer outline-none focus:outline-none"
               >
-                Let's talk !
-              </motion.a>
+                <Download size={13} className="text-neutral-400" />
+                <span>Resume</span>
+              </a>
 
-              {/* Controls */}
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={toggleTheme}
-                  className="p-2.5 rounded-full transition-colors duration-200 flex items-center justify-center"
-                  style={{ color: 'var(--text)', background: 'transparent' }}
-                  aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                >
-                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-
-                <button
-                  onClick={() => setMobileOpen((prev) => !prev)}
-                  className="p-2.5 rounded-full flex items-center justify-center"
-                  style={{ color: '#1E293B', background: '#E2E8F0' }}
-                  aria-label="Toggle menu"
-                >
-                  <Menu size={20} />
-                </button>
-              </div>
+              {/* Squarespace Signature High-Contrast Solid White Button */}
+              <motion.button
+                type="button"
+                onClick={(e) => {
+                  if (onOpenGetStarted) {
+                    e.preventDefault();
+                    onOpenGetStarted();
+                  } else {
+                    handleNavClick(e as any, '#contact');
+                  }
+                }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 py-2.5 rounded-[2px] text-xs font-sans font-bold tracking-[0.14em] uppercase bg-white text-black hover:bg-neutral-200 transition-all duration-200 cursor-pointer shadow-md outline-none focus:outline-none"
+              >
+                GET STARTED
+              </motion.button>
             </div>
 
-            {/* Mobile controls */}
-            <div className="flex md:hidden items-center gap-3">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full"
-                style={{ color: 'var(--text)' }}
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-
+            {/* Mobile Menu Trigger */}
+            <div className="flex lg:hidden items-center">
               <button
                 onClick={() => setMobileOpen((prev) => !prev)}
-                className="p-2.5 rounded-full flex items-center justify-center"
-                style={{ color: '#1E293B', background: '#E2E8F0' }}
+                className="p-2 rounded-md text-white bg-neutral-900 border border-white/10 hover:border-white/20 transition-colors outline-none focus:outline-none"
                 aria-label="Toggle menu"
                 aria-expanded={mobileOpen}
               >
                 {mobileOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
+
           </div>
         </div>
 
-        {/* Mobile dropdown */}
+        {/* Mobile Dropdown Drawer */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
@@ -208,48 +236,46 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' as const }}
-              style={{
-                overflow: 'hidden',
-                backgroundColor: 'var(--card-bg)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                borderTop: '1px solid var(--border)',
-              }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="lg:hidden overflow-hidden bg-black/95 backdrop-blur-2xl border-t border-white/10 px-6 py-5"
             >
-              <nav className="flex flex-col px-6 py-4 gap-2" aria-label="Mobile navigation">
-                {NAV_LINKS.map((link, index) => {
-                  const isActive = activeSection === link.id;
-                  return (
-                    <motion.a
-                      key={link.id}
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.05, duration: 0.25 }}
-                      className="px-4 py-3 rounded-lg text-base font-semibold transition-colors duration-150"
-                      style={{
-                        color: isActive ? 'var(--accent)' : 'var(--text)',
-                        backgroundColor: isActive ? 'rgba(249, 115, 22, 0.08)' : 'transparent',
-                      }}
-                    >
-                      {link.label}
-                    </motion.a>
-                  );
-                })}
+              <nav className="flex flex-col gap-3" aria-label="Mobile navigation">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.id}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="py-2.5 text-sm font-sans font-semibold tracking-wider text-neutral-300 hover:text-white uppercase border-b border-white/5"
+                  >
+                    {link.label}
+                  </a>
+                ))}
 
-                <motion.a
-                  href="#projects"
-                  onClick={(e) => handleNavClick(e, '#projects')}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: NAV_LINKS.length * 0.05, duration: 0.25 }}
-                  className="mt-2 px-4 py-3 rounded-lg text-sm font-semibold text-center"
-                  style={{ background: '#E2E8F0', color: '#1E293B' }}
+                <a
+                  href="/Subrat_Kumar_Acharya_Resume.pdf"
+                  download="Subrat_Kumar_Acharya_Resume.pdf"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded text-xs font-mono font-medium tracking-wider text-neutral-300 border border-white/15 bg-neutral-900/60 uppercase"
                 >
-                  Let's talk !
-                </motion.a>
+                  <Download size={14} className="text-white" />
+                  <span>Resume</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    if (onOpenGetStarted) {
+                      e.preventDefault();
+                      onOpenGetStarted();
+                    } else {
+                      handleNavClick(e as any, '#contact');
+                    }
+                  }}
+                  className="mt-2 w-full py-3.5 rounded-[2px] text-xs font-sans font-bold tracking-widest uppercase bg-white text-black hover:bg-neutral-200 transition-colors shadow-lg"
+                >
+                  GET STARTED
+                </button>
               </nav>
             </motion.div>
           )}

@@ -30,29 +30,11 @@ const BackgroundParticles: React.FC = () => {
       initParticles();
     };
 
-    const getColors = (isDark: boolean) => {
-      if (isDark) {
-        return {
-          purple: 'rgba(139, 92, 246, ',
-          indigo: 'rgba(99, 102, 241, ',
-          green: 'rgba(52, 211, 153, ',
-        };
-      } else {
-        return {
-          purple: 'rgba(99, 102, 241, ',
-          indigo: 'rgba(79, 70, 229, ',
-          green: 'rgba(16, 185, 129, ',
-        };
-      }
+    const colors = {
+      purple: 'rgba(249, 115, 22, ',  // warm orange
+      indigo: 'rgba(251, 146, 60, ',  // soft amber
+      green: 'rgba(156, 163, 175, ',  // subtle silver grey
     };
-
-    let colors = getColors(document.documentElement.classList.contains('dark'));
-
-    // Observe HTML class changes to update colors instantly
-    const observer = new MutationObserver(() => {
-      colors = getColors(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     const initParticles = () => {
       particles = [];
@@ -122,7 +104,6 @@ const BackgroundParticles: React.FC = () => {
     return () => {
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animId);
-      observer.disconnect();
     };
   }, []);
 

@@ -17,6 +17,20 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       colors: {
+        slate: {
+          50: '#FFFFFF',
+          100: '#F8F9FA',
+          150: '#F3F4F6',
+          200: '#EAECEF',
+          300: '#D8DCE3',
+          400: '#9DA3B0',
+          500: '#6E7482',
+          600: '#4B5160',
+          700: '#2E333D',
+          800: '#1A1D24',
+          900: '#111317',
+          950: '#0B0C0E',
+        },
         brand: {
           yellow: '#F5D000',
           green: '#39D353',

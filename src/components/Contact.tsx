@@ -1,8 +1,16 @@
 import { useRef, useState, type FormEvent, type ChangeEvent } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  Mail, Link2, GitBranch, MapPin, Send, CheckCircle,
-  Briefcase, Code2, Users, Lightbulb,
+  Mail,
+  Link2,
+  GitBranch,
+  MapPin,
+  Send,
+  CheckCircle,
+  Briefcase,
+  Code2,
+  Users,
+  Lightbulb,
 } from "lucide-react";
 
 interface ContactInfo {
@@ -10,25 +18,54 @@ interface ContactInfo {
   label: string;
   value: string;
   href: string;
-  accent: "yellow" | "green";
 }
 
 const contactInfoItems: ContactInfo[] = [
-  { icon: Mail,      label: "Email",    value: "subrat.acharya@gmail.com",        href: "mailto:subrat.acharya@gmail.com",          accent: "yellow" },
-  { icon: Link2,     label: "LinkedIn", value: "linkedin.com/in/subrat-acharya",  href: "https://linkedin.com/in/subrat-acharya",   accent: "green" },
-  { icon: GitBranch, label: "GitHub",   value: "github.com/subrat-acharya",       href: "https://github.com/subrat-acharya",        accent: "yellow" },
-  { icon: MapPin,    label: "Location", value: "Bhubaneswar, Odisha, India",      href: "#",                                        accent: "green" },
+  {
+    icon: Mail,
+    label: "Direct Email",
+    value: "subratkumaracharya1@gmail.com",
+    href: "mailto:subratkumaracharya1@gmail.com",
+  },
+  {
+    icon: Link2,
+    label: "LinkedIn Professional Profile",
+    value: "linkedin.com/in/subrat-k-acharya-a29681188",
+    href: "https://www.linkedin.com/in/subrat-k-acharya-a29681188/",
+  },
+  {
+    icon: GitBranch,
+    label: "GitHub Repositories",
+    value: "github.com/Subrat84584",
+    href: "https://github.com/Subrat84584",
+  },
+  {
+    icon: MapPin,
+    label: "Base Location",
+    value: "Bhubaneswar, Odisha, India",
+    href: "#",
+  },
 ];
 
 const availableFor = [
-  { label: "Full-time Roles", icon: Briefcase },
-  { label: "Freelance",       icon: Code2 },
-  { label: "Open Source",     icon: Users },
-  { label: "Consulting",      icon: Lightbulb },
+  { label: "Full-Time Mobile Roles", icon: Briefcase },
+  { label: "Cross-Platform Flutter Apps", icon: Code2 },
+  { label: "Architecture & Code Reviews", icon: Users },
+  { label: "Mobile Consulting & MVPs", icon: Lightbulb },
 ];
 
-interface FormState  { name: string; email: string; subject: string; message: string }
-interface FormErrors { name?: string; email?: string; subject?: string; message?: string }
+interface FormState {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+interface FormErrors {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+}
 
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -36,33 +73,12 @@ function validateEmail(email: string): boolean {
 
 function validateForm(form: FormState): FormErrors {
   const errors: FormErrors = {};
-  if (!form.name.trim())    errors.name    = "Name is required.";
-  if (!form.email.trim())   errors.email   = "Email is required.";
+  if (!form.name.trim()) errors.name = "Name is required.";
+  if (!form.email.trim()) errors.email = "Email is required.";
   else if (!validateEmail(form.email)) errors.email = "Please enter a valid email address.";
   if (!form.subject.trim()) errors.subject = "Subject is required.";
   if (!form.message.trim()) errors.message = "Message is required.";
   return errors;
-}
-
-// Word-by-word animated heading
-function WordReveal({ children }: { children: string }) {
-  const words = children.split(" ");
-  return (
-    <>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          className="inline-block mr-[0.28em]"
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.8 }}
-          transition={{ delay: i * 0.09, duration: 0.5, ease: "easeOut" as const }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </>
-  );
 }
 
 export default function Contact() {
@@ -73,11 +89,11 @@ export default function Contact() {
   const rightRef = useRef(null);
   const rightInView = useInView(rightRef, { once: true, margin: "-50px" });
 
-  const [form, setForm]             = useState<FormState>({ name: "", email: "", subject: "", message: "" });
-  const [errors, setErrors]         = useState<FormErrors>({});
-  const [touched, setTouched]       = useState<Partial<Record<keyof FormState, boolean>>>({});
+  const [form, setForm] = useState<FormState>({ name: "", email: "", subject: "", message: "" });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess]   = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -110,83 +126,62 @@ export default function Contact() {
     }, 1500);
   };
 
-  const inputBase = "w-full rounded-xl border bg-transparent px-4 py-3 text-sm placeholder-gray-400 backdrop-blur-sm transition-all duration-200 outline-none focus:ring-2";
-  const inputNormal = "border-[var(--border)] focus:border-[var(--accent-2)] focus:ring-[var(--border)] text-[var(--text)]";
-  const inputError  = "border-red-500/60 focus:border-red-500 focus:ring-red-500/20 text-[var(--text)]";
+  const inputBase =
+    "w-full rounded-xl border px-4 py-3 text-sm placeholder-slate-400 transition-all duration-200 outline-none";
+  const inputNormal =
+    "border-slate-300 bg-slate-50/70 focus:bg-white text-slate-900 focus:border-slate-900 focus:ring-1 focus:ring-slate-900";
+  const inputError =
+    "border-red-500/80 bg-red-50/30 text-slate-900 focus:border-red-500 focus:ring-1 focus:ring-red-500/20";
 
   return (
-    <section
-      id="contact"
-      className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 z-10"
-      style={{ background: "transparent" }}
-    >
-      <div className="pointer-events-none absolute left-0 top-0 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: "rgba(99, 102, 241, 0.03)" }} />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full blur-3xl"
-        style={{ background: "rgba(16, 185, 129, 0.03)" }} />
-
+    <section id="contact" className="relative px-4 py-24 sm:px-6 lg:px-8 z-10">
       <div className="relative mx-auto max-w-6xl">
-        {/* Heading */}
+        {/* Section Heading */}
         <motion.div
           ref={headingRef}
           initial={{ opacity: 0, y: 20 }}
           animate={headingInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          transition={{ duration: 0.5 }}
+          className="mb-16"
         >
           <span
-            className="mb-3 inline-block rounded-full border px-4 py-1.5 text-sm font-medium"
-            style={{ borderColor: "var(--border)", background: "rgba(16, 185, 129, 0.08)", color: "var(--accent)" }}
+            className="text-xs font-mono font-bold tracking-widest uppercase block mb-2"
+            style={{ color: "var(--accent)" }}
           >
-            Get In Touch
+            [COMMUNICATION // 06]
           </span>
-          <h2
-            className="mt-2 text-4xl font-extrabold sm:text-5xl"
-            style={{ color: "var(--text)" }}
-          >
-            <WordReveal>Let's Connect</WordReveal>
+          <h2 className="text-3xl sm:text-5xl font-sans tracking-tight text-slate-900">
+            Let's Build Something <span className="font-extrabold">Exceptional</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg" style={{ color: "var(--muted)" }}>
-            Have a project in mind or just want to say hello? I'd love to hear from you.
+          <p className="mt-3 max-w-2xl text-base text-slate-600 leading-relaxed font-sans">
+            Whether you have a mobile app in development, an engineering opening, or want to discuss architecture, my inbox is open.
           </p>
         </motion.div>
 
-        <div className="grid gap-10 lg:grid-cols-2">
-          {/* Left — contact info */}
+        <div className="grid gap-8 lg:grid-cols-12 items-start">
+          {/* Left Column: Direct channels + Available for */}
           <motion.div
             ref={leftRef}
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={leftInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col gap-6"
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5 flex flex-col gap-6"
           >
             <div className="space-y-3">
               {contactInfoItems.map((item, i) => {
                 const Icon = item.icon;
                 const isLink = item.href !== "#";
-                const accentColor  = item.accent === "yellow" ? "var(--accent-2)" : "var(--accent)";
-                const accentBg     = item.accent === "yellow" ? "rgba(99, 102, 241, 0.06)" : "rgba(16, 185, 129, 0.06)";
-                const accentBorder = "var(--border-hover)";
 
                 const inner = (
-                  <div
-                    className="group flex items-center gap-4 rounded-xl border p-4 transition-all duration-300 cursor-pointer"
-                    style={{
-                      background: "var(--card-bg)",
-                      borderColor: "var(--border)",
-                    }}
-                  >
-                    <div
-                      className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
-                      style={{ background: accentBg }}
-                    >
-                      <Icon className="h-5 w-5" style={{ color: accentColor }} />
+                  <div className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 hover:border-slate-400 hover:shadow-xs transition-all cursor-pointer">
+                    <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-orange-50 border border-orange-200/70 text-orange-700 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <div>
-                      <p className="text-xs font-mono uppercase tracking-wider" style={{ color: "var(--muted)" }}>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-mono uppercase tracking-wider text-slate-500">
                         {item.label}
                       </p>
-                      <p className="font-semibold text-sm mt-0.5" style={{ color: "var(--text)" }}>
+                      <p className="font-bold text-sm text-slate-900 truncate mt-0.5 group-hover:text-orange-700 transition-colors">
                         {item.value}
                       </p>
                     </div>
@@ -196,45 +191,39 @@ export default function Contact() {
                 return (
                   <motion.div
                     key={item.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={leftInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    whileHover={{ x: 4, borderColor: accentBorder }}
-                    style={{ borderRadius: "0.75rem" }}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={leftInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
                   >
                     {isLink ? (
-                      <a href={item.href} target="_blank" rel="noreferrer noopener" className="block">
+                      <a
+                        href={item.href}
+                        target={item.href.startsWith("mailto") ? undefined : "_blank"}
+                        rel="noreferrer noopener"
+                        className="block"
+                      >
                         {inner}
                       </a>
-                    ) : inner}
+                    ) : (
+                      inner
+                    )}
                   </motion.div>
                 );
               })}
             </div>
 
-            {/* Available for */}
-            <div
-              className="rounded-xl border p-5"
-              style={{
-                background: "var(--card-bg)",
-                borderColor: "var(--border)",
-              }}
-            >
-              <p className="mb-3 text-xs font-mono uppercase tracking-wider" style={{ color: "var(--muted)" }}>
-                Available for:
-              </p>
+            {/* Available for section */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs">
+              <span className="mb-3 block text-xs font-mono font-bold uppercase tracking-widest text-slate-500">
+                Engagements &amp; Availability:
+              </span>
               <div className="flex flex-wrap gap-2">
                 {availableFor.map(({ label, icon: Icon }) => (
                   <div
                     key={label}
-                    className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border"
-                    style={{
-                      borderColor: "var(--border)",
-                      background: "rgba(16, 185, 129, 0.08)",
-                      color: "var(--text)",
-                    }}
+                    className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-mono font-medium border border-slate-200 bg-slate-50 text-slate-800"
                   >
-                    <Icon className="h-3.5 w-3.5 text-[var(--accent)]" />
+                    <Icon className="h-3.5 w-3.5 text-orange-600" />
                     {label}
                   </div>
                 ))}
@@ -242,127 +231,153 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right — contact form */}
+          {/* Right Column: Clean Editorial Contact Form */}
           <motion.div
             ref={rightRef}
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={rightInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7"
           >
-            <div
-              className="relative rounded-2xl border p-6 sm:p-8"
-              style={{
-                background: "var(--card-bg)",
-                borderColor: "var(--border)",
-              }}
-            >
-              {/* Top accent bar */}
+            <div className="relative rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+              {/* Top hairline accent bar */}
               <div
-                className="absolute inset-x-0 top-0 h-px rounded-t-2xl"
-                style={{ background: "linear-gradient(90deg, var(--accent-2), var(--accent))" }}
+                className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl"
+                style={{ background: "var(--accent)" }}
               />
 
               {isSuccess ? (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex flex-col items-center justify-center py-16 text-center"
                 >
-                  <CheckCircle className="mb-4 h-16 w-16 text-[var(--accent)]" />
-                  <h3 className="mb-2 text-xl font-bold" style={{ color: "var(--text)" }}>
-                    Message Sent!
+                  <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-200 text-orange-600 flex items-center justify-center mb-4">
+                    <CheckCircle className="h-7 w-7" />
+                  </div>
+                  <h3 className="mb-2 text-xl font-bold text-slate-900">
+                    Message Dispatched Successfully
                   </h3>
-                  <p style={{ color: "var(--muted)" }}>
-                    Thanks for reaching out. I'll get back to you soon.
+                  <p className="text-sm text-slate-600 max-w-sm">
+                    Thank you for reaching out. I’ve received your message and will reply promptly.
                   </p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                  {/* Name */}
-                  <div>
-                    <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
-                      Name <span style={{ color: "var(--accent-2)" }}>*</span>
-                    </label>
-                    <input
-                      id="contact-name" name="name" type="text" placeholder="Your full name"
-                      value={form.name} onChange={handleChange} onBlur={handleBlur}
-                      className={`${inputBase} ${touched.name && errors.name ? inputError : inputNormal}`}
-                    />
-                    {touched.name && errors.name && (
-                      <p className="mt-1 text-xs text-red-400">{errors.name}</p>
-                    )}
-                  </div>
+                <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {/* Name */}
+                    <div>
+                      <label
+                        htmlFor="contact-name"
+                        className="mb-1.5 block text-xs font-mono uppercase tracking-wider text-slate-600"
+                      >
+                        Your Name <span className="text-orange-600">*</span>
+                      </label>
+                      <input
+                        id="contact-name"
+                        name="name"
+                        type="text"
+                        placeholder="e.g. Alex Henderson"
+                        value={form.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={`${inputBase} ${touched.name && errors.name ? inputError : inputNormal}`}
+                      />
+                      {touched.name && errors.name && (
+                        <p className="mt-1 font-mono text-[11px] text-red-500">{errors.name}</p>
+                      )}
+                    </div>
 
-                  {/* Email */}
-                  <div>
-                    <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
-                      Email <span style={{ color: "var(--accent-2)" }}>*</span>
-                    </label>
-                    <input
-                      id="contact-email" name="email" type="email" placeholder="your@email.com"
-                      value={form.email} onChange={handleChange} onBlur={handleBlur}
-                      className={`${inputBase} ${touched.email && errors.email ? inputError : inputNormal}`}
-                    />
-                    {touched.email && errors.email && (
-                      <p className="mt-1 text-xs text-red-400">{errors.email}</p>
-                    )}
+                    {/* Email */}
+                    <div>
+                      <label
+                        htmlFor="contact-email"
+                        className="mb-1.5 block text-xs font-mono uppercase tracking-wider text-slate-600"
+                      >
+                        Email Address <span className="text-orange-600">*</span>
+                      </label>
+                      <input
+                        id="contact-email"
+                        name="email"
+                        type="email"
+                        placeholder="alex@company.com"
+                        value={form.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={`${inputBase} ${touched.email && errors.email ? inputError : inputNormal}`}
+                      />
+                      {touched.email && errors.email && (
+                        <p className="mt-1 font-mono text-[11px] text-red-500">{errors.email}</p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Subject */}
                   <div>
-                    <label htmlFor="contact-subject" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
-                      Subject <span style={{ color: "var(--accent-2)" }}>*</span>
+                    <label
+                      htmlFor="contact-subject"
+                      className="mb-1.5 block text-xs font-mono uppercase tracking-wider text-slate-600"
+                    >
+                      Project or Discussion Topic <span className="text-orange-600">*</span>
                     </label>
                     <input
-                      id="contact-subject" name="subject" type="text" placeholder="What's this about?"
-                      value={form.subject} onChange={handleChange} onBlur={handleBlur}
+                      id="contact-subject"
+                      name="subject"
+                      type="text"
+                      placeholder="e.g. Flutter Mobile Architecture / Job Opening"
+                      value={form.subject}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       className={`${inputBase} ${touched.subject && errors.subject ? inputError : inputNormal}`}
                     />
                     {touched.subject && errors.subject && (
-                      <p className="mt-1 text-xs text-red-400">{errors.subject}</p>
+                      <p className="mt-1 font-mono text-[11px] text-red-500">{errors.subject}</p>
                     )}
                   </div>
 
                   {/* Message */}
                   <div>
-                    <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium" style={{ color: "var(--muted)" }}>
-                      Message <span style={{ color: "var(--accent-2)" }}>*</span>
+                    <label
+                      htmlFor="contact-message"
+                      className="mb-1.5 block text-xs font-mono uppercase tracking-wider text-slate-600"
+                    >
+                      Message Details <span className="text-orange-600">*</span>
                     </label>
                     <textarea
-                      id="contact-message" name="message" rows={5}
-                      placeholder="Tell me about your project or just say hi..."
-                      value={form.message} onChange={handleChange} onBlur={handleBlur}
+                      id="contact-message"
+                      name="message"
+                      rows={5}
+                      placeholder="Share project scope, timeline, requirements, or inquiry..."
+                      value={form.message}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       className={`${inputBase} resize-none ${touched.message && errors.message ? inputError : inputNormal}`}
                     />
                     {touched.message && errors.message && (
-                      <p className="mt-1 text-xs text-red-400">{errors.message}</p>
+                      <p className="mt-1 font-mono text-[11px] text-red-500">{errors.message}</p>
                     )}
                   </div>
 
-                  {/* Submit */}
+                  {/* Submit Button */}
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-semibold text-sm disabled:cursor-not-allowed disabled:opacity-70 transition-all duration-200 text-white"
-                    style={{
-                      background: "var(--accent)",
-                      boxShadow: isSubmitting ? "none" : "0 4px 14px rgba(16, 185, 129, 0.2)",
-                    }}
+                    whileHover={{ y: isSubmitting ? 0 : -1 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-bold text-sm disabled:cursor-not-allowed disabled:opacity-60 transition-all text-white bg-slate-900 hover:bg-slate-800 cursor-pointer shadow-xs"
                   >
                     {isSubmitting ? (
                       <>
-                        <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <svg className="h-4 w-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z" />
                         </svg>
-                        Sending...
+                        <span>Dispatching Transmission...</span>
                       </>
                     ) : (
                       <>
                         <Send className="h-4 w-4" />
-                        Send Message
+                        <span>Send Transmission</span>
                       </>
                     )}
                   </motion.button>
