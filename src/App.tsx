@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import GetStartedModal from './components/GetStartedModal';
+import sqsHeroBg from './assets/sqs-hero-bg.webp';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,11 +29,23 @@ export default function App() {
       <Navbar onOpenGetStarted={() => setIsModalOpen(true)} />
       
       <main>
-        {/* 1. Hero: Squarespace Light-to-Dark Canvas with Dual Black Cards */}
-        <Hero onOpenGetStarted={() => setIsModalOpen(true)} />
+        {/* 1 & 2: Hero & Flagship Projects: Authentic Squarespace Atmosphere */}
+        <section className="relative w-full bg-black text-white overflow-hidden select-none">
+          {/* Authentic Squarespace Atmospheric Canvas (Warm Champagne & Sepia Vignette) */}
+          <div className="absolute top-0 inset-x-0 h-[800px] bg-[#FAF9F7] pointer-events-none z-0 overflow-hidden">
+            <picture className="absolute inset-0 w-full h-full pointer-events-none select-none">
+              <img
+                src={sqsHeroBg}
+                alt=""
+                className="w-full h-full object-cover object-top opacity-95"
+                loading="eager"
+              />
+            </picture>
+            {/* Seamless Bottom Gradient Fade into Deep Pitch Black (#000000) */}
+            <div className="absolute inset-x-0 bottom-0 h-96 bg-gradient-to-b from-transparent via-black/75 to-black pointer-events-none" />
+          </div>
 
-        {/* 2. Flagship Projects Carousel: Pure Deep Black Section */}
-        <section className="bg-black text-white relative z-10">
+          <Hero onOpenGetStarted={() => setIsModalOpen(true)} />
           <Projects />
         </section>
 

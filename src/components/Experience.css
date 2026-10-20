@@ -69,3 +69,62 @@
 .exp-mobile-scroll::-webkit-scrollbar {
   display: none;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   NORDIC ARCHITECTURAL SLATE GREY (PREMIUM MINIMALIST PALETTE)
+   Inspired by high-end interior architecture & Scandinavian minimalism:
+   - Deep architectural slate/graphite card surface (#2D313A → #20232A)
+   - Crisp white typography (#FFFFFF) & soft cool silver (#E2E4E9)
+   - Micro-borders & subtle slate underlays (#4B5260 hover accents)
+   ───────────────────────────────────────────────────────────── */
+.exp-slate-card {
+  background: #24272F !important;
+  background: linear-gradient(165deg, #2D313A 0%, #20232A 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 16px 40px -10px rgba(15, 20, 28, 0.25), 0 2px 8px -1px rgba(15, 20, 28, 0.12) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
+}
+
+.exp-slate-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 0 22px 50px -8px rgba(15, 20, 28, 0.35), 0 4px 12px -2px rgba(15, 20, 28, 0.16) !important;
+}
+
+/* Typography Overrides inside Architectural Grey Cards */
+.exp-slate-card h3,
+.exp-slate-card h4 {
+  color: #FFFFFF !important;
+}
+
+.exp-slate-card p,
+.exp-slate-card .exp-body-text {
+  color: #E2E4E9 !important;
+}
+
+.exp-slate-card .exp-scope-box {
+  background: rgba(0, 0, 0, 0.20) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.exp-slate-card .exp-skill-tag {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  color: #ECEEF2 !important;
+  transition: all 0.2s ease;
+}
+
+.exp-slate-card .exp-skill-tag:hover {
+  background: #4B5260 !important;
+  border-color: #6B7280 !important;
+  color: #FFFFFF !important;
+}
+
+.exp-slate-card .exp-cert-card {
+  background: rgba(0, 0, 0, 0.20) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+

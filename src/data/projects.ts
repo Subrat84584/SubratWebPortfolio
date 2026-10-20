@@ -266,4 +266,80 @@ export const magas: PortfolioProject = {
   })),
 };
 
-export const projects: PortfolioProject[] = [kareSpecial, hitnMove, magas];
+export const mediTwin: PortfolioProject = {
+  id: 'meditwin',
+  name: 'MediTwin',
+  category: 'DIGITAL HEALTHCARE & TELEMEDICINE',
+  subtitle: 'Doctor Appointments, Diagnostics & Health Records',
+  icon: `${import.meta.env.BASE_URL}projects/meditwin/icon.webp`,
+  storeLinks: {
+    googlePlay: 'https://play.google.com/store/apps/details?id=com.carencurehealth.meditwin&pcampaignid=web_share',
+  },
+  description:
+    'MediTwin connects patients with certified doctors, accredited diagnostic labs, and comprehensive health management — from teleconsultations and pathology tests to digital medical records.',
+  note: {
+    title: 'Consultations. Diagnostics. Records.',
+    description: 'Clinic visits, teleconsultations, home sample collection & secure records.',
+    icon: 'care',
+  },
+  problemHeading: 'Healthcare access is fragmented. Finding care shouldn’t be.',
+  problem:
+    'Patients often navigate separate channels for doctor consultations, diagnostic tests, lab report tracking, and prescription management. Booking appointments, scheduling home sample collection, and securely storing family health history creates friction.',
+  solutionHeading: 'A complete clinical companion, right from your phone.',
+  solution:
+    'MediTwin brings verified doctor consultations (in-clinic & teleconsult), comprehensive pathology & eye diagnostics with home sample collection, digital health record management, and secure payments into one unified Flutter mobile platform.',
+  tags: ['Flutter & Dart', 'Teleconsultation', 'Diagnostic Booking', 'Digital Health Records', 'Razorpay & UPI'],
+  tagsLabel: 'App capabilities',
+  initialScreenshot: 0,
+  highlightsTitle: 'Healthcare engineering highlights',
+  highlightsLabel: 'CLINICAL APP HIGHLIGHTS',
+  highlights: [
+    {
+      icon: 'users',
+      title: 'Doctor Consultations Made Easy',
+      description: 'Browse verified doctors across specialties, compare availability, and book instant clinic visits or teleconsultations.',
+      tag: 'Doctor booking & video consult',
+    },
+    {
+      icon: 'file',
+      title: 'Diagnostics & Eye Tests',
+      description: 'Schedule routine pathology tests, full body checkups, and eye diagnostics with home sample collection or clinic visits.',
+      tag: 'Lab test scheduling',
+    },
+    {
+      icon: 'shopping',
+      title: 'Secure Digital Health Records',
+      description: 'Safely access and download digital test reports, doctor prescriptions, and medical history in one encrypted location.',
+      tag: 'EHR & report vault',
+    },
+    {
+      icon: 'insights',
+      title: 'Transparent Pricing & Payments',
+      description: 'Integrated secure online payments via UPI, net banking, and cards along with in-clinic pay options.',
+      tag: 'UPI & payment gateway',
+    },
+    {
+      icon: 'bell',
+      title: 'Real-Time Appointment Updates',
+      description: 'Automated slot confirmation, timely appointment reminders, and report readiness alerts powered by Firebase.',
+      tag: 'Real-time notifications',
+    },
+  ],
+  screenshots: [
+    { file: 'screenshot-1.webp', title: 'Consult Certified Doctors', alt: 'MediTwin doctor consultation and specialty selection screen' },
+    { file: 'screenshot-2.webp', title: 'Book Diagnostic & Eye Tests', alt: 'MediTwin diagnostic lab tests and full body checkup booking screen' },
+    { file: 'screenshot-3.webp', title: 'Home Sample Collection', alt: 'MediTwin home sample collection scheduling screen' },
+    { file: 'screenshot-4.webp', title: 'Digital Health Records', alt: 'MediTwin encrypted digital health records and test reports screen' },
+    { file: 'screenshot-5.webp', title: 'Doctor Appointments & Slots', alt: 'MediTwin real-time appointment booking and time slot selector' },
+    { file: 'screenshot-6.webp', title: 'Prescriptions & Reports', alt: 'MediTwin downloadable test reports and medical prescriptions view' },
+    { file: 'screenshot-7.webp', title: 'Flexible & Secure Payments', alt: 'MediTwin transparent payment options with UPI and card support' },
+    { file: 'screenshot-8.webp', title: 'Family Healthcare Management', alt: 'MediTwin family health profile and records management screen' },
+  ].map((screenshot) => ({
+    ...screenshot,
+    width: 1080,
+    height: 1920,
+    src: `${import.meta.env.BASE_URL}projects/meditwin/${screenshot.file}`,
+  })),
+};
+
+export const projects: PortfolioProject[] = [hitnMove, kareSpecial, mediTwin, magas];

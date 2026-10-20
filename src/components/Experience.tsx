@@ -1,422 +1,409 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
 import {
   Calendar,
   MapPin,
-  Smartphone,
-  Layers,
-  Rocket,
-  ShieldCheck,
-  CreditCard,
-  Server,
   ArrowUpRight,
+  CheckCircle2,
+  FileText,
+  Briefcase,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  TrendingUp,
+  Award,
 } from "lucide-react";
 import "./Experience.css";
 
-interface ExperienceRole {
-  id: string;
-  role: string;
-  company: string;
-  companyInitials: string;
-  companyGradient: string;
-  type: string;
-  period: string;
-  duration: string;
-  location: string;
-  isCurrent: boolean;
-  statusBadge: string;
-  overview: string;
-  logo: React.ReactNode;
-  phoneMoment: {
-    title: string;
-    appName: string;
-    screenshot: string;
-    metrics: string;
-    description: string;
-  };
-  impactMetrics: {
-    icon: React.ElementType;
-    title: string;
-    subtitle: string;
-    description: string;
-  }[];
-  deliverables: string[];
-  skills: {
-    category: string;
-    items: string[];
-  }[];
-  relatedProjectName: string;
-  relatedProjectId: string;
-}
-
-const experiences: ExperienceRole[] = [
-  {
-    id: "technovate",
-    role: "Mobile Application Specialist & Flutter Lead",
-    company: "Technovate Solutions",
-    companyInitials: "TS",
-    companyGradient: "from-orange-600 to-amber-600",
-    type: "Full-time",
-    period: "Nov 2025 – Present",
-    duration: "Current Position",
-    location: "Kolkata, WB, India",
-    isCurrent: true,
-    statusBadge: "Current Role",
-    overview:
-      "Leading mobile engineering for flagship cross-platform applications across Android and iOS using Flutter & Dart. Architecting scalable client-side component trees, integrating real-time Bluetooth Low Energy (BLE) sensor telemetry, optimizing native 60fps rendering, and managing production Google Play Console and App Store distribution pipelines.",
-    logo: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#111317" />
-        <path d="M12 14H28M20 14V28M15 28H25" stroke="#EA580C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="28" cy="14" r="2.5" fill="#F97316" />
-      </svg>
-    ),
-    phoneMoment: {
-      title: "Production Mobile Moment",
-      appName: "HitnMove Boxing Suite & IoT Telemetry",
-      screenshot: "/projects/hitnmove/screenshot-1.webp",
-      metrics: "60 FPS • Real-time BLE Sensors",
-      description: "Delivering real-time punch velocity tracking, instant device pairing, and synchronized cloud dashboards for elite athletes.",
-    },
-    impactMetrics: [
-      {
-        icon: Smartphone,
-        title: "Cross-Platform Delivery",
-        subtitle: "Android & iOS Native-Grade",
-        description:
-          "Developing seamless cross-platform client architectures with optimized widget trees and smooth 60 FPS performance.",
-      },
-      {
-        icon: Rocket,
-        title: "Release Lifecycle",
-        subtitle: "Google Play Console",
-        description:
-          "Orchestrating production release tracks, internal testing distribution channels, and compliance deployments.",
-      },
-      {
-        icon: Layers,
-        title: "Architecture & State",
-        subtitle: "BLoC & Clean Architecture",
-        description:
-          "Implementing clean state management architectures, offline caching, and real-time REST backend synchronization.",
-      },
-    ],
-    deliverables: [
-      "Architecting enterprise-grade Android and iOS applications with Flutter & Dart, emphasizing maintainability and testability",
-      "Integrating Bluetooth Low Energy (BLE) sensor streaming with custom chart renderers and sub-100ms response latencies",
-      "Managing end-to-end mobile release lifecycles, version tagging, bundle signing, and Google Play Console deployments",
-      "Optimizing rendering performance, memory footprint, and network consumption for seamless native-grade experience",
-    ],
-    skills: [
-      {
-        category: "Core Mobile",
-        items: ["Flutter", "Dart", "Android", "iOS", "BLoC"],
-      },
-      {
-        category: "Services & Tooling",
-        items: ["REST APIs", "BLE Integration", "Google Play Console", "Git", "Postman"],
-      },
-    ],
-    relatedProjectName: "HitnMove Boxing App",
-    relatedProjectId: "hitnmove",
-  },
-  {
-    id: "mohs10",
-    role: "Mobile & Backend Application Developer",
-    company: "Mohs10 Technologies",
-    companyInitials: "M10",
-    companyGradient: "from-blue-600 to-indigo-600",
-    type: "Full-time",
-    period: "Mar 2024 – Nov 2025",
-    duration: "1 yr 9 mos",
-    location: "Bhubaneswar, Odisha, India",
-    isCurrent: false,
-    statusBadge: "Engineering Tenure",
-    overview:
-      "Engineered production mobile applications in Flutter alongside Java & Spring Boot backend microservices. Built end-to-end multi-role healthcare and caregiver platforms, integrated RevenueCat in-app subscriptions, Razorpay payment gateways, and modeled optimized relational schemas in MySQL.",
-    logo: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" xmlns="http://www.w3.org/2000/svg">
-        <rect width="40" height="40" rx="10" fill="#1E293B" />
-        <path d="M12 28L12 12L20 20L28 12L28 28" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="20" cy="24" r="2" fill="#F97316" />
-      </svg>
-    ),
-    phoneMoment: {
-      title: "Production Mobile Moment",
-      appName: "Kare Special Healthcare Ecosystem",
-      screenshot: "/projects/karespecial/screenshot-1.webp",
-      metrics: "Multi-Role • RevenueCat & Razorpay",
-      description: "Spearheaded multi-tenant healthcare consultation modules, sensory games for special needs, and recurring subscription monetization.",
-    },
-    impactMetrics: [
-      {
-        icon: CreditCard,
-        title: "Monetization Suite",
-        subtitle: "RevenueCat & Razorpay",
-        description:
-          "Implemented robust in-app purchases, auto-renewing subscriptions, receipt validation, and payment gateways.",
-      },
-      {
-        icon: Server,
-        title: "Backend Services",
-        subtitle: "Spring Boot & Java",
-        description:
-          "Constructed modular REST endpoints, relational schemas in MySQL, and secured API service layers.",
-      },
-      {
-        icon: ShieldCheck,
-        title: "Quality & Testing",
-        subtitle: "Android Studio & Postman",
-        description:
-          "Executed comprehensive payload validation, stress tests, edge-case testing, and memory leak profiling.",
-      },
-    ],
-    deliverables: [
-      "Built high-performance Android and iOS mobile applications using Flutter & Dart across consumer and enterprise healthcare use cases",
-      "Integrated monetization solutions including Razorpay, RevenueCat subscriptions, and Apple/Google In-App Purchases",
-      "Architected backend microservices and relational database schemas with Java, Spring Boot, and MySQL",
-      "Partnered with cross-functional teams to translate business requirements into sleek mobile UI with high test coverage",
-    ],
-    skills: [
-      {
-        category: "Mobile & Monetization",
-        items: ["Flutter", "Dart", "RevenueCat", "Razorpay", "In-App Purchases"],
-      },
-      {
-        category: "Backend & Database",
-        items: ["Spring Boot", "Java", "REST APIs", "MySQL", "Postman", "Swagger"],
-      },
-    ],
-    relatedProjectName: "Kare Mobile Experience",
-    relatedProjectId: "karespecial",
-  },
-];
-
 export default function Experience() {
-  const [activeId, setActiveId] = useState<string>(experiences[0].id);
-  const activeRole = experiences.find((e) => e.id === activeId) || experiences[0];
+  const [activeTab, setActiveTab] = useState<"both" | "technovate" | "mohs10">("both");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -420, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 420, behavior: "smooth" });
+    }
+  };
 
   return (
-    <section id="experience" className="py-24 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-14">
-        <span className="text-xs font-mono font-bold tracking-widest uppercase block mb-2 text-orange-600">
-          [CAREER CHRONOLOGY // 02]
-        </span>
-        <h2 className="text-3xl sm:text-5xl font-sans tracking-tight font-extrabold text-slate-900">
-          Proven Industry Experience
-        </h2>
-        <p className="mt-3 text-base text-slate-600 font-sans leading-relaxed">
-          Production engineering tenures delivering mobile client architectures, native device performance, and cloud microservices.
-        </p>
-      </div>
+    <section id="experience" className="py-20 sm:py-28 px-4 sm:px-8 lg:px-12 max-w-7xl mx-auto scroll-mt-20 text-neutral-900">
+      {/* ───────────────────────────────────────────────────────
+          SECTION HEADER WITH LINKEDIN BUTTON & HORIZONTAL CONTROLS
+      ─────────────────────────────────────────────────────── */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-neutral-200">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-mono font-bold mb-3 shadow-xs">
+            <Sparkles size={13} className="text-orange-600" />
+            <span>CAREER CHRONOLOGY // 02</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-sans tracking-tight font-extrabold text-neutral-900">
+            Work Experience
+          </h2>
+          <p className="mt-2.5 text-sm sm:text-base text-neutral-600 font-sans max-w-xl leading-relaxed">
+            Full-time mobile engineering tenures at Technovate and Mohs10 Technologies displayed side by side.
+          </p>
+        </div>
 
-      {/* Two Company Selector Tabs with Brand Logos */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto mb-10">
-        {experiences.map((exp, idx) => {
-          const isActive = exp.id === activeId;
-          return (
+        {/* Action Controls: View Selector & LinkedIn Link */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Quick Company View Switcher */}
+          <div className="inline-flex items-center p-1 rounded-xl bg-neutral-100 border border-neutral-200">
             <button
-              key={exp.id}
-              onClick={() => setActiveId(exp.id)}
-              className={`p-5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex items-center justify-between gap-4 ${
-                isActive
-                  ? "border-slate-900 bg-white shadow-md ring-1 ring-slate-900"
-                  : "border-slate-200 bg-white/70 hover:border-slate-300 hover:bg-white"
+              type="button"
+              onClick={() => setActiveTab("both")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+                activeTab === "both"
+                  ? "bg-neutral-900 text-white shadow-xs font-extrabold"
+                  : "text-neutral-600 hover:text-neutral-900"
               }`}
             >
-              <div className="flex items-center gap-3.5 min-w-0">
-                <div className="flex-shrink-0">{exp.logo}</div>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className={`text-base font-bold truncate ${isActive ? "text-slate-900" : "text-slate-700"}`}>
-                      {exp.company}
-                    </h3>
-                    {exp.isCurrent && (
-                      <span className="font-mono text-[10px] font-bold text-orange-700 bg-orange-50 border border-orange-200 px-1.5 py-0.2 rounded">
-                        CURRENT
-                      </span>
-                    )}
-                  </div>
-                  <span className="block text-xs text-slate-500 truncate mt-0.5 font-sans">
-                    {exp.role}
-                  </span>
-                  <span className="block font-mono text-[11px] text-slate-400 mt-1">
-                    {exp.period} • {exp.duration}
-                  </span>
-                </div>
-              </div>
-
-              <span className="font-mono text-xs font-bold text-slate-400">
-                0{idx + 1}
-              </span>
+              Side-by-Side
             </button>
-          );
-        })}
+            <button
+              type="button"
+              onClick={() => setActiveTab("technovate")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+                activeTab === "technovate"
+                  ? "bg-neutral-900 text-white shadow-xs font-extrabold"
+                  : "text-neutral-600 hover:text-neutral-900"
+              }`}
+            >
+              01 Technovate
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("mohs10")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+                activeTab === "mohs10"
+                  ? "bg-neutral-900 text-white shadow-xs font-extrabold"
+                  : "text-neutral-600 hover:text-neutral-900"
+              }`}
+            >
+              02 Mohs10
+            </button>
+          </div>
+
+          {/* LinkedIn Verified Outbound Pill Button */}
+          <a
+            href="https://www.linkedin.com/in/subrat-k-acharya-a29681188/?isSelfProfile=true"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white text-neutral-900 border border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50 text-xs font-mono font-bold transition-all shadow-xs group cursor-pointer"
+          >
+            <Briefcase size={14} className="text-blue-600" />
+            <span>LinkedIn Profile</span>
+            <ArrowUpRight size={13} className="text-neutral-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+        </div>
       </div>
 
-      {/* Detailed Experience Dossier Card */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeRole.id}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-9 shadow-sm"
-        >
-          {/* Header Row: Company, Role & Meta */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-200">
-            <div className="flex items-start gap-4">
-              <div className="mt-1 flex-shrink-0">{activeRole.logo}</div>
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <span className="text-xl sm:text-2xl font-extrabold text-slate-900">
-                    {activeRole.company}
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
-                    {activeRole.type}
-                  </span>
-                  {activeRole.isCurrent && (
-                    <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-orange-50 text-orange-700 border border-orange-200">
-                      [ACTIVE ROLE]
-                    </span>
-                  )}
-                </div>
-                <h4 className="text-base sm:text-lg font-bold text-orange-700">
-                  {activeRole.role}
-                </h4>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-slate-500">
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50">
-                <Calendar size={13} className="text-orange-600" />
-                {activeRole.period} ({activeRole.duration})
-              </span>
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50">
-                <MapPin size={13} className="text-slate-400" />
-                {activeRole.location}
-              </span>
-            </div>
-          </div>
-
-          {/* Grid: Role Synopsis + Phone Moment Showcase */}
-          <div className="grid lg:grid-cols-12 gap-8 py-8 items-center border-b border-slate-200">
-            {/* Left: Role Overview */}
-            <div className="lg:col-span-7 space-y-4">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 block">
-                ROLE SYNOPSIS &amp; IMPACT
-              </span>
-              <p className="text-base sm:text-lg leading-relaxed text-slate-700 font-sans">
-                {activeRole.overview}
-              </p>
-
-              {/* High-Impact Engineering Metrics */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
-                {activeRole.impactMetrics.map((metric, i) => {
-                  const Icon = metric.icon;
-                  return (
-                    <div
-                      key={i}
-                      className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/80 flex flex-col justify-between"
-                    >
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-orange-100 text-orange-700 mb-2">
-                        <Icon size={16} />
-                      </div>
-                      <strong className="block text-xs font-bold text-slate-900 leading-snug">
-                        {metric.subtitle}
-                      </strong>
-                      <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
-                        {metric.description}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Right: Phone Moment Showcase (User requested: photo/moment where i show some phone with that company) */}
-            <div className="lg:col-span-5 p-5 rounded-2xl border border-orange-200 bg-orange-50/30 flex flex-col items-center">
-              <div className="w-full flex items-center justify-between pb-3 mb-3 border-b border-orange-200/60">
-                <span className="text-xs font-mono font-bold text-orange-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <Smartphone size={14} />
-                  <span>{activeRole.phoneMoment.title}</span>
-                </span>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-white text-slate-700 border border-orange-200">
-                  {activeRole.phoneMoment.metrics}
-                </span>
-              </div>
-
-              {/* Phone Frame Device Mockup */}
-              <div className="relative w-44 sm:w-48 aspect-[9/16] rounded-2xl overflow-hidden border-4 border-slate-900 bg-slate-950 shadow-xl my-2">
-                <img
-                  src={activeRole.phoneMoment.screenshot}
-                  alt={activeRole.phoneMoment.appName}
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
-                <div className="absolute inset-x-0 bottom-0 p-2.5 bg-gradient-to-t from-slate-950/95 via-slate-950/70 to-transparent text-white">
-                  <span className="block text-[10px] font-mono text-orange-400 font-bold truncate">
-                    {activeRole.company}
-                  </span>
-                  <p className="text-[11px] font-bold leading-tight truncate">
-                    {activeRole.phoneMoment.appName}
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-600 text-center font-sans mt-3 px-2 leading-relaxed">
-                {activeRole.phoneMoment.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Key Deliverables & Responsibilities */}
-          <div className="py-6 border-b border-slate-200">
-            <h4 className="text-xs font-mono uppercase tracking-widest text-slate-400 mb-4">
-              Key Contributions &amp; Engineering Deliverables
-            </h4>
-            <ul className="space-y-3 list-none p-0 m-0">
-              {activeRole.deliverables.map((bullet, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm sm:text-base leading-relaxed text-slate-700">
-                  <span className="font-mono text-sm font-bold text-orange-600 select-none flex-shrink-0 mt-0.5">
-                    —
-                  </span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Tech Group Matrix */}
-          <div className="pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-2">
-              <span className="text-xs font-mono uppercase tracking-widest text-slate-400 block">
-                Technologies &amp; Tooling Matrix
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {activeRole.skills.flatMap((s) => s.items).map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-2.5 py-1 rounded text-xs font-mono font-medium bg-slate-100 text-slate-800 border border-slate-200"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-orange-700 hover:text-orange-800 transition-colors self-start sm:self-auto"
+      {/* ───────────────────────────────────────────────────────
+          HORIZONTAL SIDE-WISE STAGE (No Vertical Scrolling)
+      ─────────────────────────────────────────────────────── */}
+      <div className="relative">
+        {/* Mobile Horizontal Scroll Cue & Arrows */}
+        <div className="flex lg:hidden items-center justify-between pb-3 text-xs font-mono text-neutral-500">
+          <span className="flex items-center gap-1.5">
+            <span>Swipe side-wise horizontally</span>
+            <span>↔</span>
+          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={scrollLeft}
+              className="w-8 h-8 rounded-full border border-neutral-300 flex items-center justify-center bg-white text-neutral-700 hover:bg-neutral-50 transition-colors cursor-pointer shadow-xs"
+              aria-label="Scroll left"
             >
-              <span>View Related Project ({activeRole.relatedProjectName})</span>
-              <ArrowUpRight size={14} />
-            </a>
+              <ChevronLeft size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={scrollRight}
+              className="w-8 h-8 rounded-full border border-neutral-300 flex items-center justify-center bg-white text-neutral-700 hover:bg-neutral-50 transition-colors cursor-pointer shadow-xs"
+              aria-label="Scroll right"
+            >
+              <ChevronRight size={16} />
+            </button>
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+
+        {/* Horizontal Container: Side-by-Side 2 Columns on Desktop, Horizontal Reel on Mobile */}
+        <div
+          ref={scrollContainerRef}
+          className={`flex overflow-x-auto snap-x snap-mandatory lg:overflow-visible gap-6 lg:gap-8 pb-4 items-stretch ${
+            activeTab === "both"
+              ? "lg:grid lg:grid-cols-2"
+              : "lg:block"
+          }`}
+        >
+          {/* ─────────────────────────────────────────────────────
+              CARD 1: TECHNOVATE (Software Engineer - Mobile Applications)
+          ───────────────────────────────────────────────────── */}
+          {(activeTab === "both" || activeTab === "technovate") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="exp-slate-card w-[88vw] sm:w-[580px] lg:w-auto shrink-0 snap-start flex flex-col justify-between rounded-3xl p-6 sm:p-8"
+            >
+              <div>
+                {/* Header: Logo, Company & Live Badge */}
+                <div className="flex items-start justify-between gap-3 pb-5 mb-5 border-b border-white/10">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-14 h-14 rounded-2xl p-1 bg-white/5 border border-white/10 shadow-xs flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <img
+                        src="/technovate-logo.png"
+                        alt="Technovate logo"
+                        className="w-full h-full object-contain rounded-xl"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-2xl font-extrabold text-white tracking-tight">
+                          Technovate
+                        </h3>
+                        <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-neutral-300 border border-white/15">
+                          Full-time
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 mt-0.5">
+                        <MapPin size={12} className="text-orange-400" />
+                        <span>Kolkata, West Bengal, India · On-site</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex-shrink-0 shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Present · 10 mos</span>
+                  </span>
+                </div>
+
+                {/* Role Title Line */}
+                <div className="mb-3">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-orange-400 block mb-1">
+                    CURRENT PRIMARY ROLE
+                  </span>
+                  <h4 className="text-xl font-bold text-white">
+                    Software Engineer – Mobile Applications
+                  </h4>
+                  <div className="flex items-center gap-1.5 font-mono text-xs text-neutral-400 mt-1">
+                    <Calendar size={12} className="text-orange-400" />
+                    <span>Jan 2026 – Present · 10 mos</span>
+                  </div>
+                </div>
+
+                {/* Role Summary */}
+                <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed mb-4">
+                  Mobile Application Developer specializing in Flutter for Android &amp; iOS. Spearheading client-side architecture, native 60 FPS performance profiling, and production release pipelines.
+                </p>
+
+                {/* Key Deliverables Bullet Points */}
+                <div className="exp-scope-box my-4 p-4 rounded-2xl">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400 block mb-2.5">
+                    Engineering Scope &amp; Responsibilities
+                  </span>
+                  <ul className="space-y-2.5 list-none p-0 m-0">
+                    {[
+                      "Architecting cross-platform applications in Flutter & Dart with responsive native rendering.",
+                      "Implementing clean state management architectures (BLoC & Provider) with offline caching.",
+                      "Integrating real-time Bluetooth Low Energy (BLE) sensor telemetry and background threads.",
+                      "Managing release tracks, bundle signing, and store deployments on Google Play Console and App Store.",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-neutral-200 font-sans leading-relaxed">
+                        <span className="font-mono text-xs font-bold text-orange-400 flex-shrink-0 mt-0.5">
+                          —
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Technologies Badges */}
+              <div className="pt-3 border-t border-white/10">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400 block mb-2">
+                  Skills &amp; Tooling (9+ Skills)
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "Flutter",
+                    "Dart",
+                    "Android Studio",
+                    "iOS Deployment",
+                    "BLoC",
+                    "REST APIs",
+                    "BLE Sensors",
+                    "Play Console",
+                    "Git",
+                  ].map((skill) => (
+                    <span
+                      key={skill}
+                      className="exp-skill-tag px-2.5 py-1 rounded-lg text-[11px] font-mono"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─────────────────────────────────────────────────────
+              CARD 2: MOHS10 TECHNOLOGIES (Software Specialist & Intern)
+          ───────────────────────────────────────────────────── */}
+          {(activeTab === "both" || activeTab === "mohs10") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+              className="exp-slate-card w-[88vw] sm:w-[580px] lg:w-auto shrink-0 snap-start flex flex-col justify-between rounded-3xl p-6 sm:p-8"
+            >
+              <div>
+                {/* Header: Logo, Company & Total Duration */}
+                <div className="flex items-start justify-between gap-3 pb-5 mb-5 border-b border-white/10">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-14 h-14 rounded-2xl p-1 bg-white/5 border border-white/10 shadow-xs flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <img
+                        src="/mohs10-logo.png"
+                        alt="Mohs10 Technologies logo"
+                        className="w-full h-full object-contain rounded-xl"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-2xl font-extrabold text-white tracking-tight">
+                          Mohs10 Technologies
+                        </h3>
+                        <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-neutral-300 border border-white/15">
+                          Full-time
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 mt-0.5">
+                        <MapPin size={12} className="text-orange-400" />
+                        <span>Bhubaneshwar, Odisha, India · On-site</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <span className="font-mono text-xs font-bold text-neutral-200 px-3 py-1 rounded-full bg-white/10 border border-white/15 flex-shrink-0">
+                    1 yr 9 mos
+                  </span>
+                </div>
+
+                {/* Connected Internal Career Progression (2 Roles) */}
+                <div className="space-y-6">
+                  {/* Sub-Role 1: Software Engineer Specialist (Promotion) */}
+                  <div className="relative pl-5 border-l-2 border-orange-500">
+                    <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-orange-500 ring-4 ring-orange-950/60" />
+                    
+                    <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-orange-400 mb-0.5">
+                      <TrendingUp size={12} />
+                      <span>PROMOTION // SPECIALIST ROLE</span>
+                    </div>
+
+                    <h4 className="text-lg font-bold text-white">
+                      Software Engineer Specialist
+                    </h4>
+                    <div className="flex items-center gap-1.5 font-mono text-xs text-neutral-400 mt-0.5 mb-2">
+                      <Calendar size={11} className="text-orange-400" />
+                      <span>Sep 2024 – Nov 2025 · 1 yr 3 mos</span>
+                    </div>
+
+                    <p className="text-xs text-neutral-300 font-sans leading-relaxed">
+                      Specialized in building Android and iOS applications using Flutter and Dart. Used Android Studio IDE and Postman API to create and test user-friendly, high-quality mobile solutions.
+                    </p>
+
+                    <div className="flex flex-wrap gap-1 mt-2.5">
+                      {["Flutter", "Dart", "Android Studio", "Postman", "REST APIs", "UI/UX"].map((s) => (
+                        <span key={s} className="exp-skill-tag px-2 py-0.5 rounded text-[10px] font-mono">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Sub-Role 2: Backend & Mobile application developer (Internship) */}
+                  <div className="relative pl-5 border-l-2 border-neutral-600">
+                    <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-neutral-500 ring-2 ring-neutral-700" />
+
+                    <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-400 mb-0.5">
+                      FOUNDATIONAL TENURE // INTERNSHIP
+                    </div>
+
+                    <h4 className="text-lg font-bold text-white">
+                      Backend &amp; Mobile application developer
+                    </h4>
+                    <div className="flex items-center gap-1.5 font-mono text-xs text-neutral-400 mt-0.5 mb-2">
+                      <Calendar size={11} className="text-orange-400" />
+                      <span>Mar 2024 – Aug 2024 · 6 mos</span>
+                    </div>
+
+                    <p className="text-xs text-neutral-300 font-sans leading-relaxed">
+                      Worked as back-end and mobile application developer intern on technologies like Spring Boot, Java, SQL, Flutter, Dart, Firebase, Android Studio, and MySQL.
+                    </p>
+
+                    {/* Verified Internship Certificate Card */}
+                    <div className="exp-cert-card my-3 p-3.5 rounded-xl flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-14 h-9 rounded-md overflow-hidden border border-white/20 bg-neutral-900 shadow-xs flex-shrink-0">
+                          <img
+                            src="/mohs10-internship-cert.png"
+                            alt="MOHS10 Internship Certificate"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-white truncate">
+                            <FileText size={13} className="text-orange-400 flex-shrink-0" />
+                            <span>Internship Certificate.pdf</span>
+                          </div>
+                          <span className="text-[10px] text-neutral-400 block truncate font-mono">
+                            MOHS10 Technologies · Mar–Aug 2024
+                          </span>
+                        </div>
+                      </div>
+
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold flex-shrink-0">
+                        <CheckCircle2 size={12} className="text-emerald-400" />
+                        <span>Verified</span>
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {["Spring Boot", "Java", "SQL", "MySQL", "Flutter", "Firebase"].map((s) => (
+                        <span key={s} className="exp-skill-tag px-2 py-0.5 rounded text-[10px] font-mono">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technologies Bottom Pill */}
+              <div className="pt-3 mt-4 border-t border-white/10 flex items-center justify-between">
+                <span className="text-[10px] font-mono text-neutral-400 flex items-center gap-1">
+                  <Award size={13} className="text-orange-400" />
+                  <span>15+ Core Technical Skills</span>
+                </span>
+                <span className="font-mono text-xs text-orange-400 font-bold">
+                  2 Connected Roles
+                </span>
+              </div>
+            </motion.div>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
