@@ -252,116 +252,147 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* ───────────────────────────────────────────────────────────
-   LIGHT EDITORIAL CANVAS (Experience, TechStack, About & Bio)
+   LIGHT EDITORIAL CANVAS (Experience, Education, About, Skills)
    ─────────────────────────────────────────────────────────── */
 .light-editorial-section {
   background-color: #FAF9F7 !important;
   color: #111317 !important;
 }
 
-.light-editorial-section .rounded-2xl.bg-white,
-.light-editorial-section .rounded-3xl.bg-white,
-.light-editorial-section .rounded-xl.bg-white,
-.light-editorial-section .p-6.bg-white,
-.light-editorial-section .p-5.bg-white,
-.light-editorial-section .p-4.bg-white,
-.light-editorial-section .bg-white {
-  background-color: #FFFFFF !important;
-  border-color: #E2E4E8 !important;
-  color: #111317 !important;
-  box-shadow: 0 4px 24px -6px rgba(17, 19, 23, 0.06) !important;
+.light-editorial-section h2,
+.light-editorial-section .section-title {
+  color: #0F172A !important;
 }
 
-.light-editorial-section .bg-white\/70,
-.light-editorial-section .bg-white\/90 {
-  background-color: rgba(255, 255, 255, 0.90) !important;
-  border-color: #E2E4E8 !important;
-  color: #111317 !important;
+.light-editorial-section .section-subtitle {
+  color: #475569 !important;
 }
 
-.light-editorial-section .bg-slate-50,
-.light-editorial-section .bg-slate-100 {
-  background-color: #F3F4F6 !important;
-  border-color: #E2E4E8 !important;
-  color: #111317 !important;
+/* ─────────────────────────────────────────────────────────────
+   NORDIC ARCHITECTURAL SLATE GREY (PREMIUM WORK EXPERIENCE PALETTE)
+   Shared across Work Experience, Education, About, and TechStack/Skills
+   ───────────────────────────────────────────────────────────── */
+.slate-card,
+.exp-slate-card {
+  background: #24272F !important;
+  background: linear-gradient(165deg, #2D313A 0%, #20232A 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 16px 40px -10px rgba(15, 20, 28, 0.25), 0 2px 8px -1px rgba(15, 20, 28, 0.12) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
 }
 
-.light-editorial-section .border-slate-200,
-.light-editorial-section .border-slate-300 {
-  border-color: #E2E4E8 !important;
+.slate-card:hover,
+.exp-slate-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 0 22px 50px -8px rgba(15, 20, 28, 0.35), 0 4px 12px -2px rgba(15, 20, 28, 0.16) !important;
 }
 
-.light-editorial-section .text-slate-900,
-.light-editorial-section .text-slate-800 {
-  color: #111317 !important;
+/* Inner containers within slate cards */
+.slate-inner-box {
+  background: rgba(0, 0, 0, 0.24) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.2s ease;
 }
 
-.light-editorial-section .text-slate-700,
-.light-editorial-section .text-slate-600 {
-  color: #4B5160 !important;
+.slate-inner-box:hover {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  background: rgba(0, 0, 0, 0.32) !important;
 }
 
-.light-editorial-section .text-slate-500,
-.light-editorial-section .text-slate-400 {
-  color: #6E7482 !important;
+/* Individual skill chip / pill inside cards */
+.slate-skill-tag {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  color: #ECEEF2 !important;
+  transition: all 0.2s ease;
+}
+
+.slate-skill-tag:hover {
+  background: #4B5260 !important;
+  border-color: #6B7280 !important;
+  color: #FFFFFF !important;
+}
+
+/* Auto-sliding cycling skill box (uniform size, left-to-right cycle wise) */
+.slate-marquee-box {
+  flex-shrink: 0;
+  width: 13.5rem; /* 216px uniform width */
+  height: 4.85rem; /* uniform height */
+  background: #24272F !important;
+  background: linear-gradient(165deg, #2D313A 0%, #20232A 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 8px 24px -6px rgba(15, 20, 28, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.slate-marquee-box:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(249, 115, 22, 0.5) !important;
+  box-shadow: 0 12px 28px -4px rgba(249, 115, 22, 0.25), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Infinite cycle animations */
+@keyframes marquee-cycle-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-cycle-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-cycle-left 34s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-cycle-right 34s linear infinite;
+}
+
+.marquee-pause:hover .animate-marquee-left,
+.marquee-pause:hover .animate-marquee-right {
+  animation-play-state: paused;
 }
 
 /* ───────────────────────────────────────────────────────────
-   DARK SECTIONS (Projects, Contact, Footer)
+   DARK SECTIONS (Hero, Projects, Contact, Footer)
    ─────────────────────────────────────────────────────────── */
 .dark body {
   background-color: #000000;
   color: #FFFFFF;
 }
 
-/* Card surfaces inside dark sections */
-.dark :not(.light-editorial-section) .rounded-2xl.bg-white,
-.dark :not(.light-editorial-section) .rounded-3xl.bg-white,
-.dark :not(.light-editorial-section) .rounded-xl.bg-white,
-.dark :not(.light-editorial-section) .p-6.bg-white,
-.dark :not(.light-editorial-section) .p-5.bg-white,
-.dark :not(.light-editorial-section) .p-4.bg-white {
+#projects,
+#contact,
+footer {
+  color: #FFFFFF;
+}
+
+#contact .rounded-2xl.bg-white,
+#contact .rounded-3xl.bg-white {
   background-color: #0E0E12 !important;
   border-color: rgba(255, 255, 255, 0.10) !important;
   color: #FFFFFF !important;
 }
 
-.dark footer {
+footer {
   background-color: #050507 !important;
   border-color: rgba(255, 255, 255, 0.10) !important;
-}
-
-.dark :not(.light-editorial-section) .bg-white\/70,
-.dark :not(.light-editorial-section) .bg-white\/90 {
-  background-color: rgba(14, 14, 18, 0.92) !important;
-  border-color: rgba(255, 255, 255, 0.10) !important;
-}
-
-.dark :not(.light-editorial-section) .bg-slate-50,
-.dark :not(.light-editorial-section) .bg-slate-100 {
-  background-color: #16161C !important;
-  border-color: rgba(255, 255, 255, 0.10) !important;
-  color: #FFFFFF !important;
-}
-
-.dark :not(.light-editorial-section) .border-slate-200,
-.dark :not(.light-editorial-section) .border-slate-300 {
-  border-color: rgba(255, 255, 255, 0.10) !important;
-}
-
-.dark :not(.light-editorial-section) .text-slate-900,
-.dark :not(.light-editorial-section) .text-slate-800 {
-  color: #FFFFFF !important;
-}
-
-.dark :not(.light-editorial-section) .text-slate-700,
-.dark :not(.light-editorial-section) .text-slate-600 {
-  color: #A1A1AA !important;
-}
-
-.dark :not(.light-editorial-section) .text-slate-500,
-.dark :not(.light-editorial-section) .text-slate-400 {
-  color: #71717A !important;
 }
 
 /* Modal and form inputs */

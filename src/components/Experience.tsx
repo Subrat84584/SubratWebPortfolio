@@ -38,10 +38,7 @@ export default function Experience() {
       ─────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-neutral-200">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-mono font-bold mb-3 shadow-xs">
-            <Sparkles size={13} className="text-orange-600" />
-            <span>CAREER CHRONOLOGY // 02</span>
-          </div>
+
           <h2 className="text-3xl sm:text-5xl font-sans tracking-tight font-extrabold text-neutral-900">
             Work Experience
           </h2>

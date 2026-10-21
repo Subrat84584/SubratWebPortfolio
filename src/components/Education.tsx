@@ -40,7 +40,7 @@ const EDUCATION: EducationItem[] = [
 ];
 
 const CERTIFICATIONS = [
-  { title: "Flutter & Dart Specialist", issuer: "Udemy", location: "Bhubaneswar, India" },
+  { title: "Flutter & Dart Specialist", issuer: "Udemy", location: "Online / Credential" },
   { title: "C++, DSA & IoT Architecture", issuer: "iNeuron", location: "Online" },
   { title: "Cyber Security and Privacy", issuer: "IIT Madras", location: "Premier Institute" },
 ];
@@ -96,91 +96,101 @@ export default function Education() {
         transition={{ duration: 0.5 }}
         className="mb-14 text-center max-w-3xl mx-auto"
       >
-        <span className="text-xs font-mono font-bold tracking-widest uppercase block mb-2 text-orange-600">
-          [ACADEMIC FOUNDATION &amp; DEGREES // 03]
-        </span>
-        <h2 className="text-3xl sm:text-5xl font-sans tracking-tight font-extrabold text-slate-900">
+
+        <h2 className="text-3xl sm:text-5xl font-sans tracking-tight font-extrabold text-neutral-900">
           Education &amp; Professional Certifications
         </h2>
-        <p className="mt-3 text-base text-slate-600 font-sans leading-relaxed">
+        <p className="mt-2.5 text-sm sm:text-base text-neutral-600 font-sans leading-relaxed">
           Master of Computer Applications from Silicon University, Bachelor of Computer Science from Utkal University, and official convocation milestone gallery.
         </p>
       </motion.div>
 
       {/* Academic Foundation & Degrees */}
       <div className="mb-16">
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 items-stretch">
           {/* Degree Timeline Cards */}
-          <div className="space-y-4">
+          <div className="space-y-5 flex flex-col justify-between">
             {EDUCATION.map((edu, idx) => (
               <div
                 key={idx}
-                className="p-5 sm:p-6 rounded-2xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between"
+                className="slate-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between h-full"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-800 border border-slate-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-white/10 text-neutral-200 border border-white/15">
                       {edu.period}
                     </span>
                     {edu.isLatest && (
-                      <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
-                        CONVOCATION 2024
+                      <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold shadow-xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>CONVOCATION 2024</span>
                       </span>
                     )}
                   </div>
-                  <div className="flex items-start gap-3 mt-2">
-                    <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 border border-orange-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <GraduationCap size={20} />
+                  <div className="flex items-start gap-3.5 mt-2">
+                    <div className="w-11 h-11 rounded-2xl bg-orange-500/15 border border-orange-500/30 text-orange-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <GraduationCap size={22} />
                     </div>
                     <div>
-                      <h4 className="text-base sm:text-lg font-bold text-slate-900">
+                      <h4 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                         {edu.degree}
                       </h4>
-                      <p className="text-sm font-semibold text-slate-700 mt-0.5">
+                      <p className="text-sm font-semibold text-neutral-300 mt-0.5">
                         {edu.institution}
                       </p>
-                      <p className="text-xs text-slate-500 mt-0.5 font-mono">
+                      <p className="text-xs text-neutral-400 mt-0.5 font-mono">
                         {edu.field}
                       </p>
                     </div>
                   </div>
                 </div>
                 {edu.highlight && (
-                  <p className="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-600 font-sans leading-relaxed">
-                    {edu.highlight}
-                  </p>
+                  <div className="slate-inner-box mt-4 p-3.5 rounded-2xl flex items-start gap-2">
+                    <span className="font-mono text-xs font-bold text-orange-400 flex-shrink-0 mt-0.5">—</span>
+                    <p className="text-xs text-neutral-300 font-sans leading-relaxed">
+                      {edu.highlight}
+                    </p>
+                  </div>
                 )}
               </div>
             ))}
           </div>
 
           {/* Professional Certifications List */}
-          <div className="p-5 sm:p-6 rounded-2xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between">
+          <div className="slate-card p-6 sm:p-7 rounded-3xl flex flex-col justify-between">
             <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400 block mb-4">
-                TECHNICAL CERTIFICATIONS
-              </span>
+              <div className="flex items-center justify-between pb-3 mb-5 border-b border-white/10">
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-neutral-400">
+                  TECHNICAL CERTIFICATIONS
+                </span>
+                <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-neutral-300 border border-white/15">
+                  Verified
+                </span>
+              </div>
               <div className="space-y-3">
                 {CERTIFICATIONS.map((cert, idx) => (
-                  <div key={idx} className="p-3.5 rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-between">
+                  <div key={idx} className="slate-inner-box p-3.5 rounded-2xl flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 border border-orange-200 flex items-center justify-center flex-shrink-0">
-                        <Award size={16} />
+                      <div className="w-9 h-9 rounded-xl bg-orange-500/15 border border-orange-500/30 text-orange-400 flex items-center justify-center flex-shrink-0">
+                        <Award size={18} />
                       </div>
                       <div>
-                        <h5 className="text-sm font-bold text-slate-900">{cert.title}</h5>
-                        <span className="text-xs font-mono text-slate-500">{cert.issuer} • {cert.location}</span>
+                        <h5 className="text-sm font-bold text-white">{cert.title}</h5>
+                        <span className="text-xs font-mono text-neutral-400">{cert.issuer} • {cert.location}</span>
                       </div>
                     </div>
-                    <CheckCircle2 size={16} className="text-emerald-600 flex-shrink-0" />
+                    <CheckCircle2 size={18} className="text-emerald-400 flex-shrink-0" />
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
               <span>Silicon University &amp; IIT Madras Accredited</span>
-              <span className="text-emerald-700 font-semibold">Verified Credentials</span>
+              <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                <CheckCircle2 size={12} className="text-emerald-400" />
+                Verified Credentials
+              </span>
             </div>
           </div>
         </div>
@@ -188,16 +198,16 @@ export default function Education() {
 
       {/* CONVOCATION 2024 PHOTO GALLERY */}
       <div>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-neutral-200 mb-8">
           <div>
             <span className="font-mono text-xs font-bold uppercase tracking-wider text-orange-600 block mb-1">
               CONVOCATION 2024 MILESTONE ARCHIVE
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            <h3 className="text-2xl sm:text-3xl font-bold text-neutral-900">
               Silicon University Ceremony Moments
             </h3>
           </div>
-          <span className="font-mono text-xs text-slate-500">
+          <span className="font-mono text-xs text-neutral-500">
             Click any photo to view in high-resolution
           </span>
         </div>
@@ -207,38 +217,38 @@ export default function Education() {
             <div
               key={photo.id}
               onClick={() => setSelectedPhoto(photo)}
-              className="group rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              className="slate-card group rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-between"
             >
               {/* Photo Frame */}
-              <div className="relative aspect-[16/11] overflow-hidden bg-slate-950">
+              <div className="relative aspect-[16/11] overflow-hidden bg-neutral-950">
                 <img
                   src={photo.src}
                   alt={photo.title}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
 
                 <div className="absolute top-3 right-3 bg-black/60 text-white p-2 rounded-xl backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity border border-white/10">
                   <Maximize2 size={14} />
                 </div>
 
-                <span className="absolute bottom-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white text-slate-950">
+                <span className="absolute bottom-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white text-neutral-950">
                   {photo.badge}
                 </span>
               </div>
 
               {/* Photo Info */}
-              <div className="p-4 sm:p-5">
-                <h4 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+              <div className="p-5">
+                <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-orange-400 transition-colors">
                   {photo.title}
                 </h4>
-                <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed font-sans">
+                <p className="text-xs text-neutral-300 mt-1 line-clamp-2 leading-relaxed font-sans">
                   {photo.caption}
                 </p>
-                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
                   <span>Silicon University 2024</span>
-                  <span className="text-orange-600 font-semibold group-hover:underline">
+                  <span className="text-orange-400 font-semibold group-hover:underline">
                     View Fullscreen →
                   </span>
                 </div>

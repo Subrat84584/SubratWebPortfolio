@@ -63,14 +63,14 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative border-t border-slate-200 bg-white z-10">
+    <footer className="relative border-t border-white/10 bg-black text-white z-10">
       <div className="relative mx-auto max-w-6xl px-6 py-16 sm:px-12 lg:px-20">
         {/* Brand and Editorial Tagline */}
         <div className="mb-12 flex flex-col items-center gap-3 text-center">
-          <span className="text-2xl font-sans font-extrabold tracking-tight text-slate-900">
+          <span className="text-2xl font-sans font-extrabold tracking-tight text-white">
             Buildwth<span style={{ color: 'var(--accent)' }}>Subrat</span>
           </span>
-          <p className="font-serif italic text-base text-slate-700">
+          <p className="font-serif italic text-base text-neutral-400">
             &ldquo;Building purposeful mobile applications with architectural precision.&rdquo;
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function Footer() {
         <div className="mb-12 grid grid-cols-1 gap-10 sm:grid-cols-3">
           {/* Quick Links */}
           <div>
-            <span className="mb-4 block text-xs font-mono font-bold uppercase tracking-widest text-slate-400">
+            <span className="mb-4 block text-xs font-mono font-bold uppercase tracking-widest text-neutral-400">
               [INDEX // SECTIONS]
             </span>
             <ul className="space-y-2">
@@ -87,7 +87,7 @@ export default function Footer() {
                 <li key={label}>
                   <button
                     onClick={() => smoothScrollTo(href)}
-                    className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors duration-150 cursor-pointer focus:outline-none"
+                    className="text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-150 cursor-pointer focus:outline-none"
                   >
                     {label}
                   </button>
@@ -98,7 +98,7 @@ export default function Footer() {
 
           {/* Connect */}
           <div>
-            <span className="mb-4 block text-xs font-mono font-bold uppercase tracking-widest text-slate-400">
+            <span className="mb-4 block text-xs font-mono font-bold uppercase tracking-widest text-neutral-400">
               [NETWORK // CHANNELS]
             </span>
             <ul className="space-y-2.5">
@@ -108,9 +108,9 @@ export default function Footer() {
                     href={href}
                     target={href.startsWith("mailto") ? undefined : "_blank"}
                     rel="noreferrer noopener"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-orange-700 transition-colors duration-150"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-orange-400 transition-colors duration-150"
                   >
-                    <Icon className="h-4 w-4 text-orange-600 flex-shrink-0" />
+                    <Icon className="h-4 w-4 text-orange-500 flex-shrink-0" />
                     <span className="truncate">{label}</span>
                   </a>
                 </li>
@@ -120,14 +120,14 @@ export default function Footer() {
 
           {/* Technical Keywords */}
           <div>
-            <span className="mb-4 block text-xs font-mono font-bold uppercase tracking-widest text-slate-400">
+            <span className="mb-4 block text-xs font-mono font-bold uppercase tracking-widest text-neutral-400">
               [INDEX // EXPERTISE]
             </span>
             <div className="flex flex-wrap gap-1.5">
               {techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-md px-2.5 py-1 text-xs font-mono font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-400 hover:bg-white transition-all duration-150 cursor-default"
+                  className="rounded-md px-2.5 py-1 text-xs font-mono font-medium border border-white/10 bg-white/5 text-neutral-300 hover:border-orange-500/40 hover:text-white transition-all duration-150 cursor-default"
                 >
                   {tech}
                 </span>
@@ -137,19 +137,22 @@ export default function Footer() {
         </div>
 
         {/* Bottom Editorial Colophon */}
-        <div className="flex flex-col items-center justify-between gap-4 pt-8 border-t border-slate-200 sm:flex-row text-xs text-slate-500">
-          <p className="flex flex-wrap items-center justify-center gap-1 font-sans">
-            <span>© 2026 Subrat K. Acharya.</span>
-            <span className="mx-1 font-mono">—</span>
-            <span>Crafted with</span>
-            <Heart className="inline h-3.5 w-3.5 fill-orange-600 text-orange-600 mx-0.5" />
-            <span>in React &amp; Tailwind CSS</span>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10 text-xs text-neutral-400">
+          <p className="flex flex-wrap items-center justify-center gap-1.5 font-sans text-neutral-300">
+            <span>© 2026 Developed by Subrat Kumar Acharya</span>
+            <span className="text-neutral-600">•</span>
+            <a
+              href="mailto:subratkumaracharya1@gmail.com"
+              className="text-orange-400 hover:text-orange-300 transition-colors underline decoration-orange-500/40 underline-offset-2"
+            >
+              subratkumaracharya1@gmail.com
+            </a>
           </p>
 
-          <div className="flex items-center gap-3 font-mono text-[11px] text-slate-400">
-            <span>SWISS MODERNIST EDITION</span>
-            <span>/</span>
-            <span>BHUBANESWAR, IN</span>
+          <div className="flex items-center gap-2 font-mono text-[11px] text-neutral-500">
+            <span>KOLKATA, WB, INDIA</span>
+            <span>•</span>
+            <span>ALL RIGHTS RESERVED</span>
           </div>
         </div>
       </div>

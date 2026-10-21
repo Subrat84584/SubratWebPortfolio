@@ -188,6 +188,8 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
               <a
                 href="/Subrat_Kumar_Acharya_Resume.pdf"
                 download="Subrat_Kumar_Acharya_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs xl:text-[13px] font-sans font-semibold tracking-[0.10em] uppercase text-neutral-400 hover:text-white transition-colors cursor-pointer outline-none focus:outline-none"
               >
                 <Download size={13} className="text-neutral-400" />
@@ -254,6 +256,8 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
                 <a
                   href="/Subrat_Kumar_Acharya_Resume.pdf"
                   download="Subrat_Kumar_Acharya_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded text-xs font-mono font-medium tracking-wider text-neutral-300 border border-white/15 bg-neutral-900/60 uppercase"
                 >
