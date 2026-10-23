@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   FileText,
   Briefcase,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   TrendingUp,

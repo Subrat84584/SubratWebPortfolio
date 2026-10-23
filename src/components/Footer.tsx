@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GitBranch, Link2, Mail, ArrowUp, Heart } from "lucide-react";
+import { GitBranch, Link2, Mail, ArrowUp } from "lucide-react";
 
 const quickLinks = [
   { label: "Home", href: "#hero" },

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, type FormEvent, type ChangeEvent } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
   Mail,
   Link2,
@@ -16,12 +16,9 @@ import {
   Check,
   ExternalLink,
   Clock,
-  Sparkles,
   MessageSquare,
   ShieldCheck,
-  Zap,
   FileText,
-  Download,
 } from "lucide-react";
 
 interface ContactInfo {

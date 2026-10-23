@@ -20,7 +20,6 @@ import {
   Workflow,
   Boxes,
   CreditCard,
-  Sparkles,
   Zap,
 } from "lucide-react";
 

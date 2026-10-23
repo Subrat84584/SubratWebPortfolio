@@ -9,7 +9,6 @@ import {
   Mail,
   MapPin,
   CheckCircle2,
-  Award,
 } from "lucide-react";
 
 const AWARDS = [
