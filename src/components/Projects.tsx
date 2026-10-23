@@ -48,13 +48,13 @@ function ProjectCard({
   const getNoteIcon = () => {
     switch (project.note.icon) {
       case "training":
-        return <Dumbbell size={20} className="text-orange-400" />;
+        return <Dumbbell size={16} className="text-orange-400" />;
       case "care":
-        return <HeartPulse size={20} className="text-emerald-400" />;
+        return <HeartPulse size={16} className="text-emerald-400" />;
       case "business":
-        return <Briefcase size={20} className="text-blue-400" />;
+        return <Briefcase size={16} className="text-blue-400" />;
       default:
-        return <Sparkles size={20} className="text-orange-400" />;
+        return <Sparkles size={16} className="text-orange-400" />;
     }
   };
 
@@ -63,69 +63,69 @@ function ProjectCard({
       id={`project-${project.id}-${number}`}
       onClick={!isActive ? onClickCard : undefined}
       style={{ width: `${cardWidth}px` }}
-      className={`kare-project relative flex-shrink-0 overflow-hidden rounded-[28px] sm:rounded-[32px] border transition-all duration-500 text-white select-none ${
+      className={`kare-project relative flex-shrink-0 overflow-hidden rounded-[20px] sm:rounded-[24px] border transition-all duration-500 text-white select-none ${
         isActive
-          ? "border-white/25 bg-[#0B0B0E] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)] ring-1 ring-white/15 opacity-100 scale-100"
-          : "border-white/10 bg-[#0B0B0E]/85 shadow-xl opacity-75 hover:opacity-95 hover:border-white/20 cursor-pointer scale-[0.985]"
+          ? "border-white/25 bg-[#0B0B0E] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85)] ring-1 ring-white/15 opacity-100 scale-100"
+          : "border-white/10 bg-[#0B0B0E]/85 shadow-lg opacity-75 hover:opacity-95 hover:border-white/20 cursor-pointer scale-[0.985]"
       }`}
       aria-labelledby={`${project.id}-${number}-heading`}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_1fr] h-full">
-        {/* Left Column: Project Details (Exact Match to Image 4) */}
-        <div className="p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.18fr_1fr] h-full">
+        {/* Left Column: Project Details (Compact & Sleek) */}
+        <div className="p-4 sm:p-5 lg:p-6 flex flex-col justify-between">
           <div>
             {/* Top Meta Line: Number + Live Status Badge */}
-            <div className="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-white/10">
-              <span className="font-mono text-xs font-bold tracking-widest uppercase text-neutral-400">
+            <div className="flex items-center justify-between gap-2 pb-2.5 mb-3 border-b border-white/10">
+              <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-neutral-400">
                 0{number} / PRODUCTION APPLICATION
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono font-bold tracking-wide">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>LIVE • {project.storeLinks.appStore ? "Android & iOS" : "Android"}</span>
               </span>
             </div>
 
             {/* Brand Header: Logo + Name + Category */}
-            <div className="flex items-center gap-4 mb-3.5">
+            <div className="flex items-center gap-3 mb-2.5">
               <img
                 src={project.icon}
                 alt={`${project.name} app icon`}
-                width="64"
-                height="64"
-                className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl border border-white/20 bg-white object-cover shadow-lg flex-shrink-0"
+                width="48"
+                height="48"
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl border border-white/20 bg-white object-cover shadow-md flex-shrink-0"
                 loading="lazy"
                 decoding="async"
               />
               <div className="min-w-0">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-orange-400 block mb-0.5">
+                <span className="font-mono text-[10px] sm:text-[10.5px] font-bold uppercase tracking-wider text-orange-400 block mb-0.5">
                   {project.category}
                 </span>
-                <h3 id={`${project.id}-${number}-heading`} className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+                <h3 id={`${project.id}-${number}-heading`} className="text-xl sm:text-2xl lg:text-[25px] font-extrabold text-white tracking-tight leading-tight">
                   {project.name}
                 </h3>
               </div>
             </div>
 
             {/* Subheading / Title */}
-            <h4 className="text-base sm:text-lg font-bold text-white mt-1 mb-2.5 leading-snug">
+            <h4 className="text-sm sm:text-[15px] font-bold text-white mt-1 mb-1.5 leading-snug line-clamp-1 sm:line-clamp-2">
               {project.subtitle}
             </h4>
 
             {/* Description */}
-            <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed mb-4 line-clamp-3">
+            <p className="text-xs text-neutral-300 font-sans leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3">
               {project.description}
             </p>
 
             {/* Highlight Callout Box (e.g. Your rounds. Your rhythm.) */}
-            <div className="my-4 p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 flex items-start gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div className="my-2.5 p-2.5 sm:p-3 rounded-xl bg-white/[0.04] border border-white/10 flex items-start gap-2.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center flex-shrink-0 mt-0.5">
                 {getNoteIcon()}
               </div>
               <div className="min-w-0">
-                <strong className="block text-xs sm:text-sm font-bold text-white mb-0.5">
+                <strong className="block text-xs font-bold text-white mb-0.5">
                   {project.note.title}
                 </strong>
-                <span className="text-[11px] sm:text-xs text-neutral-300 font-sans leading-relaxed">
+                <span className="text-[11px] text-neutral-300 font-sans leading-relaxed line-clamp-2">
                   {project.note.description}
                 </span>
               </div>
@@ -133,9 +133,9 @@ function ProjectCard({
           </div>
 
           {/* Bottom Actions: Store Badges + Architecture Tags */}
-          <div className="mt-4">
+          <div className="mt-2.5">
             {/* Store Badges */}
-            <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2.5">
+            <div className="pt-2.5 border-t border-white/10 flex flex-wrap items-center gap-2">
               {project.storeLinks.googlePlay && (
                 <motion.a
                   href={project.storeLinks.googlePlay}
@@ -144,14 +144,14 @@ function ProjectCard({
                   onClick={(e) => e.stopPropagation()}
                   whileHover={reduceMotion ? undefined : { scale: 1.02 }}
                   whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-                  className="store-btn-google inline-flex items-center gap-2 px-3.5 py-2 rounded-xl cursor-pointer text-xs font-medium transition-all group"
+                  className="store-btn-google inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-medium transition-all group"
                 >
-                  <Play size={15} fill="#000000" className="text-black flex-shrink-0" />
+                  <Play size={13} fill="#000000" className="text-black flex-shrink-0" />
                   <div className="text-left leading-tight">
-                    <span className="block text-[8px] font-mono uppercase tracking-wider font-semibold opacity-70">EXPLORE IT ON</span>
-                    <span className="font-extrabold text-xs block">Google Play</span>
+                    <span className="block text-[7.5px] font-mono uppercase tracking-wider font-semibold opacity-70">EXPLORE IT ON</span>
+                    <span className="font-extrabold text-[11px] block">Google Play</span>
                   </div>
-                  <ArrowUpRight size={13} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <ArrowUpRight size={12} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </motion.a>
               )}
 
@@ -163,29 +163,29 @@ function ProjectCard({
                   onClick={(e) => e.stopPropagation()}
                   whileHover={reduceMotion ? undefined : { scale: 1.02 }}
                   whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-                  className="store-btn-apple inline-flex items-center gap-2 px-3.5 py-2 rounded-xl cursor-pointer text-xs font-medium transition-all group"
+                  className="store-btn-apple inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-medium transition-all group"
                 >
-                  <Smartphone size={15} className="text-blue-400 flex-shrink-0" />
+                  <Smartphone size={13} className="text-blue-400 flex-shrink-0" />
                   <div className="text-left leading-tight">
-                    <span className="block text-[8px] font-mono text-neutral-400 uppercase tracking-wider">EXPLORE IT ON</span>
-                    <span className="font-extrabold text-white text-xs block">App Store</span>
+                    <span className="block text-[7.5px] font-mono text-neutral-400 uppercase tracking-wider">EXPLORE IT ON</span>
+                    <span className="font-extrabold text-white text-[11px] block">App Store</span>
                   </div>
-                  <ArrowUpRight size={13} className="text-neutral-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <ArrowUpRight size={12} className="text-neutral-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </motion.a>
               )}
             </div>
 
             {/* Build Architecture & Tags */}
-            <div className="mt-3.5 pt-2.5 border-t border-white/10">
-              <span className="text-[11px] font-mono font-bold text-orange-400 mb-1.5 inline-flex items-center gap-1 tracking-wide">
+            <div className="mt-2.5 pt-2 border-t border-white/10">
+              <span className="text-[10px] font-mono font-bold text-orange-400 mb-1 inline-flex items-center gap-1 tracking-wide">
                 <span>Build Architecture</span>
                 <span className="text-xs">↓</span>
               </span>
-              <div className="flex flex-wrap gap-1.5 mt-1">
+              <div className="flex flex-wrap gap-1 mt-0.5">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300 font-mono text-[10px]"
+                    className="px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-neutral-300 font-mono text-[9px] sm:text-[9.5px]"
                   >
                     {tag}
                   </span>
@@ -196,13 +196,13 @@ function ProjectCard({
         </div>
 
         {/* Right Column: Single Polished Project Screen Mockup + "View Project Images" CTA */}
-        <div className="relative p-6 sm:p-8 flex flex-col items-center justify-between bg-gradient-to-b from-[#13131A] via-[#0E0E14] to-[#0A0A0E] border-t lg:border-t-0 lg:border-l border-white/10 min-h-[440px]">
+        <div className="relative p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-between bg-gradient-to-b from-[#13131A] via-[#0E0E14] to-[#0A0A0E] border-t lg:border-t-0 lg:border-l border-white/10 min-h-[360px] sm:min-h-[380px]">
           {/* Top Eyebrow */}
-          <div className="w-full flex items-center justify-between mb-3">
-            <span className="font-mono text-[11px] font-bold text-neutral-400 tracking-wider uppercase">
+          <div className="w-full flex items-center justify-between mb-2">
+            <span className="font-mono text-[10px] font-bold text-neutral-400 tracking-wider uppercase">
               A LOOK INSIDE
             </span>
-            <span className="font-mono text-[10px] text-emerald-400 font-semibold flex items-center gap-1.5">
+            <span className="font-mono text-[9.5px] text-emerald-400 font-semibold flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Live Production Screen
             </span>
@@ -227,7 +227,7 @@ function ProjectCard({
           >
             {/* Ambient Glow */}
             <div
-              className={`absolute inset-0 blur-3xl opacity-30 group-hover/phone:opacity-60 transition-opacity pointer-events-none rounded-full ${
+              className={`absolute inset-0 blur-2xl opacity-30 group-hover/phone:opacity-60 transition-opacity pointer-events-none rounded-full ${
                 project.id === "hitnmove"
                   ? "bg-orange-500/40"
                   : project.id === "karespecial"
@@ -239,14 +239,14 @@ function ProjectCard({
             />
 
             {/* Smartphone Frame */}
-            <div className="relative w-[190px] sm:w-[220px] aspect-[9/18.5] rounded-[36px] p-2 bg-[#1A1A22] border-[3px] border-neutral-700 shadow-2xl shadow-black transition-transform duration-300 group-hover/phone:scale-[1.03] group-hover/phone:-translate-y-1">
+            <div className="relative w-[155px] sm:w-[170px] aspect-[9/18.5] rounded-[28px] p-1.5 bg-[#1A1A22] border-2 border-neutral-700 shadow-2xl shadow-black transition-transform duration-300 group-hover/phone:scale-[1.03] group-hover/phone:-translate-y-1">
               {/* Speaker Notch */}
-              <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-14 h-3.5 bg-black rounded-full z-20 flex items-center justify-end pr-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-neutral-900 border border-neutral-800" />
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-11 h-2.5 bg-black rounded-full z-20 flex items-center justify-end pr-1">
+                <div className="w-1 h-1 rounded-full bg-neutral-900 border border-neutral-800" />
               </div>
 
               {/* Display Screen */}
-              <div className="relative w-full h-full rounded-[28px] overflow-hidden bg-black">
+              <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-black">
                 <img
                   src={featuredScreen.src}
                   alt={featuredScreen.alt}
@@ -255,9 +255,9 @@ function ProjectCard({
                 />
 
                 {/* Hover Overlay Hint */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover/phone:opacity-100 transition-opacity flex flex-col items-center justify-end pb-3.5 px-3 text-center">
-                  <span className="text-[10px] font-mono font-bold text-white bg-black/80 px-3 py-1.5 rounded-full border border-white/25 shadow-lg flex items-center gap-1.5">
-                    <Eye size={12} className="text-orange-400" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover/phone:opacity-100 transition-opacity flex flex-col items-center justify-end pb-2.5 px-2 text-center">
+                  <span className="text-[9.5px] font-mono font-bold text-white bg-black/80 px-2.5 py-1 rounded-full border border-white/25 shadow-lg flex items-center gap-1">
+                    <Eye size={11} className="text-orange-400" />
                     <span>View All {project.screenshots.length} Screens ↗</span>
                   </span>
                 </div>
@@ -266,7 +266,7 @@ function ProjectCard({
           </div>
 
           {/* View Project Images Button Section */}
-          <div className="w-full flex flex-col items-center gap-1.5 pt-3.5 border-t border-white/10 mt-3">
+          <div className="w-full flex flex-col items-center gap-1 pt-2.5 border-t border-white/10 mt-2">
             <motion.button
               type="button"
               onClick={(e) => {
@@ -275,13 +275,13 @@ function ProjectCard({
               }}
               whileHover={reduceMotion ? undefined : { scale: 1.02 }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-              className="btn-live-screens w-full max-w-xs inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white text-black font-sans font-bold text-xs hover:bg-neutral-200 transition-all shadow-xl cursor-pointer group"
+              className="btn-live-screens w-full max-w-[260px] inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-white text-black font-sans font-bold text-xs hover:bg-neutral-200 transition-all shadow-md cursor-pointer group"
             >
-              <Eye size={15} className="text-black group-hover:scale-110 transition-transform" />
+              <Eye size={14} className="text-black group-hover:scale-110 transition-transform" />
               <span>View Project Images ({project.screenshots.length})</span>
-              <ArrowUpRight size={14} className="text-neutral-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight size={13} className="text-neutral-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </motion.button>
-            <span className="text-[10px] font-mono text-neutral-400">
+            <span className="text-[9.5px] font-mono text-neutral-400">
               Click to open interactive gallery
             </span>
           </div>
@@ -310,34 +310,34 @@ export default function Projects() {
   const [modalScreenIndex, setModalScreenIndex] = useState(0);
 
   // Responsive card metrics for horizontal reel
-  const [cardMetrics, setCardMetrics] = useState({ width: 760, gap: 28 });
+  const [cardMetrics, setCardMetrics] = useState({ width: 680, gap: 24 });
 
   const SLIDE_DURATION = 4600; // 4.6 seconds per project auto-slide
 
-  // Calculate card width and gap so 2 cards sit side-by-side on desktop (Squarespace style)
+  // Calculate card width and gap so 2 cards sit side-by-side on desktop (compact & balanced)
   useEffect(() => {
     const updateMetrics = () => {
       if (!containerRef.current) return;
       const containerWidth = containerRef.current.offsetWidth;
 
       if (window.innerWidth >= 1200) {
-        // Wide Desktop: 2 cards clearly visible side-by-side (like AGENCY and BOTANICA)
-        const gap = 32;
-        const width = Math.min(820, Math.floor((containerWidth - gap) * 0.53));
+        // Wide Desktop: 2 cards clearly visible side-by-side with elegant proportions
+        const gap = 24;
+        const width = Math.min(680, Math.floor((containerWidth - gap) * 0.495));
         setCardMetrics({ width, gap });
       } else if (window.innerWidth >= 1024) {
-        const gap = 24;
-        const width = Math.floor((containerWidth - gap) * 0.55);
+        const gap = 20;
+        const width = Math.min(600, Math.floor((containerWidth - gap) * 0.52));
         setCardMetrics({ width, gap });
       } else if (window.innerWidth >= 640) {
         // Tablet: 1 prominent card + peeking adjacent card
-        const gap = 20;
-        const width = Math.min(640, Math.floor(containerWidth * 0.84));
+        const gap = 16;
+        const width = Math.min(540, Math.floor(containerWidth * 0.82));
         setCardMetrics({ width, gap });
       } else {
         // Mobile: 1 responsive card filling ~88vw
-        const gap = 16;
-        const width = Math.floor(containerWidth * 0.90);
+        const gap = 14;
+        const width = Math.floor(containerWidth * 0.88);
         setCardMetrics({ width, gap });
       }
     };
@@ -424,28 +424,28 @@ export default function Projects() {
       ─────────────────────────────────────────────────────── */}
       <div
         ref={containerRef}
-        className="relative my-4 sm:my-6 overflow-hidden"
+        className="group/reel relative my-4 sm:my-6 overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Floating Left Arrow */}
+        {/* Floating Left Arrow (Appears smoothly on container hover) */}
         <button
           type="button"
           onClick={goToPrev}
           aria-label="Previous project"
-          className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/80 hover:bg-black border border-white/20 shadow-2xl flex items-center justify-center text-white hover:text-orange-400 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-md"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/85 hover:bg-black border border-white/20 shadow-2xl flex items-center justify-center text-white hover:text-orange-400 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-md opacity-0 group-hover/reel:opacity-100"
         >
-          <ChevronLeft size={22} />
+          <ChevronLeft size={20} />
         </button>
 
-        {/* Floating Right Arrow */}
+        {/* Floating Right Arrow (Appears smoothly on container hover) */}
         <button
           type="button"
           onClick={goToNext}
           aria-label="Next project"
-          className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/80 hover:bg-black border border-white/20 shadow-2xl flex items-center justify-center text-white hover:text-orange-400 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-md"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/85 hover:bg-black border border-white/20 shadow-2xl flex items-center justify-center text-white hover:text-orange-400 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-md opacity-0 group-hover/reel:opacity-100"
         >
-          <ChevronRight size={22} />
+          <ChevronRight size={20} />
         </button>
 
         {/* Sliding Multi-Card Track */}
@@ -491,10 +491,19 @@ export default function Projects() {
       </div>
 
       {/* ───────────────────────────────────────────────────────
-          SQUARESPACE SIGNATURE CAPSULE AUTO-SLIDE INDICATOR
+          SQUARESPACE SIGNATURE CAPSULE AUTO-SLIDE INDICATOR & CONTROLS
       ─────────────────────────────────────────────────────── */}
-      <div className="flex flex-col items-center justify-center gap-2 mt-4 mb-10">
-        <div className="flex items-center justify-center gap-2.5 p-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md shadow-lg">
+      <div className="flex items-center justify-center gap-3 mt-4 mb-8">
+        <button
+          type="button"
+          onClick={goToPrev}
+          aria-label="Previous project"
+          className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all cursor-pointer"
+        >
+          <ChevronLeft size={16} />
+        </button>
+
+        <div className="flex items-center justify-center gap-2 p-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md shadow-lg">
           {projects.map((p, idx) => {
             const isActive = idx === activeProjectIdx;
             return (
@@ -504,7 +513,7 @@ export default function Projects() {
                 aria-label={`Go to project 0${idx + 1}: ${p.name}`}
                 className="relative h-2 rounded-full overflow-hidden transition-all duration-300 cursor-pointer"
                 style={{
-                  width: isActive ? "64px" : "20px",
+                  width: isActive ? "52px" : "18px",
                   backgroundColor: isActive ? "rgba(255, 255, 255, 0.25)" : "rgba(255, 255, 255, 0.10)",
                 }}
               >
@@ -518,6 +527,15 @@ export default function Projects() {
             );
           })}
         </div>
+
+        <button
+          type="button"
+          onClick={goToNext}
+          aria-label="Next project"
+          className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition-all cursor-pointer"
+        >
+          <ChevronRight size={16} />
+        </button>
       </div>
 
       {/* ───────────────────────────────────────────────────────

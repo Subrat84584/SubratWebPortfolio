@@ -23,16 +23,28 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [isAtExperience, setIsAtExperience] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
   const isClickScrollingRef = useRef(false);
   const clickTimeoutRef = useRef<number | null>(null);
 
-  // Reliable scroll tracking for active section underline
+  // Reliable scroll tracking for active section underline & experience section detection
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 40);
+
+      // Track whether scroll position has reached the Experience section
+      const expEl = document.getElementById('experience');
+      if (expEl) {
+        const rect = expEl.getBoundingClientRect();
+        // Transition to black navbar as soon as Experience section reaches navbar view
+        setIsAtExperience(rect.top <= 90);
+      } else {
+        // Fallback: estimate based on scroll height
+        setIsAtExperience(scrollY > 1200);
+      }
 
       // If user recently clicked a nav item, don't let scroll spy overwrite it during smooth scroll
       if (isClickScrollingRef.current) return;
@@ -110,6 +122,12 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
     
     // Immediately set activeSection so underline transitions smoothly on click
     setActiveSection(id);
+    if (id === 'experience' || id === 'education' || id === 'about' || id === 'tech-stack' || id === 'contact') {
+      setIsAtExperience(true);
+    } else if (id === 'hero' || id === 'projects') {
+      setIsAtExperience(false);
+    }
+
     isClickScrollingRef.current = true;
     if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
     clickTimeoutRef.current = window.setTimeout(() => {
@@ -131,12 +149,16 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-black border-b border-white/10 ${
-          scrolled ? 'shadow-2xl shadow-black/90' : 'shadow-lg shadow-black/50'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isAtExperience
+            ? 'bg-black border-b border-white/10 shadow-2xl shadow-black/90'
+            : scrolled
+            ? 'bg-[#FAF9F7]/95 backdrop-blur-md border-b-0 border-transparent shadow-none'
+            : 'bg-transparent border-b-0 border-transparent shadow-none'
         }`}
       >
-        {/* Generous wide container with ample breathing room to prevent congestion */}
-        <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16">
+        {/* Aligned container matching the below flagship projects section */}
+        <div className="w-full max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
             {/* Left: Brand Logo (Moved left, with "Mobile Apps Eng") */}
@@ -148,10 +170,14 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
               className="flex-shrink-0 flex flex-col text-left select-none cursor-pointer group outline-none focus:outline-none"
               aria-label="BuildwthSubrat - Home"
             >
-              <span className="text-base sm:text-lg lg:text-xl font-sans font-extrabold tracking-[0.14em] uppercase text-white leading-none group-hover:text-neutral-200 transition-colors">
+              <span className={`text-base sm:text-lg lg:text-xl font-sans font-extrabold tracking-[0.14em] uppercase leading-none transition-colors duration-300 ${
+                isAtExperience ? 'text-white group-hover:text-neutral-200' : 'text-neutral-900 group-hover:text-neutral-700'
+              }`}>
                 BUILDWTHSUBRAT
               </span>
-              <span className="text-[11px] font-sans font-medium tracking-widest text-neutral-400 mt-1 uppercase">
+              <span className={`text-[11px] font-sans font-medium tracking-widest mt-1 uppercase transition-colors duration-300 ${
+                isAtExperience ? 'text-neutral-400' : 'text-neutral-500'
+              }`}>
                 Mobile Apps Eng
               </span>
             </motion.a>
@@ -166,14 +192,22 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`relative py-1 text-xs xl:text-[13px] font-sans font-semibold tracking-[0.10em] uppercase transition-colors duration-200 cursor-pointer select-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none ${
-                      isActive ? 'text-white' : 'text-neutral-400 hover:text-white'
+                      isAtExperience
+                        ? isActive
+                          ? 'text-white'
+                          : 'text-neutral-400 hover:text-white'
+                        : isActive
+                        ? 'text-neutral-900'
+                        : 'text-neutral-600 hover:text-neutral-900'
                     }`}
                   >
                     <span>{link.label}</span>
                     {isActive && (
                       <motion.span
                         layoutId="navActiveLine"
-                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-white rounded-full"
+                        className={`absolute bottom-0 left-0 right-0 h-[1.5px] rounded-full ${
+                          isAtExperience ? 'bg-white' : 'bg-neutral-900'
+                        }`}
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -182,21 +216,23 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
               })}
             </nav>
 
-            {/* Right: Resume (PDF bracket removed) + GET STARTED Box moved right */}
+            {/* Right: Resume + GET STARTED Box */}
             <div className="hidden lg:flex items-center gap-6 xl:gap-8 flex-shrink-0">
-              {/* Direct Resume Download Link (No bracket) */}
+              {/* Direct Resume Download Link */}
               <a
                 href="/Subrat_Kumar_Acharya_Resume.pdf"
                 download="Subrat_Kumar_Acharya_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs xl:text-[13px] font-sans font-semibold tracking-[0.10em] uppercase text-neutral-400 hover:text-white transition-colors cursor-pointer outline-none focus:outline-none"
+                className={`inline-flex items-center gap-1.5 text-xs xl:text-[13px] font-sans font-semibold tracking-[0.10em] uppercase transition-colors duration-200 cursor-pointer outline-none focus:outline-none ${
+                  isAtExperience ? 'text-neutral-400 hover:text-white' : 'text-neutral-600 hover:text-neutral-900'
+                }`}
               >
-                <Download size={13} className="text-neutral-400" />
+                <Download size={13} className={isAtExperience ? 'text-neutral-400' : 'text-neutral-600'} />
                 <span>Resume</span>
               </a>
 
-              {/* Squarespace Signature High-Contrast Solid White Button */}
+              {/* High-Contrast Action Button: Dark on light canvas, White on dark canvas */}
               <motion.button
                 type="button"
                 onClick={(e) => {
@@ -209,7 +245,11 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-6 py-2.5 rounded-[2px] text-xs font-sans font-bold tracking-[0.14em] uppercase bg-white text-black hover:bg-neutral-200 transition-all duration-200 cursor-pointer shadow-md outline-none focus:outline-none"
+                className={`px-6 py-2.5 rounded-[2px] text-xs font-sans font-bold tracking-[0.14em] uppercase transition-all duration-200 cursor-pointer shadow-md outline-none focus:outline-none ${
+                  isAtExperience
+                    ? 'bg-white text-black hover:bg-neutral-200'
+                    : 'bg-neutral-950 text-white hover:bg-neutral-800'
+                }`}
               >
                 GET STARTED
               </motion.button>
@@ -219,7 +259,11 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
             <div className="flex lg:hidden items-center">
               <button
                 onClick={() => setMobileOpen((prev) => !prev)}
-                className="p-2 rounded-md text-white bg-neutral-900 border border-white/10 hover:border-white/20 transition-colors outline-none focus:outline-none"
+                className={`p-2 rounded-md transition-colors outline-none focus:outline-none ${
+                  isAtExperience
+                    ? 'text-white bg-neutral-900 border border-white/10 hover:border-white/20'
+                    : 'text-neutral-900 bg-neutral-200/80 border border-neutral-300 hover:bg-neutral-300'
+                }`}
                 aria-label="Toggle menu"
                 aria-expanded={mobileOpen}
               >
@@ -239,7 +283,11 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.25, ease: 'easeInOut' }}
-              className="lg:hidden overflow-hidden bg-black/95 backdrop-blur-2xl border-t border-white/10 px-6 py-5"
+              className={`lg:hidden overflow-hidden backdrop-blur-2xl border-t px-6 py-5 transition-colors duration-200 ${
+                isAtExperience
+                  ? 'bg-black/95 border-white/10'
+                  : 'bg-[#FAF9F7]/98 border-neutral-300'
+              }`}
             >
               <nav className="flex flex-col gap-3" aria-label="Mobile navigation">
                 {NAV_LINKS.map((link) => (
@@ -247,7 +295,11 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
                     key={link.id}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="py-2.5 text-sm font-sans font-semibold tracking-wider text-neutral-300 hover:text-white uppercase border-b border-white/5"
+                    className={`py-2.5 text-sm font-sans font-semibold tracking-wider uppercase border-b transition-colors ${
+                      isAtExperience
+                        ? 'text-neutral-300 hover:text-white border-white/5'
+                        : 'text-neutral-800 hover:text-black border-neutral-200'
+                    }`}
                   >
                     {link.label}
                   </a>
@@ -259,9 +311,13 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded text-xs font-mono font-medium tracking-wider text-neutral-300 border border-white/15 bg-neutral-900/60 uppercase"
+                  className={`mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded text-xs font-mono font-medium tracking-wider uppercase transition-colors ${
+                    isAtExperience
+                      ? 'text-neutral-300 border border-white/15 bg-neutral-900/60'
+                      : 'text-neutral-800 border border-neutral-300 bg-neutral-200/60'
+                  }`}
                 >
-                  <Download size={14} className="text-white" />
+                  <Download size={14} className={isAtExperience ? 'text-white' : 'text-neutral-800'} />
                   <span>Resume</span>
                 </a>
 
@@ -276,7 +332,11 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenGetStarted }) => {
                       handleNavClick(e as any, '#contact');
                     }
                   }}
-                  className="mt-2 w-full py-3.5 rounded-[2px] text-xs font-sans font-bold tracking-widest uppercase bg-white text-black hover:bg-neutral-200 transition-colors shadow-lg"
+                  className={`mt-2 w-full py-3.5 rounded-[2px] text-xs font-sans font-bold tracking-widest uppercase transition-colors shadow-lg ${
+                    isAtExperience
+                      ? 'bg-white text-black hover:bg-neutral-200'
+                      : 'bg-neutral-950 text-white hover:bg-neutral-800'
+                  }`}
                 >
                   GET STARTED
                 </button>
